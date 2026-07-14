@@ -29,7 +29,7 @@ button{
 
 /* ---- worlds ------------------------------------------------------- */
 .world-paper{
-  color-scheme: light;   /* paper chapters are light on purpose — keep browser dark-mode filters off them too */
+  color-scheme: only light;   /* paper chapters are light on purpose — keep browser dark-mode filters off them too */
   background:var(--paper);
   color:var(--ink);
   font-family:"Inter",system-ui,sans-serif; /* self-hosted subset arrives with P2+ chapters */
