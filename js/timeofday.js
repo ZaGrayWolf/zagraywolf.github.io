@@ -53,7 +53,9 @@ export function initTimeOfDay(){
     // The vibe stays DARK at every hour — DAY_SCALE compresses the range to a
     // narrow band so daytime is only a faint blue lift over the deep-night
     // black (enough to tell morning from night, never a bright sky).
-    const DAY_SCALE = 0.2;
+    // phones: mornings washed out badly (dawn phase lifted the whole scene), so
+    // compress the lift hard there; desktop keeps the fuller 0.2 cycle unchanged.
+    const DAY_SCALE = matchMedia("(max-width:700px)").matches ? 0.08 : 0.2;
     const day = daylight(now.getHours() + now.getMinutes() / 60) * DAY_SCALE;
     body.style.setProperty('--tod-day', day.toFixed(3));
     if (!clock){
