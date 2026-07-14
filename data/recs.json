@@ -1,0 +1,59 @@
+{
+  "_note": "Owner-editable. id=slug, title=CAPS, write=short blurb (the owner's voice — terse), garnish=one glyph, pairs=project/role name or null. Add freely — more entries just make chef's choice richer. Five lanterns: anime, manga, movies, books, shows.",
+  "anime": [
+    { "id": "vinland-saga", "title": "VINLAND SAGA", "write": "Unparalleled story.", "garnish": "⚔", "pairs": null },
+    { "id": "fmab", "title": "FULLMETAL ALCHEMIST: BROTHERHOOD", "write": "Best starter anime.", "garnish": "⚗", "pairs": null },
+    { "id": "attack-on-titan", "title": "ATTACK ON TITAN", "write": "A masterpiece like none other.", "garnish": "☰", "pairs": null },
+    { "id": "code-geass", "title": "CODE GEASS", "write": "Best ending in anime.", "garnish": "♟", "pairs": null },
+    { "id": "evangelion", "title": "NEON GENESIS EVANGELION", "write": "Goated OP. It inspired a whole era.", "garnish": "✛", "pairs": null },
+    { "id": "hajime-no-ippo", "title": "HAJIME NO IPPO", "write": "Amazing sports anime.", "garnish": "◓", "pairs": null },
+    { "id": "jojo", "title": "JOJO'S BIZARRE ADVENTURE", "write": "Peak.", "garnish": "✦", "pairs": null },
+    { "id": "jujutsu-kaisen", "title": "JUJUTSU KAISEN", "write": "Crazy plot and story, unlike any other.", "garnish": "⛩", "pairs": null },
+    { "id": "your-lie-in-april", "title": "YOUR LIE IN APRIL", "write": "For when you feel stuck and want to cry.", "garnish": "♪", "pairs": null }
+  ],
+  "manga": [
+    { "id": "berserk", "title": "BERSERK", "write": "The GOAT.", "garnish": "☠", "pairs": null },
+    { "id": "vinland-saga", "title": "VINLAND SAGA", "write": "Unparalleled story.", "garnish": "⚔", "pairs": null },
+    { "id": "chainsaw-man", "title": "CHAINSAW MAN", "write": "Fujimoto's best yet, peak panelling.", "garnish": "⛓", "pairs": null },
+    { "id": "20th-century-boys", "title": "20TH CENTURY BOYS", "write": "An amazing thriller.", "garnish": "◉", "pairs": null },
+    { "id": "slam-dunk", "title": "SLAM DUNK", "write": "Best sports manga of all time, arguable with Ippo.", "garnish": "◯", "pairs": null },
+    { "id": "kingdom", "title": "KINGDOM", "write": "Epic war manga; on the edge of your seat every chapter.", "garnish": "⚑", "pairs": null },
+    { "id": "death-note", "title": "DEATH NOTE", "write": "Mind-bending cat and mouse.", "garnish": "✎", "pairs": null },
+    { "id": "blue-period", "title": "BLUE PERIOD", "write": "When you feel hopeless, and it's about art.", "garnish": "▧", "pairs": null },
+    { "id": "tokyo-ghoul", "title": "TOKYO GHOUL", "write": "The best-illustrated manga.", "garnish": "◬", "pairs": null }
+  ],
+  "movies": [
+    { "id": "shawshank", "title": "THE SHAWSHANK REDEMPTION", "write": "Hope, served slow.", "garnish": "○", "pairs": null },
+    { "id": "parasite", "title": "PARASITE", "write": "Class war, one staircase at a time.", "garnish": "◑", "pairs": null },
+    { "id": "your-name", "title": "YOUR NAME", "write": "The greatest animated romance ever made.", "garnish": "✦", "pairs": null },
+    { "id": "whiplash", "title": "WHIPLASH", "write": "Obsession, kept at tempo.", "garnish": "♪", "pairs": null },
+    { "id": "pulp-fiction", "title": "PULP FICTION", "write": "Structure as a magic trick.", "garnish": "◆", "pairs": null },
+    { "id": "no-country", "title": "NO COUNTRY FOR OLD MEN", "write": "Dread with no soundtrack.", "garnish": "◌", "pairs": null },
+    { "id": "perfect-blue", "title": "PERFECT BLUE", "write": "Identity coming apart, frame by frame.", "garnish": "◈", "pairs": null },
+    { "id": "lotr", "title": "THE LORD OF THE RINGS", "write": "The best trilogy.", "garnish": "♦", "pairs": null },
+    { "id": "shutter-island", "title": "SHUTTER ISLAND", "write": "The floor drops out in the last reel.", "garnish": "▦", "pairs": null }
+  ],
+  "books": [
+    { "id": "pragmatic-programmer", "title": "THE PRAGMATIC PROGRAMMER", "write": "The rules the code-quality crowd cargo-culted. Read the original to understand where they come from and when to break them.", "garnish": "◆", "pairs": null },
+    { "id": "godel-escher-bach", "title": "GÖDEL, ESCHER, BACH", "write": "The recursion book. Takes a year to finish. That is correct.", "garnish": "∞", "pairs": null },
+    { "id": "thinking-fast-slow", "title": "THINKING, FAST AND SLOW", "write": "The biases that make model evaluation hard and trading dangerous.", "garnish": "▣", "pairs": "Option pricing engine" },
+    { "id": "white-nights", "title": "WHITE NIGHTS", "write": "Loneliness, and four nights of almost.", "garnish": "☾", "pairs": null },
+    { "id": "extinction-trials", "title": "THE EXTINCTION TRIALS", "write": "Survival sci-fi with no safety net.", "garnish": "◳", "pairs": null },
+    { "id": "deep-work", "title": "DEEP WORK", "write": "The case for focus in a distracted world.", "garnish": "◎", "pairs": null },
+    { "id": "meditations", "title": "MEDITATIONS", "write": "Stoicism, straight from the emperor's notebook.", "garnish": "☉", "pairs": null },
+    { "id": "heads-you-win", "title": "HEADS YOU WIN", "write": "One life, two timelines.", "garnish": "⇄", "pairs": null },
+    { "id": "merchant-of-venice", "title": "THE MERCHANT OF VENICE", "write": "Mercy, money, and a pound of flesh.", "garnish": "⚖", "pairs": null },
+    { "id": "the-alchemist", "title": "THE ALCHEMIST", "write": "Follow the omens.", "garnish": "❖", "pairs": null }
+  ],
+  "shows": [
+    { "id": "breaking-bad", "title": "BREAKING BAD", "write": "The cleanest character descent ever filmed.", "garnish": "⚗", "pairs": null },
+    { "id": "succession", "title": "SUCCESSION", "write": "If Shakespeare wrote a modern show.", "garnish": "♛", "pairs": null },
+    { "id": "chernobyl", "title": "CHERNOBYL", "write": "The cost of lies, measured in roentgen.", "garnish": "☢", "pairs": null },
+    { "id": "got", "title": "GAME OF THRONES / HOTD", "write": "The throne that costs everyone.", "garnish": "♜", "pairs": null },
+    { "id": "narcos", "title": "NARCOS", "write": "An empire built on powder.", "garnish": "◆", "pairs": null },
+    { "id": "ozark", "title": "OZARK", "write": "A family laundering itself away.", "garnish": "◍", "pairs": null },
+    { "id": "squid-game", "title": "SQUID GAME", "write": "Childhood games, adult stakes.", "garnish": "◯", "pairs": null },
+    { "id": "the-office", "title": "THE OFFICE (US)", "write": "Comfort food that never spoils.", "garnish": "☺", "pairs": null },
+    { "id": "3-body-problem", "title": "3 BODY PROBLEM", "write": "Physics as a horror story.", "garnish": "◌", "pairs": null }
+  ]
+}

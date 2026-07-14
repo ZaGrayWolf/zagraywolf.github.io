@@ -1,0 +1,59 @@
+[
+  {
+    "aria": "BookMyShow internship",
+    "narrate": "studying BookMyShow · the Agentic OS",
+    "captionTail": "BOOKMYSHOW · DEVOPS ENGINEER INTERN · JUN–JUL 2026",
+    "title": "Platform engineering for the Agentic OS.",
+    "meta": "summer internship · Jun–Jul 2026",
+    "lead": "BookMyShow: a million people, one show, one second. The infra doesn't get to fail. The build: an internal <b>Agentic OS</b> — a platform that lets AI agents plug into company workflows and take the repetitive operational work off the team.",
+    "beats": [
+      { "caption": "LAYER 1 · INFRA", "body": "DevOps at ticketing scale: pipelines, reliability, and infrastructure engineered to hold when a hundred thousand sessions spike at once." },
+      { "caption": "LAYER 2 · PLATFORM", "body": "The Agentic OS platform layer: a runtime that wires AI agents into internal tools and workflows so the agents can act on the company's own data and systems." },
+      { "caption": "LAYER 3 · AUTOMATION", "class": "panel--tilt", "body": "Ops that used to need a person and a calendar now run on their own. Less manual work; more time for the work that actually needs a human." },
+      { "caption": "BUILT · CODEBASE SCORING ENGINE", "wide": true, "title": "100-point codebase health, from the inside out.", "body": "An in-house scoring algorithm that extracts resources from a codebase and returns a single score out of 100: a diagnostic for overall code quality and a clear starting point for what to fix next." }
+    ],
+    "payoff": { "title": "AGENTS RUN THE OPS.", "sub": "agentic platform engineering · devops · pipelines · ticketing scale" }
+  },
+  {
+    "aria": "Incubyte internship",
+    "narrate": "studying Incubyte · the agents",
+    "captionTail": "INCUBYTE · SOFTWARE ENGINEERING INTERN · JUN–JUL 2025",
+    "title": "20+ enterprise AI agents. In production.",
+    "crumb": { "title": "CODE GEASS", "cat": "anime", "note": "command from the shadows" },
+    "lead": "Enterprise AI agents on Google Cloud (Agno framework), wired into real corporate systems over RESTful microservices. Each agent handles a slice of the work that used to go to a human.",
+    "beats": [
+      { "caption": "THE STACK", "body": "Google Cloud · Agno framework · RESTful microservices · cloud-native from day one.", "metric": "20+ agents" },
+      { "caption": "THE CLIENTS", "body": "Real enterprise clients with live operational workflows — not prototypes. Every agent runs in a live corporate environment.", "metric": "in production" },
+      { "caption": "THE NUMBERS", "body": "Manual workload down 60%. Throughput up 40%. The agents made the math better in both directions.", "metric": "−60% workload · +40% throughput" }
+    ],
+    "payoff": { "title": "SHIPPED TO REAL CLIENTS.", "sub": "enterprise AI · cloud-native · in production" }
+  },
+  {
+    "aria": "KLIV research internship",
+    "narrate": "studying KLIV · the edge benchmarks",
+    "captionTail": "KLIV GROUP, IIT KHARAGPUR · DL RESEARCH INTERN · JAN 2025 –",
+    "title": "Big models. Tiny machines. Real data.",
+    "lead": "17 CNNs and Transformers. 8 input resolutions. 4 edge platforms. Not a one-shot experiment — a systematic benchmarking study built to actually answer the question: what does quantization cost, and where?",
+    "beats": [
+      { "caption": "THE GRID", "body": "Every model run against every resolution on every device. PTQ and QAT, INT8 throughout. The combinatorics were the point — no cherry-picking a single lucky config.", "metric": "17 models · 8 resolutions · 4 devices" },
+      { "caption": "THE MEASUREMENTS", "body": "Each run instrumented end-to-end: latency, throughput, activation memory, page fault rate. Plotted, cross-compared, reproduced. The kind of data that turns \"it depends\" into a real number.", "metric": "latency · throughput · page faults · activation size" },
+      { "caption": "THE FINDING", "class": "panel--broken", "body": "35% faster inference. Accuracy above 90%. Model footprint down 40%. Reproducible across hardware — not one run on one device on a good day.", "metric": "−40% size · +35% speed · 90%+ accuracy" }
+    ],
+    "payoff": { "title": "THE DATA SAYS IT FITS.", "sub": "jetson nano · coral edgetpu · edge benchmarking · INT8 PTQ + QAT · <a href=\"oneshot.html\">read the one-shot →</a>" }
+  },
+  {
+    "aria": "Team RoboManipal",
+    "narrate": "studying RoboManipal · the payoff",
+    "sfx": { "text": "DON!!", "style": "top:-2.5rem; right:0" },
+    "captionTail": "TEAM ROBOMANIPAL, MIT MAHE · ROBOTICS SOFTWARE ENGINEER · MAR 2024 –",
+    "title": "A robot needs to know exactly where it is, twenty times a second.",
+    "crumb": { "title": "NEON GENESIS EVANGELION", "cat": "anime", "note": "pilot and machine, synced" },
+    "lead": "Real-time 6-DOF pose estimation in ROS + OpenCV. The season, compressed into three competitions:",
+    "beats": [
+      { "caption": "BEAT 1 · NATIONALS", "body": "ABU Robocon 2024. Systematic testing, systematic validation, almost-perfect sheet.", "metric": "99 / 100" },
+      { "caption": "BEAT 2 · GERMANY", "body": "The same robot, an ocean away. RoboCup@Work 2025 international finals.", "metric": "TOP 8" },
+      { "caption": "BEAT 3 · BRAZIL", "class": "panel--tilt2", "body": "The same robot, another hemisphere. It still knows exactly where it is.", "metric": "TOP 10" }
+    ],
+    "payoff": { "title": "THE ROBOT KNOWS WHERE IT IS.", "sub": "6-DOF pose estimation · 20+ FPS · millimeter accuracy · two continents" }
+  }
+]

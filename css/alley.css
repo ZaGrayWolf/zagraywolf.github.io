@@ -1,0 +1,639 @@
+/* alley.css — the night-time back alley (A7 `/`).
+   Layer order inside .alley is paint order; parallax factors live in
+   data-parallax and are applied by js/alley.js (progressive enhancement —
+   the scene composes correctly with JS off). */
+
+body[data-page="notfound"]{
+  overflow-x:hidden;
+  background:color-mix(in srgb, var(--tod-bg) calc((1 - var(--dawn-mix, 0)) * 100%), var(--bg-dawn));
+}
+
+/* Spider-Verse sky: a deep vertical gradient — indigo at the top, through
+   purple, into a magenta horizon glow low down — so the skyline silhouettes
+   against it like the upside-down-city shot. Kept moody/deep (not pastel) so
+   the cyan/amber neon and the chapter text stay readable. Top stop is --tod-bg
+   so the real-clock tint still nudges it. Built only from palette tokens. */
+body[data-page="alley"]{
+  overflow-x:hidden;
+  /* home-screen theme: blue + white neon (scoped — only the alley). */
+  --neon-cyan: #5fbcff;   /* electric blue — the primary neon */
+  --neon-mag:  #f2f7ff;   /* white neon — the accent + horizon glow */
+  --name-day:  #123a5e;   /* deep ink-blue the name wears in daylight (unlit) */
+
+  /* day↔night cycle: js/timeofday.js sets --tod-day 0 (night) … 1 (bright
+     midday) from the real clock. The sky lerps between a bright daytime
+     palette and the dark neon night. Default 0 → no-JS stays night. */
+  --day-top:  #a9d4ff;  --night-top:  var(--bg);
+  --day-mid:  #cbe6ff;  --night-mid:  var(--bg-dawn);
+  --day-bot:  #eef6ff;  --night-bot:  color-mix(in srgb, var(--neon-mag) 16%, var(--bg));
+  --day-glow: color-mix(in srgb, #ffffff 52%, transparent);
+  --night-glow: color-mix(in srgb, var(--neon-mag) 20%, transparent);
+  --sky-top:  color-mix(in srgb, var(--day-top)  calc(var(--tod-day) * 100%), var(--night-top));
+  --sky-mid:  color-mix(in srgb, var(--day-mid)  calc(var(--tod-day) * 100%), var(--night-mid));
+  --sky-bot:  color-mix(in srgb, var(--day-bot)  calc(var(--tod-day) * 100%), var(--night-bot));
+  --sky-glow: color-mix(in srgb, var(--day-glow) calc(var(--tod-day) * 100%), var(--night-glow));
+  /* the skyline catches daylight too — lit blue-grey by day, dark silhouettes
+     at night — so the lower scene isn't a dark wall when the sky is bright */
+  --bldg-far:  color-mix(in srgb, #9cc0e6 calc(var(--tod-day) * 100%), color-mix(in srgb, var(--bg) 35%, var(--dim)));
+  --bldg-mid:  color-mix(in srgb, #6f96c2 calc(var(--tod-day) * 100%), color-mix(in srgb, var(--bg) 60%, var(--bg-dawn)));
+  --bldg-near: color-mix(in srgb, #4a6b94 calc(var(--tod-day) * 100%), color-mix(in srgb, var(--bg) 86%, var(--bg-dawn)));
+  background:
+    radial-gradient(150% 64% at 50% 74%, var(--sky-glow) 0%, transparent 60%),
+    linear-gradient(to bottom, var(--sky-top) 0%, var(--sky-mid) 44%, var(--sky-bot) 100%);
+  background-attachment:fixed;
+}
+
+.alley{
+  position:relative;
+  min-height:100svh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+.layer{ will-change:transform; }
+
+/* ---- L0 sky ---------------------------------------------------------- */
+.layer-sky{
+  position:absolute; inset:0 -4% auto;
+  display:flex; justify-content:center;
+  pointer-events:none;
+}
+.skyline{
+  font-family:var(--mono);
+  font-size:10px; line-height:1.05;
+  color:var(--dim);
+  opacity:.5;
+}
+
+/* ---- L1 layered skyline (Spider-Verse depth, Tokyo-night palette) -------
+   Two parallax slabs of varied building silhouettes. Atmospheric perspective:
+   the far slab is a lighter blue-grey, the near slab near-black indigo, so it
+   recedes. The near band carries a cyan/magenta chromatic-aberration edge —
+   the Spider-Verse signature, drawn in the site's own neon tokens — plus a few
+   rooftop antennae and sparse lit windows. preserveAspectRatio:none lets each
+   slab fill its box; pointer parallax (alley.js) drifts them at different
+   rates for depth. Decorative, aria-hidden; no-JS still sees it. */
+.layer-skyline-back, .layer-skyline-front{
+  position:absolute; left:-4%; right:-4%; bottom:0;
+  pointer-events:none;
+}
+.layer-skyline-back{ height:56%; opacity:.5; }
+.layer-skyline-mid{ height:62%; opacity:.75; }
+.layer-skyline-front{ height:70%; opacity:.95; }
+.layer-skyline-back svg, .layer-skyline-front svg, .layer-skyline-mid svg{
+  position:absolute; bottom:0; left:0; width:100%; height:100%; display:block;
+}
+.layer-skyline-mid{
+  position:absolute; left:-4%; right:-4%; bottom:0;
+  pointer-events:none;
+}
+/* inverted skyline hanging from the top — the upside-down-city mirror, faint
+   so it stays behind the name */
+.layer-skyline-top{
+  position:absolute; left:-4%; right:-4%; top:0; height:34%;
+  opacity:.45; pointer-events:none;
+}
+.layer-skyline-top svg{
+  position:absolute; top:0; left:0; width:100%; height:100%; display:block;
+  transform:scaleY(-1);
+}
+.sky-far{ fill:var(--bldg-far); }
+.sky-mid{ fill:var(--bldg-mid); }
+.sky-near{ fill:var(--bldg-near); }
+.sky-cyan{ fill:var(--neon-cyan); opacity:.45; }        /* chromatic edge — */
+.sky-mag{  fill:var(--neon-mag);  opacity:.42; }        /* offset via attr   */
+.sky-detail{ stroke:color-mix(in srgb, var(--bg) 65%, var(--bg-dawn)); stroke-width:2.5; }
+.sky-win{ fill:var(--neon-cyan); opacity:.42; }
+.sky-win.dim{ fill:var(--label); opacity:.3; }
+.sky-win.warm{ fill:var(--amber); opacity:.35; }
+
+/* ---- embedded glyphs — static characters strewn into the scene ---------
+   Signage/graffiti scattered through the alley; mostly faint blue, a few
+   brighter neon. Decorative, aria-hidden, parallaxes with its layer. */
+.layer-glyphs{ position:absolute; inset:0; pointer-events:none; font-family:var(--mono); }
+.layer-glyphs span{
+  position:absolute; transform:translate(-50%, -50%);
+  font-size:var(--t-2);
+  color:color-mix(in srgb, var(--neon-cyan) 36%, transparent);
+}
+.layer-glyphs .g-sm{ font-size:var(--t-1); }
+.layer-glyphs .g-lg{ font-size:var(--t-4); }
+.layer-glyphs .g-bright{
+  color:var(--neon-cyan);
+  text-shadow:0 0 8px color-mix(in srgb, var(--neon-cyan) 55%, transparent);
+}
+
+/* ---- content column --------------------------------------------------- */
+.alley main{
+  position:relative; z-index:var(--z-content);
+  flex:1;
+  display:flex; flex-direction:column;
+  padding:var(--s-8) var(--s-3) 0;
+}
+
+/* ---- hero: the flickering name sign ----------------------------------- */
+.hero{ text-align:center; margin-top:var(--s-6); }
+.name-sign{
+  font-family:var(--mono);
+  font-size:var(--t-6);
+  font-weight:normal;
+  letter-spacing:.14em;
+  /* a real neon sign: ink-dark + unlit in daylight, glowing neon after dark */
+  color:color-mix(in srgb, var(--name-day) calc(var(--tod-day) * 100%), var(--neon-cyan));
+  text-shadow:
+    0 0 6px  color-mix(in srgb, var(--neon-cyan) calc((1 - var(--tod-day)) * 100%), transparent),
+    0 0 18px color-mix(in srgb, var(--neon-cyan) calc((1 - var(--tod-day)) * 100%), transparent),
+    0 0 42px color-mix(in srgb, var(--neon-cyan) calc((1 - var(--tod-day)) * 55%), transparent);
+}
+.name-sign .name-en{ animation:sign-flicker 7s infinite; }
+.name-sign .name-sep{ color:var(--dim); text-shadow:none; padding:0 var(--s-1); }
+.name-sign .name-tag{ font-size:var(--t-4); letter-spacing:.22em; }
+.hero-sub{
+  margin-top:var(--s-2);
+  font-size:var(--t-1);
+  letter-spacing:.18em;
+  /* darkens for legibility on the bright daytime sky, back to label-grey at night */
+  color:color-mix(in srgb, var(--name-day) calc(var(--tod-day) * 100%), var(--label));
+}
+
+/* ---- L2 the five neon signs ------------------------------------------- */
+.layer-signs{
+  /* generous top margin — the helix descends through this gap */
+  margin:calc(var(--s-8) * 3) auto var(--s-6);
+  display:flex; flex-wrap:wrap; justify-content:center;
+  gap:var(--s-3) var(--s-4);
+  max-width:64rem;
+}
+/* unlit by default — dark glass tubes at 3am; they wake on approach */
+.sign{
+  position:relative;
+  display:flex; flex-direction:column; align-items:center;
+  gap:2px;
+  padding:var(--s-2) var(--s-3) var(--s-1);
+  text-decoration:none;
+  border:1px solid var(--dim);
+  border-radius:3px;
+  color:color-mix(in srgb, var(--neon-cyan) 30%, var(--label));
+  text-shadow:none;
+  box-shadow:inset 0 0 14px rgba(0,0,0,.35);
+  background:color-mix(in srgb, var(--bg) 94%, var(--neon-cyan));
+  transition:color var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out), text-shadow var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out);
+}
+/* the mounting bracket — hangs each sign off an unseen wall */
+.sign::before{
+  content:"╲";
+  position:absolute; top:calc(-1 * var(--s-3)); left:50%;
+  transform:translateX(-50%);
+  color:var(--dim); text-shadow:none;
+  font-size:var(--t-1);
+}
+.sign i{ font-style:normal; font-size:var(--t-0); letter-spacing:.4em; color:inherit; transition:color var(--dur-2) var(--ease-out); }
+.sign b{ font-weight:normal; font-size:var(--t-3); letter-spacing:.18em; }
+/* chapter tag drawn from data-ch via CSS (not DOM text) so each sign's
+   accessible name stays just its word — WCAG 2.5.3 label-in-name */
+.sign::after{ content:attr(data-ch); text-decoration:none; font-size:var(--t-0); color:var(--label); text-shadow:none; letter-spacing:.3em; }
+
+/* hang at uneven heights — an alley, not a navbar */
+.sign:nth-child(1){ transform:translateY(6px) rotate(-1deg); }
+.sign:nth-child(2){ transform:translateY(-8px); }
+.sign:nth-child(3){ transform:translateY(10px) rotate(.6deg); }
+.sign:nth-child(4){ transform:translateY(-4px) rotate(-.4deg); }
+.sign:nth-child(5){ transform:translateY(8px) rotate(1deg); }
+/* the one-shot sign — a special chapter, so it hangs amber like the stall's
+   warmth: smaller than the five chapters, on its own row (.sign-break),
+   dropped a little further down the wall */
+.sign-break{ flex-basis:100%; }
+.sign--special{
+  color:color-mix(in srgb, var(--amber) 38%, var(--label));
+  background:color-mix(in srgb, var(--bg) 94%, var(--amber));
+  padding:var(--s-1) var(--s-2);
+  transform:translateY(14px) rotate(-.8deg);
+}
+.sign--special b{ font-size:var(--t-1); }
+.sign--special:hover, .sign--special:focus-visible{
+  color:var(--amber);
+  border-color:color-mix(in srgb, var(--amber) 55%, var(--dim));
+  text-shadow:0 0 8px var(--amber), 0 0 22px color-mix(in srgb, var(--amber) 50%, transparent);
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--amber) 22%, transparent),
+    inset 0 0 14px color-mix(in srgb, var(--amber) 9%, transparent);
+}
+
+/* the tube wakes up — cyan is a sign's "on" color (A2); magenta stays
+   reserved for interaction alerts (:active, startle) */
+.sign:hover, .sign:focus-visible, .sign:active{
+  color:var(--neon-cyan);
+  border-color:color-mix(in srgb, var(--neon-cyan) 55%, var(--dim));
+  text-shadow:0 0 8px var(--neon-cyan), 0 0 22px color-mix(in srgb, var(--neon-cyan) 50%, transparent);
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--neon-cyan) 22%, transparent),
+    inset 0 0 14px color-mix(in srgb, var(--neon-cyan) 9%, transparent);
+  animation:sign-buzz .18s linear infinite;
+}
+.sign:active{
+  color:var(--neon-mag);
+  border-color:var(--neon-mag);
+  text-shadow:0 0 8px var(--neon-mag), 0 0 24px color-mix(in srgb, var(--neon-mag) 55%, transparent);
+}
+
+/* a chapter you've already read — its tube rests ticked, slightly warmer */
+.sign--visited{ color:color-mix(in srgb, var(--neon-cyan) 42%, var(--label)); }
+.sign--visited u::after{ content:" ✓"; letter-spacing:0; }
+
+/* clicked: the sign flares wide awake as the world dims around it */
+.sign.is-leaving{
+  transform:scale(1.1);
+  color:var(--neon-cyan);
+  border-color:var(--neon-cyan);
+  text-shadow:0 0 12px var(--neon-cyan), 0 0 40px color-mix(in srgb, var(--neon-cyan) 65%, transparent);
+  box-shadow:0 0 24px color-mix(in srgb, var(--neon-cyan) 35%, transparent);
+  transition:transform var(--dur-3) var(--ease-out);
+  animation:none;
+}
+
+/* one sign per visit is a dying tube — a faint glint, not full brightness */
+.sign--flicker{ animation:sign-glint 6s infinite; }
+.sign--flicker:hover, .sign--flicker:focus-visible{ animation:sign-buzz .18s linear infinite; }
+
+@keyframes sign-glint{
+  0%, 41%, 45%, 78%, 81%, 100%{
+    color:color-mix(in srgb, var(--neon-cyan) 30%, var(--label));
+    text-shadow:none;
+  }
+  42%, 44%{
+    color:color-mix(in srgb, var(--neon-cyan) 60%, var(--label));
+    text-shadow:0 0 10px color-mix(in srgb, var(--neon-cyan) 35%, transparent);
+  }
+  79.5%{
+    color:color-mix(in srgb, var(--neon-cyan) 45%, var(--label));
+    text-shadow:0 0 6px color-mix(in srgb, var(--neon-cyan) 20%, transparent);
+  }
+}
+@keyframes sign-buzz{
+  0%,100%{ transform:translate(0,0); }
+  25%{ transform:translate(.4px,-.3px); }
+  50%{ transform:translate(-.3px,.4px); }
+  75%{ transform:translate(.3px,.2px); }
+}
+
+/* ---- L3 street ---------------------------------------------------------- */
+.layer-street{
+  position:relative;
+  margin-top:auto;
+  min-height:13rem;
+}
+/* the road surface */
+.layer-street::after{
+  content:"";
+  position:absolute; left:-6%; right:-6%; bottom:0; height:3.5rem;
+  background:linear-gradient(color-mix(in srgb, var(--dim) 40%, var(--bg)), var(--bg));
+  border-top:1px solid var(--dim);
+}
+/* warm spill — the stall's lantern light pools onto the street.
+   Amber only at/near the stall (A2); with the signs dark this is the
+   scene's dominant light. */
+.layer-street::before{
+  content:"";
+  position:absolute; right:-4%; bottom:0;
+  width:42rem; height:16rem;
+  pointer-events:none;
+  background:radial-gradient(ellipse at 72% 78%,
+    color-mix(in srgb, var(--amber) 9%, transparent),
+    color-mix(in srgb, var(--amber) 4%, transparent) 45%,
+    transparent 72%);
+}
+
+/* the stall — a hand-drawn SVG yatai cart; amber lives here ONLY (A2) */
+.stall{
+  position:absolute; right:3%; bottom:2.4rem;
+  width:19rem;
+  text-decoration:none;
+  display:block;
+}
+.stall-svg{ display:block; width:100%; height:auto; overflow:visible; }
+
+.s-ink{ fill:color-mix(in srgb, var(--dim) 70%, var(--bg)); }
+.s-line{ stroke:var(--dim); stroke-width:2; }
+
+.stall-fringe rect:nth-child(odd){ fill:color-mix(in srgb, var(--amber) 30%, var(--bg)); }
+.stall-fringe rect:nth-child(even){ fill:color-mix(in srgb, var(--dim) 85%, var(--bg)); }
+
+.stall-sign rect{
+  fill:color-mix(in srgb, var(--bg) 88%, var(--amber));
+  stroke:color-mix(in srgb, var(--amber) 65%, var(--dim));
+  stroke-width:1.5;
+}
+.stall-sign text{
+  font-family:var(--mono); font-size:15px; letter-spacing:.2em;
+  fill:var(--amber);
+}
+.stall:hover .stall-sign text, .stall:focus-visible .stall-sign text{
+  filter:drop-shadow(0 0 6px var(--amber));
+}
+
+.stall-curtain rect{
+  fill:color-mix(in srgb, var(--dim) 65%, var(--amber));
+  stroke:var(--bg); stroke-width:1.5;
+}
+
+.stall-board rect{ fill:var(--bg); stroke:var(--dim); stroke-width:1.5; }
+.stall-board line{ stroke:var(--dim); stroke-width:2; stroke-linecap:round; }
+
+.stall-lamp{
+  animation:lantern-sway 5s ease-in-out infinite;
+  transform-box:fill-box; transform-origin:50% 0;
+}
+.lamp-glow{ fill:var(--amber); opacity:.18; filter:blur(6px); }
+.lamp-body{ fill:color-mix(in srgb, var(--amber) 85%, var(--bg)); }
+.lamp-rib{ fill:none; stroke:color-mix(in srgb, var(--bg) 60%, var(--amber)); stroke-width:1.5; }
+@keyframes lantern-sway{
+  0%,100%{ transform:rotate(2.2deg); }
+  50%{ transform:rotate(-2.2deg); }
+}
+
+.stall-bowls path{ fill:var(--bg); stroke:color-mix(in srgb, var(--amber) 45%, var(--dim)); stroke-width:1.5; }
+.stall-bowls line{ stroke:var(--label); stroke-width:1.5; stroke-linecap:round; }
+
+.stall-steam path{
+  stroke:color-mix(in srgb, var(--label) 70%, var(--amber));
+  opacity:0;
+  animation:steam-rise 3.4s ease-in-out infinite;
+}
+.stall-steam path:nth-child(2){ animation-delay:1.1s; }
+.stall-steam path:nth-child(3){ animation-delay:2.2s; }
+@keyframes steam-rise{
+  0%{ opacity:0; transform:translateY(5px); }
+  30%{ opacity:.5; }
+  100%{ opacity:0; transform:translateY(-12px); }
+}
+
+.stall-bodywood rect{ fill:color-mix(in srgb, var(--bg) 84%, var(--amber)); stroke:var(--dim); stroke-width:1.5; }
+.stall-bodywood line{ stroke:color-mix(in srgb, var(--dim) 60%, var(--bg)); stroke-width:1.5; }
+
+.stall-stool rect{ fill:color-mix(in srgb, var(--dim) 80%, var(--bg)); }
+.stall-stool line{ stroke:var(--dim); stroke-width:2.5; }
+
+.stall-wheel circle{ fill:none; stroke:var(--dim); stroke-width:3; }
+.stall-wheel line{ stroke:var(--dim); stroke-width:2; }
+.stall-tag{
+  position:absolute; left:1.4rem; bottom:2.4rem;
+  padding:2px var(--s-1);
+  background:var(--paper); color:var(--ink);
+  font-size:var(--t-0); letter-spacing:.18em;
+  transform:rotate(-4deg);
+  border:1px dashed var(--ink-soft);
+  box-shadow:0 2px 6px rgba(0,0,0,.6);
+}
+/* tag string */
+.stall-tag::before{
+  content:""; position:absolute; top:-0.75rem; left:1.25rem;
+  width:1px; height:.75rem; background:var(--label);
+}
+.stall:hover .stall-tag, .stall:focus-visible .stall-tag{ transform:rotate(-1deg); }
+
+/* arcade cabinet — the game, discoverable in-scene */
+.arcade{
+  position:absolute; left:7%; bottom:2.8rem;
+  width:4rem; height:6.5rem;
+  display:flex; flex-direction:column; align-items:center;
+  gap:var(--s-1);
+  padding-top:var(--s-1);
+  background:color-mix(in srgb, var(--bg) 92%, var(--neon-cyan));
+  border:1px solid var(--dim);
+  border-radius:6px 6px 2px 2px;
+  cursor:pointer;
+}
+.arcade i{
+  font-style:normal;
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.2em;
+  color:color-mix(in srgb, var(--neon-cyan) 35%, var(--label));
+}
+.arcade b{
+  font-weight:normal;
+  width:2.6rem; height:2rem;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:var(--t-0);
+  background:var(--bg);
+  border:1px solid var(--dim);
+  border-radius:3px;
+  color:color-mix(in srgb, var(--neon-cyan) 45%, var(--dim));
+  box-shadow:inset 0 0 10px color-mix(in srgb, var(--neon-cyan) 10%, transparent);
+}
+/* joystick */
+.arcade::after{
+  content:"●";
+  font-size:var(--t-0);
+  color:var(--dim);
+}
+.arcade:hover i, .arcade:focus-visible i{
+  color:var(--neon-cyan);
+  text-shadow:0 0 8px var(--neon-cyan);
+}
+.arcade:hover b, .arcade:focus-visible b{
+  color:var(--neon-cyan);
+  box-shadow:inset 0 0 10px color-mix(in srgb, var(--neon-cyan) 30%, transparent);
+}
+
+/* puddle reflecting the name sign */
+.puddle{
+  position:absolute; left:50%; bottom:.4rem;
+  transform:translateX(-50%);
+  width:min(28rem, 76vw);
+  text-align:center;
+  overflow:hidden;
+  pointer-events:none;
+}
+.puddle span{
+  display:block;
+  font-family:var(--mono);
+  font-size:var(--t-3);
+  letter-spacing:.14em;
+  white-space:nowrap;
+  color:var(--neon-cyan);
+  transform:scaleY(-1) skewX(-4deg);
+  filter:blur(2.5px);
+  opacity:.22;
+  text-shadow:0 0 12px var(--neon-cyan);
+  -webkit-mask-image:linear-gradient(rgba(0,0,0,.9), transparent 85%);
+          mask-image:linear-gradient(rgba(0,0,0,.9), transparent 85%);
+  animation:puddle-ripple 6s ease-in-out infinite;
+}
+@keyframes puddle-ripple{
+  0%,100%{ filter:blur(2.5px); opacity:.22; }
+  50%{ filter:blur(3.5px); opacity:.17; }
+}
+
+/* scroll invitation */
+.alley-down{
+  position:absolute; left:50%; bottom:4.25rem;
+  transform:translateX(-50%);
+  color:var(--label); text-decoration:none;
+  font-size:var(--t-0); letter-spacing:.3em;
+}
+.alley-down:hover{ color:var(--neon-cyan); }
+
+/* ---- dawn contact strip (A7) ------------------------------------------- */
+.dawn{
+  position:relative; z-index:var(--z-content);
+  min-height:88svh;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:var(--s-3);
+  padding:var(--s-8) var(--s-3);
+  text-align:center;
+  /* first light on the horizon — the page ends as deliberately as it opens */
+  background:radial-gradient(70% 36% at 50% 100%,
+    color-mix(in srgb, var(--bg-dawn) 55%, var(--label) 12%),
+    color-mix(in srgb, var(--bg-dawn) 40%, transparent) 55%,
+    transparent 80%);
+}
+.dawn-title{
+  font-family:var(--mono); font-weight:normal;
+  font-size:var(--t-4); letter-spacing:.1em;
+  color:var(--label);
+}
+.dawn-sub{ font-size:var(--t-1); color:var(--label); opacity:.7; }
+.dawn-signs{
+  list-style:none; padding:0;
+  display:flex; flex-wrap:wrap; justify-content:center;
+  gap:var(--s-3) var(--s-4);
+  margin-top:var(--s-4);
+}
+.dawn-sign{
+  display:block;
+  padding:var(--s-1) var(--s-2);
+  text-decoration:none;
+  font-size:var(--t-2); letter-spacing:.2em;
+  color:var(--neon-cyan);
+  border:1px solid color-mix(in srgb, var(--neon-cyan) 45%, var(--dim));
+  text-shadow:0 0 8px var(--neon-cyan), 0 0 20px color-mix(in srgb, var(--neon-cyan) 50%, transparent);
+  transition:color var(--dur-3) var(--ease-in-out), text-shadow var(--dur-3) var(--ease-in-out), border-color var(--dur-3) var(--ease-in-out);
+}
+/* a sign that has switched off for the morning — still readable (A8) */
+.dawn-sign.is-off{
+  color:var(--label);
+  border-color:var(--dim);
+  text-shadow:none;
+}
+.dawn-sign:hover, .dawn-sign:focus-visible{
+  color:var(--neon-mag);
+  border-color:var(--neon-mag);
+  text-shadow:0 0 8px var(--neon-mag);
+}
+.dawn-wave{
+  margin-top:var(--s-4);
+  font-size:var(--t-5);
+  color:var(--dim);
+}
+.dawn-fine{ font-size:var(--t-0); color:var(--label); opacity:.55; letter-spacing:.12em; }  /* was --dim (#2a3142) — invisible on the dark dawn bg; muted --label reads as fine print */
+
+/* the dawn "leave a note" form (js/contact.js) */
+.dawn-contact{
+  display:flex; flex-direction:column; gap:var(--s-2);
+  width:min(30rem, 90vw); margin-top:var(--s-5);
+}
+.dawn-contact .dawn-sub{ margin-bottom:var(--s-1); }
+.dawn-contact input, .dawn-contact textarea{
+  font-family:var(--mono); font-size:var(--t-1);
+  color:var(--label); background:color-mix(in srgb, var(--bg) 60%, transparent);
+  border:1px solid var(--dim); padding:var(--s-2);
+  transition:border-color var(--dur-2) var(--ease-out);
+}
+.dawn-contact textarea{ resize:vertical; min-height:4.5rem; }
+.dawn-contact input::placeholder, .dawn-contact textarea::placeholder{ color:var(--dim); }
+.dawn-contact input:focus-visible, .dawn-contact textarea:focus-visible{
+  outline:none; border-color:var(--neon-cyan);
+}
+.dawn-contact .contact-cta{ align-self:center; margin-top:var(--s-1); }
+.cf-hp{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }  /* honeypot — off-screen, not display:none (bots skip those) */
+.cf-status{ min-height:1.2em; font-size:var(--t-0); color:var(--dim); letter-spacing:.06em; }
+.cf-status.is-ok{ color:var(--neon-cyan); }
+
+/* the "About me" arrow styles live in base.css now (used on home + stall). */
+
+/* ---- responsive (A8): below 900 the alley runs on 3 layers -------------- */
+@media (max-width: 900px){
+  .layer-far{ display:none; }
+  /* no helix below 900 (A8) — reclaim its descent gap */
+  .layer-signs{ margin-top:var(--s-8); }
+  .name-sign{ font-size:var(--t-5); }
+  .name-sign .name-tag{ font-size:var(--t-3); }
+  .layer-signs{ gap:var(--s-2) var(--s-2); }
+  .sign b{ font-size:var(--t-2); }
+  .stall{ width:13rem; right:2%; }
+  .stall-tag{ bottom:1.6rem; }
+  .skyline{ font-size:7px; }
+}
+/* short landscape phones (~≤480px tall): the helix-gap top margin + big hero
+   shove the signs down onto the fixed bottom HUD (curator:// / cmds / clock).
+   Tighten the vertical rhythm and pad the bottom so the signs sit clear of it. */
+@media (orientation:landscape) and (max-height:480px){
+  .alley main{ padding-top:var(--s-4); padding-bottom:calc(var(--s-8) + env(safe-area-inset-bottom)); }
+  .hero{ margin-top:var(--s-1); }
+  .layer-signs{ margin-top:var(--s-4); margin-bottom:var(--s-3); }
+}
+/* the wide ASCII <pre> skyline overflows phones (no h-scroll) — drop it;
+   the SVG layered skyline still carries the backdrop */
+@media (max-width: 700px){
+  .layer-sky{ display:none; }
+  /* quiet the animated background so the signs + name read clearly on a small
+     screen: dim the scattered glyphs and the helix/stream canvas */
+  .layer-glyphs{ opacity:.5; }
+  #flows-canvas{ opacity:.6; }
+}
+@media (max-width: 480px){
+  /* keep the scroll cue off the stall's tag */
+  .alley-down{ left:var(--s-3); transform:none; }
+  .name-sign{ font-size:var(--t-4); }
+  .name-sign .name-sep{ display:none; } /* no orphaned slash between stacked lines */
+  .name-sign .name-tag{ display:block; font-size:var(--t-2); }
+  .sign{ padding:var(--s-1) var(--s-2); }
+  .puddle span{ font-size:var(--t-1); }
+  .dawn{ padding:var(--s-6) var(--s-2); }
+}
+/* touch: the chapter signs need a real tap target (≥44px) */
+@media (pointer: coarse){
+  .sign{ padding:var(--s-2) var(--s-3); min-height:44px; justify-content:center; }
+}
+
+/* ---- reduced motion (A8) -------------------------------------------------- */
+@media (prefers-reduced-motion: reduce){
+  .name-sign .name-en, .sign--flicker, .stall-lamp, .stall-steam path, .puddle span{ animation:none; }
+  .stall-steam path{ opacity:.3; }
+  .sign:hover, .sign:focus-visible, .sign:active{ animation:none; }
+}
+
+/* ── NEON WALL SIGN · remove this block + the .neon-wall-sign span in index.html to revert ──
+   Hot-pink kanji on the left alley wall. One sign, one character (狼 = wolf). */
+.neon-wall-sign{
+  font-size:clamp(2rem, 5vw, 3.8rem);
+  font-weight:900;
+  color:#ff2d78;
+  text-shadow:
+    0 0 3px #fff,
+    0 0 8px #ff2d78,
+    0 0 20px #ff2d78,
+    0 0 44px #cc0040,
+    0 0 80px rgba(204,0,64,.4);
+  animation:neon-wall-flicker 11s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes neon-wall-flicker{
+  0%, 89%, 91%, 94%, 100%{ opacity:1; }
+  90%{ opacity:.75; }
+  92%{ opacity:1; }
+  93%{ opacity:.6; }
+}
+@media (max-width:480px){ .neon-wall-sign{ display:none; } }
+@media (prefers-reduced-motion:reduce){ .neon-wall-sign{ animation:none; } }
+/* ── END NEON WALL SIGN ── */
+
+/* ---- boot ------------------------------------------------------------------ */
+#curator-canvas{ opacity:1; transition:opacity var(--dur-4) var(--ease-out); }
+.preboot #curator-canvas{ opacity:0; }
+/* phones: calm ambient — the curator stays (it's a signature) but drops back to
+   faint atmosphere instead of competing with the already-busy small screen.
+   Placed after the base rule so it wins; the .preboot rule (higher specificity)
+   still hides it during the boot veil. Desktop untouched. */
+@media (max-width:700px){ #curator-canvas{ opacity:.5; } }

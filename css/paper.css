@@ -1,0 +1,291 @@
+/* paper.css — paper-world placeholder styling (P1 stubs).
+   Chapters proper arrive with panels.css in P2; this only covers the
+   "coming soon" interstitial so stub pages already obey A1's contrast. */
+
+.stub{
+  min-height:100svh;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:var(--s-3);
+  padding:var(--s-8) var(--s-3);
+  text-align:center;
+}
+.stub-divider{
+  font-family:var(--mono);
+  font-size:var(--t-1);
+  color:var(--ink-soft);
+  letter-spacing:.05em;
+}
+.stub h1{
+  font-size:var(--t-5);
+  font-weight:600;
+  color:var(--ink);
+  letter-spacing:.04em;
+}
+.stub p{
+  max-width:32rem;
+  color:var(--ink-soft);
+  font-size:var(--t-1);
+}
+.stub-tone{
+  /* screentone swatch (A4) — a taste of the chapter texture */
+  width:8rem; height:2.5rem;
+  background:radial-gradient(circle, var(--ink) 25%, transparent 26%) 0 0/6px 6px;
+  opacity:.25;
+  transform:rotate(45deg) scale(.7);
+}
+/* teaser facts — real details/links while the chapter is being inked */
+.stub-list{
+  list-style:none; padding:0;
+  margin-top:var(--s-2);
+  max-width:36rem;
+  text-align:left;
+  border-top:1px solid color-mix(in srgb, var(--ink) 20%, var(--paper));
+}
+.stub-list li{
+  padding:var(--s-2) var(--s-1);
+  border-bottom:1px solid color-mix(in srgb, var(--ink) 20%, var(--paper));
+  font-size:var(--t-1); line-height:1.5;
+  color:var(--ink-soft);
+}
+.stub-list b{ font-weight:600; color:var(--ink); }
+.stub-list .mono{ font-family:var(--mono); font-size:var(--t-0); letter-spacing:.04em; }
+.stub-list a{ color:var(--ink); text-underline-offset:3px; }
+.stub-list a:hover{ color:var(--ink-soft); }
+
+/* .stub prefix keeps this above base.css's `.world-paper a` color */
+.stub .stub-cta{
+  display:inline-block;
+  margin-top:var(--s-2);
+  padding:var(--s-1) var(--s-3);
+  font-family:var(--mono); font-size:var(--t-1); letter-spacing:.1em;
+  color:var(--paper); background:var(--ink);
+  text-decoration:none;
+  border:2px solid var(--ink);
+  transition:color var(--dur-2) var(--ease-out), background var(--dur-2) var(--ease-out);
+}
+.stub .stub-cta:hover, .stub .stub-cta:focus-visible{ background:var(--paper); color:var(--ink); }
+
+.stub-back{
+  font-family:var(--mono);
+  font-size:var(--t-1);
+  letter-spacing:.1em;
+  color:var(--ink);
+}
+/* ---- resume chapter styles ---------------------------------------------- */
+.resume-section-head{
+  font-size:var(--t-1); font-weight:700; letter-spacing:.18em;
+  color:var(--ink-soft); text-transform:uppercase;
+  margin-bottom:var(--s-3); margin-top:var(--s-4);
+  border-bottom:1px solid color-mix(in srgb, var(--ink) 18%, var(--paper));
+  padding-bottom:var(--s-1);
+}
+.resume-section-head:first-of-type{ margin-top:var(--s-2); }
+.resume-role{
+  margin-bottom:var(--s-4);
+  padding-bottom:var(--s-3);
+  border-bottom:1px solid color-mix(in srgb, var(--ink) 10%, var(--paper));
+}
+.resume-role:last-child{ border-bottom:0; margin-bottom:0; padding-bottom:0; }
+.resume-role-header{
+  display:flex; flex-wrap:wrap; gap:var(--s-1) var(--s-3);
+  align-items:baseline;
+  margin-bottom:var(--s-1);
+}
+.resume-role-header b{ font-size:var(--t-2); font-weight:700; color:var(--ink); }
+.resume-role-header .mono{ font-family:var(--mono); font-size:var(--t-0); color:var(--ink-soft); margin-left:auto; }
+.resume-bullets{
+  list-style:none; padding:0;
+  display:flex; flex-direction:column; gap:var(--s-1);
+}
+.resume-bullets li{
+  font-size:var(--t-1); line-height:1.5; color:var(--ink-soft);
+  padding-left:var(--s-3); position:relative;
+}
+.resume-bullets li::before{
+  content:"▸";
+  position:absolute; left:0;
+  color:var(--ink); font-size:var(--t-0);
+}
+/* skills terminal */
+.skills-terminal{
+  font-family:var(--mono); font-size:var(--t-0);
+  color:var(--ink-soft);
+  margin:0;
+  background:color-mix(in srgb, var(--ink) 5%, var(--paper));
+  padding:var(--s-3);
+  border-left:3px solid var(--ink);
+  display:grid; gap:.45rem;
+}
+.skills-row{
+  display:grid;
+  grid-template-columns:9rem 1fr;
+  gap:var(--s-2);
+  align-items:baseline;
+}
+.skills-row dt{ margin:0; white-space:nowrap; }
+.skills-row dd{ margin:0; line-height:1.5; }
+.skills-prompt{ color:var(--ink); font-weight:700; }
+.skills-key{ color:var(--ink); }
+@media (max-width:480px){
+  .skills-row{ grid-template-columns:1fr; gap:0 0; }
+  .skills-row dd{ padding-left:1.4rem; margin-bottom:var(--s-1); }
+  .companion{ max-width:min(13rem, 72vw); }
+}
+/* touch: give Casper's companion a real tap target */
+@media (pointer: coarse){ .companion-cat{ padding:var(--s-1) 4px; } }
+/* PDF download button (inside .payoff — ink bg) */
+.download-cta{
+  display:inline-block;
+  margin-top:var(--s-4);
+  padding:var(--s-2) var(--s-6);
+  border:3px solid var(--paper);
+  background:transparent;
+  cursor:pointer;
+  color:var(--paper);
+  text-decoration:none;
+  font-family:var(--mono); font-size:var(--t-1); letter-spacing:.14em;
+  transition:background var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+}
+.download-cta:hover, .download-cta:focus-visible{
+  background:var(--paper); color:var(--ink);
+}
+/* freshness stamp under the CTA — bump the text when the PDF is swapped */
+.resume-updated{
+  margin-top:var(--s-2);
+  font-size:var(--t-0); letter-spacing:.14em;
+  color:color-mix(in srgb, var(--paper) 55%, transparent);
+}
+
+/* paper-world minimap + narrator line read in ink (zero neon on paper) */
+.world-paper .hud-map{ color:color-mix(in srgb, var(--ink) 30%, var(--paper)); }
+.world-paper .hud-map a{ color:var(--ink-soft); }
+.world-paper .hud-state{ color:var(--ink-soft); }
+.world-paper .hud-state b{ color:var(--ink); }
+.world-paper .hud-map a[aria-current="page"]{ color:var(--ink); text-shadow:none; font-weight:600; }
+/* visited breadcrumb in warm amber-ink (not glaring neon — paper stays clean) */
+.world-paper .hud-map a.is-visited{ color:color-mix(in srgb, var(--amber) 60%, var(--ink)); }
+/* on paper the "considering" cue is the narrated line + escort, not a neon glow */
+.world-paper .hud-map a:hover, .world-paper .hud-map a:focus-visible{ color:var(--ink); text-shadow:none; }
+/* constellation trail in faint ink on paper (no neon dim) */
+.world-paper .hud-lines polyline{ stroke:color-mix(in srgb, var(--ink) 28%, var(--paper)); }
+
+/* the curator canvas renders at z-curator (above content). On paper its dark
+   ink glyphs were overpowering the text at full strength — so it follows the
+   cursor here as a FAINT ghost (low opacity), present but never obscuring. */
+.world-paper #curator-canvas{ opacity:.2; }
+
+/* ── converter (C6) — pic→ASCII on the resume page ─────────────────── */
+.converter{ margin-top:var(--s-6); }
+.conv-caption{
+  font-family:var(--mono); font-size:var(--t-0); color:var(--ink-soft);
+  margin-bottom:var(--s-2); letter-spacing:.03em;
+}
+.conv-grid{ display:grid; gap:var(--s-3); }
+@media (min-width:900px){ .conv-grid{ grid-template-columns:1fr 1fr; align-items:start; } }
+
+.conv-drop{
+  border:2px dashed var(--ink-soft); padding:var(--s-4) var(--s-2);
+  text-align:center; cursor:pointer; transition:border-color .15s, background .15s;
+  display:flex; flex-direction:column; gap:var(--s-1); align-items:center; justify-content:center;
+  min-height:8rem;
+}
+.conv-drop.is-over{ border-color:var(--ink); background:rgba(17,17,17,.04); }
+.conv-drop b{ font-family:var(--mono); font-size:var(--t-1); color:var(--ink); }
+.conv-drop small{ font-size:var(--t-0); color:var(--ink-soft); }
+.conv-drop input[type=file]{
+  position:absolute; width:1px; height:1px; opacity:0; overflow:hidden; clip:rect(0 0 0 0);
+}
+.conv-privacy{ font-size:var(--t-0); color:var(--ink-soft); font-style:italic; }
+.conv-thumb{
+  display:block; margin-top:var(--s-2);
+  max-width:9rem; max-height:7rem; width:auto; height:auto;
+  border:2px solid var(--ink); filter:grayscale(1) contrast(1.05);
+}
+
+.conv-controls{
+  display:flex; flex-wrap:wrap; gap:var(--s-2) var(--s-3); align-items:center;
+  margin-top:var(--s-2); font-family:var(--mono); font-size:var(--t-0);
+}
+.conv-controls label{ display:flex; align-items:center; gap:var(--s-1); color:var(--ink-soft); }
+.conv-controls select{
+  font-family:var(--mono); font-size:var(--t-0); border:1.5px solid var(--ink-soft);
+  background:var(--paper); color:var(--ink); padding:.15rem .4rem;
+}
+.conv-controls input[type=range]{ accent-color:var(--ink); }
+.conv-controls input[type=checkbox]{ accent-color:var(--ink); width:1rem; height:1rem; }
+
+.conv-out-wrap{ display:flex; flex-direction:column; gap:var(--s-1); }
+.conv-out{
+  border:2px solid var(--ink); background:var(--paper); color:var(--ink);
+  font-family:var(--mono); font-size:6px; line-height:1.0;  /* JS auto-fits font-size */
+  white-space:pre; overflow:hidden; padding:4px;
+  margin:0; min-height:14rem;
+}
+.conv-status{ font-family:var(--mono); font-size:var(--t-0); color:var(--ink-soft); min-height:1.2em; }
+.conv-actions{ display:flex; gap:var(--s-1); }
+.conv-actions button{
+  font-family:var(--mono); font-size:var(--t-0); border:1.5px solid var(--ink);
+  background:none; color:var(--ink); padding:.25rem .8rem; cursor:pointer;
+  transition:background .12s, color .12s;
+}
+.conv-actions button:hover:not(:disabled){ background:var(--ink); color:var(--paper); }
+.conv-actions button:disabled{ opacity:.4; cursor:default; }
+
+/* ── Casper, the companion (js/companion.js) ─────────────────────────
+   The alley cat, padded into the chapters. Ink line-art (zero neon on
+   paper), bottom-left, above content and below the HUD. Pads in once,
+   speaks one contextual line, then settles to just the cat sitting there;
+   clicking him advances his thoughts. */
+.companion{
+  /* bottom-right: bottom-left now belongs to the narrator's HUD state line */
+  position:fixed; right:calc(var(--s-2) + env(safe-area-inset-right)); bottom:calc(var(--s-2) + env(safe-area-inset-bottom)); z-index:var(--z-cat);
+  display:flex; align-items:flex-end; gap:var(--s-1);
+  max-width:min(22rem, 70vw);
+  transform:translateY(135%);                 /* offstage until ready */
+  transition:transform var(--dur-4) var(--ease-out);
+}
+.companion.is-ready{ transform:none; }
+.companion-cat{
+  flex:0 0 auto;
+  font-family:var(--mono); font-size:var(--t-2); line-height:1; color:var(--ink);
+  cursor:pointer; white-space:nowrap; user-select:none;
+  transition:transform var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+}
+/* the ASCII cat is drawn via CSS (not DOM text) so the button's accessible
+   name stays the aria-label, not the glyph art — WCAG 2.5.3 label-in-name */
+.companion-cat::before{ content:"/ᐠ｡ꞈ｡ᐟ\\"; }
+.companion-cat:hover, .companion-cat:focus-visible, .companion-cat:active{ transform:translateY(-3px); color:var(--ink-soft); }
+/* phones: lift Casper + his bubble clear of the bottom curator:// (.hud-state) line */
+@media (max-width:700px){
+  .companion{ bottom:calc(var(--s-2) + var(--s-6) + env(safe-area-inset-bottom)); }
+}
+.companion-bubble{
+  padding:var(--s-1) var(--s-2);
+  background:color-mix(in srgb, var(--ink) 5%, var(--paper));
+  border:2px solid var(--ink);
+  color:var(--ink-soft); font-size:var(--t-0); line-height:1.4;
+  opacity:0; transform:translateY(6px);
+  transition:opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+}
+.companion-bubble.is-in{ opacity:1; transform:none; }
+.companion-bubble:empty{ display:none; }
+/* the about-page nudge link inside Casper's bubble */
+.companion-link{
+  color:var(--ink); font-weight:700; text-decoration:underline;
+  text-underline-offset:2px; text-decoration-thickness:1px;
+  white-space:nowrap;
+}
+.companion-link:hover, .companion-link:focus-visible{ text-decoration-thickness:2px; }
+
+@media (max-width:900px){
+  /* keep clear of the bottom-right minimap / thumb zones on narrow screens */
+  .companion{ max-width:min(16rem, 64vw); }
+  .companion-cat{ font-size:var(--t-1); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .companion{ transform:none; transition:none; }
+  .companion-bubble{ transition:none; transform:none; }
+  .companion-bubble.is-in{ opacity:1; }
+}

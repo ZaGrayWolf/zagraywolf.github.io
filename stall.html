@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>THE STALL · ZaGrayWolf</title>
+<meta name="description" content="ZaGrayWolf's recommendation counter — a night yatai cart serving anime, manga, movies, books, and shows. Pick a lantern; a card slides across.">
+<meta name="theme-color" content="#07070c">
+<link rel="canonical" href="https://zagraywolf.github.io/stall.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<!-- modulepreload: flatten the ES-module boot waterfall (all always-loaded; pure load speedup, no behaviour change). ?v= bumped by the site-wide sed. -->
+<link rel="modulepreload" href="/js/main.js?v=4.39">
+<link rel="modulepreload" href="/js/config.js?v=4.39">
+<link rel="modulepreload" href="/js/ticker.js?v=4.39">
+<link rel="modulepreload" href="/js/curator.js?v=4.39">
+<link rel="modulepreload" href="/js/cat.js?v=4.39">
+<link rel="modulepreload" href="/js/hud.js?v=4.39">
+<link rel="modulepreload" href="/js/transition.js?v=4.39">
+<link rel="modulepreload" href="/js/timeofday.js?v=4.39">
+<link rel="modulepreload" href="/js/narrator.js?v=4.39">
+<link rel="modulepreload" href="/js/analytics.js?v=4.39">
+<link rel="modulepreload" href="/js/palette.js?v=4.39">
+<link rel="modulepreload" href="/js/resume-preview.js?v=4.39">
+<link rel="modulepreload" href="/js/dynamic-menu.js?v=4.39">
+<meta property="og:type" content="website">
+<meta property="og:title" content="THE STALL · ZaGrayWolf">
+<meta property="og:description" content="ZaGrayWolf's recommendation counter — a night yatai cart serving anime, manga, movies, books, and shows. Pick a lantern; a card slides across.">
+<meta property="og:url" content="https://zagraywolf.github.io/stall.html">
+<meta property="og:image" content="https://zagraywolf.github.io/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://zagraywolf.github.io/assets/img/og.png">
+<link rel="stylesheet" href="css/tokens.css?v=4.39">
+<link rel="stylesheet" href="css/base.css?v=4.39">
+<link rel="stylesheet" href="css/stall.css?v=4.39">
+</head>
+<body data-page="stall" data-cat="off">
+<a class="skip-link" href="#main">skip to content</a>
+<a class="hud-resume" href="resume.html">RESUME ↓</a>
+<a class="edge-tab edge-tab--prev" href="resume.html" aria-label="Previous chapter: Resume"><span class="edge-tab-icon" aria-hidden="true">«</span><span class="edge-tab-label">RESUME</span></a>
+
+<div class="manga-bg" aria-hidden="true">
+  <img src="assets/img/panels/p-2024-09-20-01.jpg" alt="" loading="lazy">
+  <img src="assets/img/panels/p-2024-11-21-06.jpg" alt="" loading="lazy">
+  <img src="assets/img/panels/p-2025-04-25-17.jpg" alt="" loading="lazy">
+  <img src="assets/img/panels/p-2025-06-27-23.jpg" alt="" loading="lazy">
+  <img src="assets/img/panels/p-2025-12-19-26.jpg" alt="" loading="lazy">
+  <img src="assets/img/panels/p-2026-04-13-29.jpg" alt="" loading="lazy">
+</div>
+
+<!-- warm night-air embers drifting up behind the cart -->
+<div class="stall-embers" aria-hidden="true">
+  <span style="--ex:14%; --edur:7s;  --edelay:0s"></span>
+  <span style="--ex:32%; --edur:8.5s;--edelay:1.4s"></span>
+  <span style="--ex:53%; --edur:6.5s;--edelay:2.8s"></span>
+  <span style="--ex:68%; --edur:9s;  --edelay:0.7s"></span>
+  <span style="--ex:81%; --edur:7.5s;--edelay:3.6s"></span>
+  <span style="--ex:44%; --edur:10s; --edelay:5s"></span>
+</div>
+
+<main id="main" class="stall-night">
+
+  <header class="stall-head">
+    <h1 class="stall-title">THE STALL</h1>
+    <p class="stall-sub">the lantern's lit. ask Casper, or tap one.</p>
+  </header>
+
+  <!-- ════ the scene: SVG art + interaction layer share one aspect-locked stage ════ -->
+  <div class="stall-stage">
+    <svg class="stall-svg-big" viewBox="0 0 480 300" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <radialGradient id="stall-warm" cx="50%" cy="80%" r="70%">
+          <stop offset="0%"  stop-color="var(--amber)" stop-opacity=".26"/>
+          <stop offset="55%" stop-color="var(--amber)" stop-opacity=".08"/>
+          <stop offset="100%" stop-color="var(--amber)" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- warm interior glow -->
+      <rect x="40" y="86" width="400" height="118" fill="url(#stall-warm)"/>
+
+      <!-- big STALL sign on the roof -->
+      <g class="stall-sign">
+        <rect x="176" y="12" width="128" height="38" rx="4"/>
+        <text x="240" y="38" text-anchor="middle">STALL</text>
+      </g>
+
+      <!-- roof -->
+      <path class="s-ink" d="M20 78 Q 240 44 460 78 L 454 90 Q 240 58 26 90 Z"/>
+      <!-- awning fringe -->
+      <g class="stall-fringe">
+        <rect x="30"  y="86" width="36" height="22"/><rect x="66"  y="88" width="36" height="18"/>
+        <rect x="102" y="86" width="36" height="22"/><rect x="138" y="88" width="36" height="18"/>
+        <rect x="174" y="86" width="36" height="22"/><rect x="210" y="88" width="36" height="18"/>
+        <rect x="246" y="86" width="36" height="22"/><rect x="282" y="88" width="36" height="18"/>
+        <rect x="318" y="86" width="36" height="22"/><rect x="354" y="88" width="36" height="18"/>
+        <rect x="390" y="86" width="36" height="22"/><rect x="426" y="88" width="24" height="18"/>
+      </g>
+
+      <!-- posts -->
+      <rect class="s-ink" x="32" y="90" width="6" height="112"/>
+      <rect class="s-ink" x="442" y="90" width="6" height="112"/>
+
+      <!-- side menu board -->
+      <g class="stall-board">
+        <rect x="44" y="110" width="44" height="70"/>
+        <line x1="52" y1="124" x2="80" y2="124"/><line x1="52" y1="136" x2="74" y2="136"/>
+        <line x1="52" y1="148" x2="80" y2="148"/><line x1="52" y1="160" x2="70" y2="160"/>
+      </g>
+
+      <!-- 5 hanging lanterns — one per category (evenly spaced) -->
+      <g class="stall-lamp" id="lamp-anime">
+        <line class="s-line" x1="80" y1="88" x2="80" y2="97"/>
+        <ellipse class="lamp-glow" cx="80" cy="120" rx="26" ry="30"/>
+        <ellipse class="lamp-body" cx="80" cy="120" rx="17" ry="23"/>
+        <path class="lamp-rib" d="M64 112 q16 5 32 0 M64 128 q16 5 32 0"/>
+        <text class="lamp-label" x="80" y="152" text-anchor="middle">ANIME</text>
+      </g>
+      <g class="stall-lamp" id="lamp-manga">
+        <line class="s-line" x1="165" y1="88" x2="165" y2="97"/>
+        <ellipse class="lamp-glow" cx="165" cy="120" rx="26" ry="30"/>
+        <ellipse class="lamp-body" cx="165" cy="120" rx="17" ry="23"/>
+        <path class="lamp-rib" d="M149 112 q16 5 32 0 M149 128 q16 5 32 0"/>
+        <text class="lamp-label" x="165" y="152" text-anchor="middle">MANGA</text>
+      </g>
+      <g class="stall-lamp" id="lamp-movies">
+        <line class="s-line" x1="250" y1="88" x2="250" y2="97"/>
+        <ellipse class="lamp-glow" cx="250" cy="120" rx="26" ry="30"/>
+        <ellipse class="lamp-body" cx="250" cy="120" rx="17" ry="23"/>
+        <path class="lamp-rib" d="M234 112 q16 5 32 0 M234 128 q16 5 32 0"/>
+        <text class="lamp-label" x="250" y="152" text-anchor="middle">MOVIES</text>
+      </g>
+      <g class="stall-lamp" id="lamp-books">
+        <line class="s-line" x1="335" y1="88" x2="335" y2="97"/>
+        <ellipse class="lamp-glow" cx="335" cy="120" rx="26" ry="30"/>
+        <ellipse class="lamp-body" cx="335" cy="120" rx="17" ry="23"/>
+        <path class="lamp-rib" d="M319 112 q16 5 32 0 M319 128 q16 5 32 0"/>
+        <text class="lamp-label" x="335" y="152" text-anchor="middle">BOOKS</text>
+      </g>
+      <g class="stall-lamp" id="lamp-shows">
+        <line class="s-line" x1="420" y1="88" x2="420" y2="97"/>
+        <ellipse class="lamp-glow" cx="420" cy="120" rx="26" ry="30"/>
+        <ellipse class="lamp-body" cx="420" cy="120" rx="17" ry="23"/>
+        <path class="lamp-rib" d="M404 112 q16 5 32 0 M404 128 q16 5 32 0"/>
+        <text class="lamp-label" x="420" y="152" text-anchor="middle">SHOWS</text>
+      </g>
+
+      <!-- steam rising off the bowls -->
+      <g class="stall-steam" fill="none" stroke-linecap="round" stroke-width="2.5">
+        <path d="M80 196 q -5 -10 1 -19 q 6 -9 0 -18"/>
+        <path d="M165 196 q 6 -9 -1 -18 q -6 -9 1 -17"/>
+        <path d="M250 196 q -5 -11 1 -20 q 5 -8 0 -16"/>
+        <path d="M335 196 q 6 -9 -1 -18 q -5 -9 1 -16"/>
+        <path d="M420 196 q -5 -10 1 -19 q 6 -9 0 -18"/>
+      </g>
+
+      <!-- counter -->
+      <rect class="s-ink" x="30" y="188" width="420" height="12" rx="3"/>
+
+      <!-- bowls on the counter -->
+      <g class="stall-bowls">
+        <path d="M66 200 a 14 9 0 0 0 28 0 z"/>
+        <path d="M151 200 a 14 9 0 0 0 28 0 z"/>
+        <path d="M236 200 a 14 9 0 0 0 28 0 z"/>
+        <path d="M321 200 a 14 9 0 0 0 28 0 z"/>
+        <path d="M406 200 a 14 9 0 0 0 28 0 z"/>
+      </g>
+
+      <!-- cart body -->
+      <g class="stall-bodywood">
+        <rect x="44" y="200" width="392" height="64"/>
+        <line x1="44" y1="222" x2="436" y2="222"/>
+        <line x1="44" y1="244" x2="436" y2="244"/>
+      </g>
+
+      <!-- stools -->
+      <g class="stall-stool">
+        <rect x="150" y="230" width="34" height="8" rx="2"/>
+        <line x1="156" y1="238" x2="156" y2="266"/><line x1="178" y1="238" x2="178" y2="266"/>
+        <rect x="300" y="230" width="34" height="8" rx="2"/>
+        <line x1="306" y1="238" x2="306" y2="266"/><line x1="328" y1="238" x2="328" y2="266"/>
+      </g>
+
+      <!-- wheels -->
+      <g class="stall-wheel">
+        <circle cx="110" cy="272" r="18"/><circle cx="370" cy="272" r="18"/>
+        <line x1="110" y1="256" x2="110" y2="288"/><line x1="94" y1="272" x2="126" y2="272"/>
+        <line x1="370" y1="256" x2="370" y2="288"/><line x1="354" y1="272" x2="386" y2="272"/>
+      </g>
+    </svg>
+
+    <!-- interaction layer: 5 category hotspots positioned over the lanterns -->
+    <div class="stall-hotspots" role="group" aria-label="Menu categories — pick a lantern">
+      <button class="stall-hotspot" id="hot-anime"  data-cat="anime"  aria-expanded="false" aria-controls="recs-anime"  aria-label="ANIME recommendations"  style="left:10.7%;top:30%;width:12%;height:32%"></button>
+      <button class="stall-hotspot" id="hot-manga"  data-cat="manga"  aria-expanded="false" aria-controls="recs-manga"  aria-label="MANGA recommendations"  style="left:28.4%;top:30%;width:12%;height:32%"></button>
+      <button class="stall-hotspot" id="hot-movies" data-cat="movies" aria-expanded="false" aria-controls="recs-movies" aria-label="MOVIES recommendations" style="left:46.1%;top:30%;width:12%;height:32%"></button>
+      <button class="stall-hotspot" id="hot-books"  data-cat="books"  aria-expanded="false" aria-controls="recs-books"  aria-label="BOOKS recommendations"  style="left:63.8%;top:30%;width:12%;height:32%"></button>
+      <button class="stall-hotspot" id="hot-shows"  data-cat="shows"  aria-expanded="false" aria-controls="recs-shows"  aria-label="SHOWS recommendations"  style="left:81.5%;top:30%;width:12%;height:32%"></button>
+    </div>
+
+    <!-- Casper — the white cat behind the counter (decorative; the chat below is the interface) -->
+    <svg class="stall-cat" id="stall-cat" viewBox="0 0 120 120" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
+      <g class="cat-glow"><ellipse cx="60" cy="74" rx="40" ry="34" fill="var(--amber)" opacity=".12"/></g>
+      <g class="cat-body">
+        <!-- tail -->
+        <path class="cat-fur cat-tail" d="M96 96 q 22 -6 16 -26 q -3 -12 -13 -10 q 7 4 5 14 q -2 12 -14 14 z"/>
+        <!-- body blob rising over the counter -->
+        <path class="cat-fur" d="M24 112 Q 18 64 60 60 Q 102 64 96 112 Z"/>
+        <!-- head -->
+        <g class="cat-head">
+          <path class="cat-fur" d="M36 36 Q 34 18 46 22 L 52 30 Q 60 27 68 30 L 74 22 Q 86 18 84 36 Q 92 46 90 60 Q 84 80 60 80 Q 36 80 30 60 Q 28 46 36 36 Z"/>
+          <!-- inner ears -->
+          <path class="cat-ear-in" d="M40 30 L 46 26 L 49 34 Z"/>
+          <path class="cat-ear-in" d="M80 30 L 74 26 L 71 34 Z"/>
+          <!-- eyes (calm verticals) -->
+          <ellipse class="cat-eye" cx="50" cy="52" rx="3.4" ry="6.5"/>
+          <ellipse class="cat-eye" cx="70" cy="52" rx="3.4" ry="6.5"/>
+          <!-- nose -->
+          <path class="cat-nose" d="M57 60 L 63 60 L 60 64 Z"/>
+          <!-- whiskers -->
+          <g class="cat-whisker">
+            <line x1="44" y1="60" x2="24" y2="57"/><line x1="44" y1="63" x2="25" y2="65"/>
+            <line x1="76" y1="60" x2="96" y2="57"/><line x1="76" y1="63" x2="95" y2="65"/>
+          </g>
+        </g>
+        <!-- collar -->
+        <path class="cat-collar" d="M44 78 Q 60 86 76 78"/>
+        <!-- paws on the counter -->
+        <ellipse class="cat-fur" cx="46" cy="110" rx="10" ry="7"/>
+        <ellipse class="cat-fur" cx="74" cy="110" rx="10" ry="7"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- ════ the card slides across the counter here ════ -->
+  <div class="stall-card-area">
+    <div class="stall-card-slot" id="stall-card-slot" aria-live="polite" aria-atomic="true"></div>
+  </div>
+
+  <!-- ════ ask Casper — concierge chat (enhancement; hidden until JS+data load) ════ -->
+  <section class="stall-concierge" id="stall-concierge" aria-label="Ask Casper" hidden>
+    <div class="casper-bubble" id="casper-bubble" role="status" aria-live="polite" aria-atomic="true"></div>
+    <form class="casper-form" id="casper-form">
+      <label class="casper-label" for="casper-input">Ask Casper about the menu, or the human who runs the cart</label>
+      <div class="casper-inputrow">
+        <input id="casper-input" class="casper-input" type="text" autocomplete="off" maxlength="200"
+               enterkeyhint="send" placeholder="ask Casper anything…">
+        <button class="casper-send" type="submit" aria-label="Ask Casper">↩</button>
+      </div>
+    </form>
+    <ul class="casper-chips" id="casper-chips" aria-label="Suggested questions"></ul>
+  </section>
+
+  <!-- ════ rec lists — static & readable without JS; stall.js takes this over ════ -->
+  <div id="stall-menu">
+    <section class="stall-reclist" id="recs-anime" aria-label="ANIME recommendations">
+      <h2>ANIME</h2>
+      <dl>
+        <dt>VINLAND SAGA</dt><dd>Unparalleled story.</dd>
+        <dt>FULLMETAL ALCHEMIST: BROTHERHOOD</dt><dd>Best starter anime.</dd>
+        <dt>ATTACK ON TITAN</dt><dd>A masterpiece like none other.</dd>
+        <dt>CODE GEASS</dt><dd>Best ending in anime.</dd>
+        <dt>NEON GENESIS EVANGELION</dt><dd>Goated OP. It inspired a whole era.</dd>
+        <dt>HAJIME NO IPPO</dt><dd>Amazing sports anime.</dd>
+        <dt>JOJO'S BIZARRE ADVENTURE</dt><dd>Peak.</dd>
+        <dt>JUJUTSU KAISEN</dt><dd>Crazy plot and story, unlike any other.</dd>
+        <dt>YOUR LIE IN APRIL</dt><dd>For when you feel stuck and want to cry.</dd>
+      </dl>
+    </section>
+    <section class="stall-reclist" id="recs-manga" aria-label="MANGA recommendations">
+      <h2>MANGA</h2>
+      <dl>
+        <dt>BERSERK</dt><dd>The GOAT.</dd>
+        <dt>VINLAND SAGA</dt><dd>Unparalleled story.</dd>
+        <dt>CHAINSAW MAN</dt><dd>Fujimoto's best yet, peak panelling.</dd>
+        <dt>20TH CENTURY BOYS</dt><dd>An amazing thriller.</dd>
+        <dt>SLAM DUNK</dt><dd>Best sports manga of all time, arguable with Ippo.</dd>
+        <dt>KINGDOM</dt><dd>Epic war manga; on the edge of your seat every chapter.</dd>
+        <dt>DEATH NOTE</dt><dd>Mind-bending cat and mouse.</dd>
+        <dt>BLUE PERIOD</dt><dd>When you feel hopeless, and it's about art.</dd>
+        <dt>TOKYO GHOUL</dt><dd>The best-illustrated manga.</dd>
+      </dl>
+    </section>
+    <section class="stall-reclist" id="recs-movies" aria-label="MOVIES recommendations">
+      <h2>MOVIES</h2>
+      <dl>
+        <dt>THE SHAWSHANK REDEMPTION</dt><dd>Hope, served slow.</dd>
+        <dt>PARASITE</dt><dd>Class war, one staircase at a time.</dd>
+        <dt>YOUR NAME</dt><dd>The greatest animated romance ever made.</dd>
+        <dt>WHIPLASH</dt><dd>Obsession, kept at tempo.</dd>
+        <dt>PULP FICTION</dt><dd>Structure as a magic trick.</dd>
+        <dt>NO COUNTRY FOR OLD MEN</dt><dd>Dread with no soundtrack.</dd>
+        <dt>PERFECT BLUE</dt><dd>Identity coming apart, frame by frame.</dd>
+        <dt>THE LORD OF THE RINGS</dt><dd>The best trilogy.</dd>
+        <dt>SHUTTER ISLAND</dt><dd>The floor drops out in the last reel.</dd>
+      </dl>
+    </section>
+    <section class="stall-reclist" id="recs-books" aria-label="BOOKS recommendations">
+      <h2>BOOKS</h2>
+      <dl>
+        <dt>THE PRAGMATIC PROGRAMMER</dt><dd>The rules the code-quality crowd cargo-culted. Read the original to know when to break them.</dd>
+        <dt>GÖDEL, ESCHER, BACH</dt><dd>The recursion book. Takes a year to finish. That's correct.</dd>
+        <dt>THINKING, FAST AND SLOW</dt><dd>The biases that make model evaluation hard and trading dangerous.</dd>
+        <dt>WHITE NIGHTS</dt><dd>Loneliness, and four nights of almost.</dd>
+        <dt>THE EXTINCTION TRIALS</dt><dd>Survival sci-fi with no safety net.</dd>
+        <dt>DEEP WORK</dt><dd>The case for focus in a distracted world.</dd>
+        <dt>MEDITATIONS</dt><dd>Stoicism, straight from the emperor's notebook.</dd>
+        <dt>HEADS YOU WIN</dt><dd>One life, two timelines.</dd>
+        <dt>THE MERCHANT OF VENICE</dt><dd>Mercy, money, and a pound of flesh.</dd>
+        <dt>THE ALCHEMIST</dt><dd>Follow the omens.</dd>
+      </dl>
+    </section>
+    <section class="stall-reclist" id="recs-shows" aria-label="SHOWS recommendations">
+      <h2>SHOWS</h2>
+      <dl>
+        <dt>BREAKING BAD</dt><dd>The cleanest character descent ever filmed.</dd>
+        <dt>SUCCESSION</dt><dd>If Shakespeare wrote a modern show.</dd>
+        <dt>CHERNOBYL</dt><dd>The cost of lies, measured in roentgen.</dd>
+        <dt>GAME OF THRONES / HOTD</dt><dd>The throne that costs everyone.</dd>
+        <dt>NARCOS</dt><dd>An empire built on powder.</dd>
+        <dt>OZARK</dt><dd>A family laundering itself away.</dd>
+        <dt>SQUID GAME</dt><dd>Childhood games, adult stakes.</dd>
+        <dt>THE OFFICE (US)</dt><dd>Comfort food that never spoils.</dd>
+        <dt>3 BODY PROBLEM</dt><dd>Physics as a horror story.</dd>
+      </dl>
+    </section>
+  </div>
+
+  <button class="chef-choice" type="button" aria-label="Give me a random recommendation">★ chef's choice</button>
+
+  <p class="stall-payoff">these are not reviews. they are the things that changed how I think.<br>your mileage: unknown.</p>
+
+  <p class="about-sign" aria-label="signed, K Abhuday">K Abhuday</p>
+  <a class="next-chapter" href="index.html">← back to the alley</a>
+
+  <a class="tbc tbc--center" href="about.html" aria-label="About me">
+    <svg class="tbc-svg" viewBox="0 0 300 84" role="img" aria-hidden="true">
+      <g fill="currentColor">
+        <polygon points="11,26 21,26 11,58 1,58"/>
+        <polygon points="31,26 39,26 29,58 21,58"/>
+        <path d="M54,28 L236,28 L236,15 L298,43 L236,71 L236,58 L54,58 Z"/>
+      </g>
+      <text x="145" y="52" text-anchor="middle">About me</text>
+    </svg>
+  </a>
+</main>
+
+<nav class="hud-map" aria-label="Site minimap">[<a href="index.html" data-node="alley" aria-label="Alley — home">#</a>]─[<a href="work.html" data-node="work" aria-label="Chapter 1 — work">1</a>]─[<a href="projects.html" data-node="projects" aria-label="Chapter 2 — projects">2</a>]─[<a href="papers.html" data-node="papers" aria-label="Chapter 3 — wins">3</a>]─[<a href="resume.html" data-node="resume" aria-label="Chapter 4 — resume">4</a>]─[<a href="stall.html" data-node="stall" aria-label="Chapter 5 — the stall">5</a>]</nav>
+
+<canvas id="curator-canvas" class="fx-canvas" aria-hidden="true"></canvas>
+<script type="module" src="js/main.js?v=4.39"></script>
+</body>
+</html>

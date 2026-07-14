@@ -1,0 +1,79 @@
+/* game.css — NEKO CATCHER CRT window (C8). Linked from pages with the cat. */
+
+.crt{
+  position:fixed; inset:0;
+  z-index:var(--z-game);
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.55);
+}
+.crt-window{
+  background:color-mix(in srgb, var(--bg) 80%, var(--dim));
+  border:1px solid var(--dim);
+  border-radius:8px;
+  padding:0 var(--s-1) var(--s-1);
+  box-shadow:0 12px 60px rgba(0,0,0,.8);
+  max-width:96vw;                          /* never exceed the phone viewport */
+}
+@media (max-width:560px){
+  .crt-window{ padding:0 2px 2px; }
+  .crt-bar{ font-size:.7rem; }
+}
+.crt-bar{
+  display:flex; align-items:center; gap:var(--s-1);
+  padding:var(--s-1);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.1em;
+  color:var(--label);
+}
+.crt-bar > span:first-child{ flex:1; overflow:hidden; white-space:nowrap; }
+.crt-close{
+  font-family:var(--mono); font-size:var(--t-1);
+  color:var(--label);
+  padding:0 var(--s-1);
+}
+.crt-close:hover{ color:var(--neon-mag); }
+.crt-sound{
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.08em;
+  color:var(--label); background:none; border:1px solid var(--dim);
+  padding:.1rem var(--s-1); cursor:pointer; transition:color .12s, border-color .12s;
+}
+.crt-sound[aria-pressed="true"]{ color:var(--amber); border-color:var(--amber); }
+.crt-sound:hover{ color:var(--neon-cyan); border-color:var(--neon-cyan); }
+.crt-sound:focus-visible, .crt-close:focus-visible{ outline:2px solid var(--neon-cyan); outline-offset:2px; }
+
+.crt-screen{
+  position:relative;
+  border-radius:10px;                     /* the barrel illusion */
+  overflow:hidden;
+  border:1px solid var(--dim);
+  box-shadow:inset 0 0 34px rgba(0,0,0,.85),
+             0 0 22px color-mix(in srgb, var(--neon-cyan) 16%, transparent);  /* faint screen glow */
+}
+.crt-screen.crt-on{ animation:crt-power .5s var(--ease-out); }
+@keyframes crt-power{
+  0%{   filter:brightness(2.6) contrast(.4); opacity:.15; }
+  22%{  filter:brightness(.5); opacity:1; }
+  55%{  filter:brightness(1.3); }
+  100%{ filter:none; }
+}
+.crt-screen canvas{
+  display:block;
+  image-rendering:pixelated;
+  background:var(--bg);
+}
+.crt-scan{
+  position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0 1px, transparent 1px 3px);
+  border-radius:10px;
+  box-shadow:inset 0 0 24px rgba(0,0,0,.55);
+}
+.crt-hint{
+  margin-top:var(--s-1);
+  text-align:center;
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.08em;
+  color:var(--dim);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .crt-scan{ display:none; }
+  .crt-screen.crt-on{ animation:none; }
+}

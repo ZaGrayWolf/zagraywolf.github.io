@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zagraywolf.github.io/sitemap.xml

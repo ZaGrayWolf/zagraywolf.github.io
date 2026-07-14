@@ -1,0 +1,77 @@
+/* print.css — the clean ink résumé when the resume page is printed or saved as
+   PDF. Linked media="print" on resume.html ONLY, so it never touches the screen
+   view. Strips all the night/paper chrome and renders just the document — black
+   on white, single column, page-break-aware. The "SAVE AS PDF" button
+   (#resume-print) calls window.print(); browsers' "Save as PDF" target does the
+   rest. Self-maintaining: the PDF is always whatever the page currently says. */
+
+@page { margin: 1.1cm 1.3cm; }
+
+@media print {
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 9pt;
+    line-height: 1.3;
+  }
+  /* force a standard font stack so the print never falls back to macOS's huge
+     bitmap symbol/emoji font (that fallback was bloating the PDF to ~6 MB) */
+  *, *::before, *::after { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; }
+  .mono, .resume-role-header .mono, .skills-row, .skills-row dt, .skills-row dd {
+    font-family: "Courier New", Courier, monospace !important;
+  }
+
+  /* hide everything that isn't the document */
+  .skip-link, .edge-tab, .hud-map, .hud-state, .cmdk, .cmdk-fab,
+  .manga-bg, .marquee, .cover, .next-chapter, .folio, .scan,
+  #curator-canvas, .fx-canvas, .companion, .cat,
+  [aria-label="Download PDF"], [aria-label="Image to ASCII converter"] {
+    display: none !important;
+  }
+
+  /* flatten the manga grid into a single clean column */
+  main.chapter, .page, .panel, article {
+    display: block !important;
+    width: auto !important; max-width: none !important;
+    margin: 0 !important; padding: 0 !important;
+    border: 0 !important; background: none !important;
+    box-shadow: none !important; transform: none !important;  /* kill tilts */
+    color: #000 !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .panel { position: static !important; }
+  .panel canvas, .panel svg { display: none !important; }     /* glyph-border fx */
+  /* kill decorative pseudo-elements (corner marks, tone veils, speedlines) */
+  .panel::before, .panel::after,
+  .panel--tone::after, .panel--broken::after,
+  .payoff::before, .cover::before { content: none !important; display: none !important; }
+
+  .page  { margin-bottom: .2cm !important; }
+  .panel { margin-bottom: .32cm !important; }   /* flow across pages — only roles/rows stay whole */
+
+  /* type */
+  h1, h2, h3, b, strong { color: #000 !important; }
+  address h2 { font-size: 18pt !important; font-weight: 800 !important; margin: 0 0 3pt; }
+  .resume-section-head {
+    font-size: 12.5pt !important; font-weight: 800 !important;
+    border-bottom: 1.5pt solid #000; padding-bottom: 2pt; margin: 8pt 0 5pt;
+    break-after: avoid;
+  }
+  /* captions ("EXPERIENCE", "STACK", …) are redundant with the section heads */
+  .panel-caption { display: none !important; }
+  a { color: #000 !important; text-decoration: none !important; }
+
+  /* roles + bullets, tight */
+  .resume-role { margin-bottom: 5pt; break-inside: avoid; }
+  .resume-role-header { display: flex; justify-content: space-between; gap: 12pt; align-items: baseline; }
+  .resume-role-header .mono { font-size: 8.5pt; color: #333 !important; text-align: right; }
+  .resume-bullets { margin: 2pt 0 0; padding-left: 14pt; }
+  .resume-bullets li { margin-bottom: 1pt; }
+
+  /* skills grid → compact label/value rows */
+  .skills-terminal { display: block !important; }
+  .skills-row { display: flex; gap: 10pt; margin-bottom: 2pt; break-inside: avoid; }
+  .skills-row dt { min-width: 78pt; font-weight: 700; margin: 0; }
+  .skills-row dd { margin: 0; }
+  .skills-prompt { display: none !important; }
+}

@@ -1,0 +1,248 @@
+/* about.css — CH.00 ABOUT: the one quiet room off the alley.
+   Reuses the alley's scene classes (.layer-sky / .layer-skyline-* /
+   .layer-glyphs / .name-sign / .arcade) and palette so it reads as the same
+   street, then lays the bio out as a calm column over a faint manga backdrop.
+   The Spider-Verse skyline + blue/white neon + day/night come from mirroring
+   the alley's scoped token block below. */
+
+body[data-page="about"]{
+  overflow-x:hidden;
+  /* same blue + white neon the alley wears (scoped here too) */
+  --neon-cyan: #5fbcff;
+  --neon-mag:  #f2f7ff;
+  --name-day:  #123a5e;
+
+  /* day↔night cycle (js/timeofday.js sets --tod-day 0…1) */
+  --day-top:  #a9d4ff;  --night-top:  var(--bg);
+  --day-mid:  #cbe6ff;  --night-mid:  var(--bg-dawn);
+  --day-bot:  #eef6ff;  --night-bot:  color-mix(in srgb, var(--neon-mag) 16%, var(--bg));
+  --day-glow: color-mix(in srgb, #ffffff 52%, transparent);
+  --night-glow: color-mix(in srgb, var(--neon-mag) 20%, transparent);
+  --sky-top:  color-mix(in srgb, var(--day-top)  calc(var(--tod-day) * 100%), var(--night-top));
+  --sky-mid:  color-mix(in srgb, var(--day-mid)  calc(var(--tod-day) * 100%), var(--night-mid));
+  --sky-bot:  color-mix(in srgb, var(--day-bot)  calc(var(--tod-day) * 100%), var(--night-bot));
+  --sky-glow: color-mix(in srgb, var(--day-glow) calc(var(--tod-day) * 100%), var(--night-glow));
+  --bldg-far:  color-mix(in srgb, #9cc0e6 calc(var(--tod-day) * 100%), color-mix(in srgb, var(--bg) 35%, var(--dim)));
+  --bldg-mid:  color-mix(in srgb, #6f96c2 calc(var(--tod-day) * 100%), color-mix(in srgb, var(--bg) 60%, var(--bg-dawn)));
+  --bldg-near: color-mix(in srgb, #4a6b94 calc(var(--tod-day) * 100%), color-mix(in srgb, var(--bg) 86%, var(--bg-dawn)));
+  background:
+    radial-gradient(150% 64% at 50% 30%, var(--sky-glow) 0%, transparent 60%),
+    linear-gradient(to bottom, var(--sky-top) 0%, var(--sky-mid) 50%, var(--sky-bot) 100%);
+  background-attachment:fixed;
+  color:var(--label);
+  min-height:100svh;
+}
+
+/* the scene layers sit fixed behind the scrolling column */
+body[data-page="about"] .layer-sky,
+body[data-page="about"] .layer-skyline-top,
+body[data-page="about"] .layer-skyline-back,
+body[data-page="about"] .layer-skyline-front,
+body[data-page="about"] .layer-glyphs{
+  position:fixed;
+}
+
+/* ---- faint manga backdrop (mirrors stall.css) ------------------------- */
+body[data-page="about"] .manga-bg{
+  position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;
+}
+body[data-page="about"] .manga-bg img{
+  position:absolute; width:28%; max-width:22rem; aspect-ratio:4/3; object-fit:cover;
+  opacity:.05; filter:grayscale(1) contrast(1.1);
+  mix-blend-mode:screen;
+}
+body[data-page="about"] .manga-bg img:nth-child(1){ top:-2%;  left:-4%;  transform:rotate(-6deg); }
+body[data-page="about"] .manga-bg img:nth-child(2){ top:10%;  right:-5%; transform:rotate(5deg);  width:24%; }
+body[data-page="about"] .manga-bg img:nth-child(3){ top:46%;  left:-6%;  transform:rotate(4deg);  width:24%; }
+body[data-page="about"] .manga-bg img:nth-child(4){ bottom:6%; right:-4%; transform:rotate(-5deg); }
+body[data-page="about"] .manga-bg img:nth-child(5){ bottom:-3%; left:8%;  transform:rotate(3deg);  width:22%; }
+body[data-page="about"] .manga-bg img:nth-child(6){ top:34%;  right:6%;  transform:rotate(-3deg); width:18%; opacity:.04; }
+
+/* ---- the reading column ----------------------------------------------- */
+.about-wrap{
+  position:relative; z-index:var(--z-content);
+  max-width:52rem;
+  margin:0 auto;
+  padding:var(--s-8) var(--s-4) var(--s-8);
+}
+.about-hero{ text-align:center; margin-bottom:var(--s-6); }
+.about-kicker{
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.4em;
+  color:color-mix(in srgb, var(--neon-cyan) 55%, var(--label));
+  margin-bottom:var(--s-3);
+}
+.about-avatar{
+  display:block; margin:0 auto var(--s-4);
+  width:80px; height:80px; border-radius:50%;
+  filter:grayscale(1) contrast(1.1);
+  border:2px solid color-mix(in srgb, var(--neon-cyan) 30%, transparent);
+  transition:filter var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out);
+}
+.about-avatar:hover{ filter:grayscale(0); border-color:var(--neon-cyan); }
+.about-hero .name-sign{ font-size:var(--t-5); }
+.about-hero .hero-sub{
+  margin-top:var(--s-2);
+  font-size:var(--t-1); letter-spacing:.18em;
+  color:color-mix(in srgb, var(--name-day) calc(var(--tod-day) * 100%), var(--label));
+}
+
+/* prose */
+.about-body{
+  font-family:var(--mono);
+  font-size:var(--t-2); line-height:1.85;
+  color:color-mix(in srgb, var(--name-day) calc(var(--tod-day) * 70%), var(--label));
+}
+.about-body p{ margin-bottom:var(--s-4); }
+.about-body .lede{
+  font-size:var(--t-3); line-height:1.7;
+  color:color-mix(in srgb, var(--name-day) calc(var(--tod-day) * 80%), var(--label));
+}
+.about-body b{ color:var(--neon-cyan); font-weight:normal; text-shadow:0 0 8px color-mix(in srgb, var(--neon-cyan) 35%, transparent); }
+.about-body em{ color:color-mix(in srgb, var(--neon-mag) 80%, var(--label)); font-style:italic; }
+
+/* a glass "player card" of facts, like the work.html stats panel */
+.about-card{
+  margin:var(--s-6) 0;
+  padding:var(--s-3) var(--s-4);
+  border:1px solid color-mix(in srgb, var(--neon-cyan) 22%, var(--dim));
+  border-radius:4px;
+  background:color-mix(in srgb, var(--bg) 88%, var(--neon-cyan));
+  box-shadow:inset 0 0 22px rgba(0,0,0,.35);
+  font-family:var(--mono); font-size:var(--t-1); line-height:1.9;
+  color:var(--label);
+}
+.about-card .k{ color:color-mix(in srgb, var(--neon-cyan) 60%, var(--label)); letter-spacing:.12em; }
+.about-card b{ color:var(--neon-cyan); font-weight:normal; }
+
+/* a living "NOW" line — what he's into this month */
+.about-now{
+  margin:var(--s-4) 0 var(--s-6);
+  display:flex; align-items:baseline; flex-wrap:wrap; gap:var(--s-1) var(--s-2);
+  font-family:var(--mono); font-size:var(--t-1); line-height:1.7;
+  color:var(--label);
+}
+.about-now .now-tag{
+  font-size:var(--t-0); letter-spacing:.22em; font-weight:700;
+  color:var(--bg);
+  background:var(--neon-cyan);
+  padding:1px var(--s-1); border-radius:2px;
+  box-shadow:0 0 10px color-mix(in srgb, var(--neon-cyan) 45%, transparent);
+  animation:now-pulse 2.6s var(--ease-in-out) infinite;
+}
+.about-now b{ color:var(--neon-cyan); font-weight:normal; }
+.about-now em{ color:color-mix(in srgb, var(--neon-mag) 80%, var(--label)); font-style:italic; }
+@keyframes now-pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.72; } }
+@media (prefers-reduced-motion: reduce){ .about-now .now-tag{ animation:none; } }
+
+/* handwritten sign-off closing the bio */
+.about-sign{
+  margin-top:var(--s-3);
+  text-align:right;
+  font-family:"Bradley Hand","Segoe Print","Comic Sans MS",cursive;
+  font-size:var(--t-4); font-weight:700;
+  color:color-mix(in srgb, var(--neon-cyan) 55%, var(--label));
+  transform:rotate(-3deg);
+}
+
+/* colophon — how the site was built (engineer flex, on-brand) */
+.about-colophon{
+  margin:var(--s-6) 0;
+  padding:var(--s-3) var(--s-4);
+  border:1px dashed color-mix(in srgb, var(--neon-cyan) 26%, var(--dim));
+  border-radius:4px;
+  background:color-mix(in srgb, var(--bg) 94%, var(--neon-cyan));
+}
+.about-colophon h3{
+  font-family:var(--mono); font-weight:normal;
+  font-size:var(--t-0); letter-spacing:.28em;
+  color:color-mix(in srgb, var(--neon-cyan) 55%, var(--label));
+  margin-bottom:var(--s-2);
+}
+.about-colophon p{
+  font-family:var(--mono); font-size:var(--t-0); line-height:1.85;
+  color:color-mix(in srgb, var(--label) 88%, var(--neon-cyan));
+}
+
+/* design-philosophy + hobbies, side by side */
+.about-cols{
+  display:grid; grid-template-columns:1fr 1fr; gap:var(--s-4);
+  margin:var(--s-6) 0;
+}
+.about-block{
+  padding:var(--s-3) var(--s-4);
+  border:1px solid var(--dim); border-radius:4px;
+  background:color-mix(in srgb, var(--bg) 92%, var(--neon-cyan));
+}
+.about-block h3{
+  font-family:var(--mono); font-weight:normal;
+  font-size:var(--t-0); letter-spacing:.28em;
+  color:color-mix(in srgb, var(--neon-cyan) 55%, var(--label));
+  margin-bottom:var(--s-2);
+}
+.about-block p, .about-block ul{
+  font-family:var(--mono); font-size:var(--t-1); line-height:1.8;
+  color:var(--label);
+}
+.about-block ul{ list-style:none; padding:0; }
+.about-block li{ padding:2px 0; }
+.about-block li::before{ content:"› "; color:var(--neon-cyan); }
+
+/* Casper line */
+.about-casper{
+  margin-top:var(--s-6);
+  text-align:center;
+  font-family:var(--mono); font-size:var(--t-1); line-height:1.8;
+  color:color-mix(in srgb, var(--name-day) calc(var(--tod-day) * 60%), var(--label));
+}
+/* the arcade cabinet sits low and left-of-centre, mirroring the alley's arcade
+   (left:7%). Clear of the far-left cmds chip + curator line, and well away from
+   the bottom-right clock. Fixed so it stays put while the bio scrolls. */
+.arcade--about{
+  position:fixed; left:8%; right:auto; bottom:2.8rem;
+  z-index:var(--z-content);
+}
+
+/* social row — reuses .dawn-signs / .dawn-sign from alley.css */
+.about-socials{ margin:var(--s-6) 0 0; display:flex; flex-direction:column; align-items:center; text-align:center; }
+.about-socials .dawn-sub{ font-size:var(--t-2); opacity:1; color:var(--neon-cyan); }
+
+/* a quiet way back to the street */
+.about-back{
+  display:inline-block; margin-top:var(--s-8);
+  font-family:var(--mono); font-size:var(--t-1); letter-spacing:.2em;
+  color:var(--label); text-decoration:none;
+}
+.about-back:hover, .about-back:focus-visible{ color:var(--neon-cyan); text-shadow:0 0 8px var(--neon-cyan); }
+
+/* ---- responsive ------------------------------------------------------- */
+@media (max-width: 900px){
+  .about-hero .name-sign{ font-size:var(--t-4); }
+  .about-cols{ grid-template-columns:1fr; }
+}
+@media (max-width: 700px){
+  /* on phones a fixed game button would sit over the bio — drop it inline at
+     the foot of the column instead */
+  .arcade--about{ position:static; margin:var(--s-6) auto 0; }
+}
+@media (max-width: 480px){
+  .about-wrap{ padding:var(--s-6) var(--s-3); }
+  .about-body{ font-size:var(--t-1); }
+  .about-body .lede{ font-size:var(--t-2); }
+  .about-hero .name-sign .name-sep{ display:none; }
+  .about-hero .name-sign .name-tag{ display:block; font-size:var(--t-2); }
+}
+@media (pointer: coarse){
+  .about-back{ padding:var(--s-2) var(--s-3); min-height:44px; }
+}
+
+/* ---- reduced motion --------------------------------------------------- */
+@media (prefers-reduced-motion: reduce){
+  body[data-page="about"] .name-sign .name-en{ animation:none; }
+}
+
+/* ---- boot ------------------------------------------------------------- */
+body[data-page="about"] #curator-canvas{ opacity:.85; transition:opacity var(--dur-4) var(--ease-out); }
+body[data-page="about"].preboot #curator-canvas{ opacity:0; }
+/* phones: calm the curator on the bio page too — faint ambient, less clutter
+   while reading. (.preboot rule above keeps it hidden during the boot veil.) */
+@media (max-width:700px){ body[data-page="about"] #curator-canvas{ opacity:.5; } }

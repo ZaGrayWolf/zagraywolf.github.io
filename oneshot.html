@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ONE-SHOT — EDGE BENCHMARKS · ZaGrayWolf</title>
+<meta name="description" content="One study, read in full: benchmarking 17 CNNs and Transformers across 8 resolutions on 4 edge platforms. INT8 PTQ and QAT, latency to page faults. A ZaGrayWolf one-shot.">
+<meta name="theme-color" content="#f6f4ef">
+<link rel="canonical" href="https://zagraywolf.github.io/oneshot.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<!-- modulepreload: flatten the ES-module boot waterfall (all always-loaded; pure load speedup, no behaviour change). ?v= bumped by the site-wide sed. -->
+<link rel="modulepreload" href="/js/main.js?v=4.39">
+<link rel="modulepreload" href="/js/config.js?v=4.39">
+<link rel="modulepreload" href="/js/ticker.js?v=4.39">
+<link rel="modulepreload" href="/js/curator.js?v=4.39">
+<link rel="modulepreload" href="/js/cat.js?v=4.39">
+<link rel="modulepreload" href="/js/hud.js?v=4.39">
+<link rel="modulepreload" href="/js/transition.js?v=4.39">
+<link rel="modulepreload" href="/js/timeofday.js?v=4.39">
+<link rel="modulepreload" href="/js/narrator.js?v=4.39">
+<link rel="modulepreload" href="/js/analytics.js?v=4.39">
+<link rel="modulepreload" href="/js/palette.js?v=4.39">
+<link rel="modulepreload" href="/js/resume-preview.js?v=4.39">
+<link rel="modulepreload" href="/js/dynamic-menu.js?v=4.39">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ONE-SHOT — EDGE BENCHMARKS · ZaGrayWolf">
+<meta property="og:description" content="One study, read in full: benchmarking 17 CNNs and Transformers across 8 resolutions on 4 edge platforms. INT8 PTQ and QAT, latency to page faults.">
+<meta property="og:url" content="https://zagraywolf.github.io/oneshot.html">
+<meta property="og:image" content="https://zagraywolf.github.io/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://zagraywolf.github.io/assets/img/og.png">
+<link rel="stylesheet" href="css/tokens.css?v=4.39">
+<link rel="stylesheet" href="css/base.css?v=4.39">
+<link rel="stylesheet" href="css/paper.css?v=4.39">
+<link rel="stylesheet" href="css/panels.css?v=4.39">
+</head>
+<body data-page="oneshot" data-cat="off" class="world-paper">
+<a class="skip-link" href="#main">skip to content</a>
+<a class="hud-resume" href="resume.html">RESUME ↓</a>
+<a class="edge-tab edge-tab--prev" href="projects.html" aria-label="Back to chapter 2: Projects"><span class="edge-tab-icon" aria-hidden="true">«</span><span class="edge-tab-label">PROJECTS</span></a>
+<a class="edge-tab edge-tab--next" href="papers.html" aria-label="Chapter 3: Wins"><span class="edge-tab-icon" aria-hidden="true">»</span><span class="edge-tab-label">WINS</span></a>
+
+<div class="manga-bg" aria-hidden="true">
+  <img src="assets/img/panels/p-2024-09-25-02.jpg" alt="" loading="lazy">
+  <img src="assets/img/panels/p-2024-11-08-04.jpg" alt="" loading="lazy">
+  <img src="assets/img/panels/p-2025-03-01-11.jpg" alt="" loading="lazy">
+  <img src="assets/img/panels/p-2025-04-25-17.jpg" alt="" loading="lazy">
+  <img src="assets/img/panels/p-2025-07-19-25.jpg" alt="" loading="lazy">
+  <img src="assets/img/panels/p-2026-04-13-29.jpg" alt="" loading="lazy">
+</div>
+<main class="chapter" id="main">
+
+  <!-- ════ cover ════ -->
+  <header class="cover" data-narrate="opening the one-shot">
+    <p class="chapter-kicker" aria-hidden="true">═══╡ ONE-SHOT ╞═══</p>
+    <h1>EDGE BENCHMARKS</h1>
+    <p class="cover-sub">a special chapter. one study, read in full.</p>
+  </header>
+
+  <div class="marquee" aria-hidden="true"><span>INT8 × PTQ × QAT × LATENCY × THROUGHPUT × ACTIVATION MEMORY × PAGE FAULTS × INT8 × PTQ × QAT × LATENCY × THROUGHPUT × ACTIVATION MEMORY × PAGE FAULTS ×&nbsp;</span></div>
+
+  <!-- ════ recruiter skim layer ════ -->
+  <section class="tldr" aria-label="Case study summary" data-narrate="skimming the study">
+    <p class="tldr-title">TL;DR FOR THE BUSY</p>
+    <ul>
+      <li><b>The question</b> what model runs on what edge hardware, at what resolution, for what latency <span class="mono">KLIV, IIT KGP</span></li>
+      <li><b>The grid</b> 17 models × 8 resolutions × 4 devices, INT8 via both PTQ and QAT <span class="mono">544 configs</span></li>
+      <li><b>The result</b> 35% faster at 90%+ accuracy, footprint −40% <span class="mono">vs FP32, same device</span></li>
+      <li><b>The catch</b> 700+ plots generated, all under NDA. methods below, data stays in the lab <span class="mono">NDA</span></li>
+    </ul>
+  </section>
+
+  <!-- ════ p.1 — the question ════ -->
+  <section class="page" aria-label="The question" data-narrate="the question that started it">
+    <article class="panel panel--12 panel--tone reveal">
+      <span class="panel-caption">THE QUESTION</span>
+      <h2>What actually runs?</h2>
+      <p>Ship a vision model to the edge and the first question is brutal. Which model runs on which hardware, inside real physical constraints, at which input resolution, and what latency and throughput do you get for it. The lab needed that answer as a table: pick your constraints, read off the optimal config. That table did not exist.</p>
+      <p class="bubble">"Everyone benchmarks their lucky config. Nobody benchmarks the grid."</p>
+    </article>
+
+    <article class="panel panel--4 reveal">
+      <span class="panel-caption">PRIOR ART</span>
+      <h2>Not found.</h2>
+      <p>Published numbers come one lucky config at a time: one model, one device, one resolution, latency only. Nothing proper, nothing in depth. Nothing that put latency, throughput and activation memory side by side on real edge hardware. So the study had to build its own ground truth.</p>
+      <span class="beat-metric">prior art: nothing comprehensive</span>
+    </article>
+
+    <article class="panel panel--4 reveal">
+      <span class="panel-caption">THE GRID</span>
+      <h2>Combinatorics on purpose.</h2>
+      <p>17 CNNs and Transformers. 8 input resolutions. 4 edge platforms, Jetson Nano and Coral EdgeTPU among them. INT8 throughout, quantized both ways. Every model against every resolution on every device. No cherry-picked runs.</p>
+      <span class="beat-metric">17 × 8 × 4 = 544 configs</span>
+    </article>
+
+    <article class="panel panel--4 panel--tilt reveal">
+      <span class="panel-caption">THE REAL DIFFICULTY</span>
+      <h2>The harness was the hard part.</h2>
+      <p>Not the models. The engineering around them: every platform brings its own toolchain, every toolchain its own libraries, every library its own version constraints, and physical hardware brings error classes that simulation never shows you. INT8 adds a layer of pain of its own. Keeping 544 configs comparable and reproducible in code, that is the study.</p>
+      <span class="beat-metric">4 toolchains · 1 harness</span>
+    </article>
+    <p class="folio panel--12" aria-hidden="true"><span>ONE-SHOT — EDGE BENCHMARKS</span><span>p.1 / 4</span></p>
+  </section>
+
+  <!-- ════ p.2 — the forks ════ -->
+  <section class="page" aria-label="Design decisions" data-narrate="the forks in the road">
+    <article class="panel panel--4 reveal">
+      <span class="panel-caption">FORK №1 — PTQ OR QAT?</span>
+      <h2>Both. That's the point.</h2>
+      <p>PTQ alone is the cheap answer. QAT is the industry standard. A study meant to be the reference has to say what QAT's extra training actually buys on the same hardware, so both went into the grid for every config. Rejected: shipping only the easy half.</p>
+    </article>
+
+    <article class="panel panel--4 reveal">
+      <span class="panel-caption">FORK №2 — WHERE DOES LATENCY LIVE?</span>
+      <h2>The OS is part of the model.</h2>
+      <p>Most benchmarks stop at model compute. This one instrumented activation memory, page-fault rate and base OS time too, because on a small board the operating system's overhead is part of your latency budget. Rejected: pretending the model runs in a vacuum.</p>
+      <span class="beat-metric">latency · throughput · activation mem · page faults</span>
+    </article>
+
+    <article class="panel panel--12 panel--broken reveal" style="position:relative">
+      <span class="sfx" style="top:-2.5rem; right:2%" aria-hidden="true">BAKI!!</span>
+      <span class="panel-caption">WHAT BROKE</span>
+      <h2>Everything, repeatedly.</h2>
+      <p>Library and hardware compatibility errors, constantly. A version that works on one platform breaks the next. An export that converts cleanly on the desk refuses on the device. Debugging on physical hardware where the only error message is sometimes a power cycle. Every fix got folded back into the harness, which is how the pipeline earned its reproducibility.</p>
+    </article>
+    <p class="folio panel--12" aria-hidden="true"><span>ONE-SHOT — EDGE BENCHMARKS</span><span>p.2 / 4</span></p>
+  </section>
+
+  <!-- ════ p.3 — the scoreboard ════ -->
+  <section class="page" aria-label="Results" data-narrate="reading the scoreboard">
+    <article class="panel panel--12 panel--tone reveal">
+      <span class="panel-caption">THE SCOREBOARD</span>
+      <h2>Against FP32, on the same device.</h2>
+      <p>The baseline is honest: the same model at full FP32 precision on the same hardware. Quantized INT8 came back 35% faster at 90%+ retained accuracy, with the model footprint down 40%. Reproduced across devices, not one run on one board on a good day.</p>
+      <span class="beat-metric">+35% speed · −40% size · 90%+ accuracy · vs FP32</span>
+    </article>
+
+    <article class="panel panel--4 reveal">
+      <span class="panel-caption">THE OUTPUT</span>
+      <h2>700+ plots. You can't see them.</h2>
+      <p>The study generated over 700 plots and graphs across the grid. They belong to the lab and sit under NDA, so this page describes methods, not findings. The numbers above are the shareable summary; the rest stays in Kharagpur.</p>
+      <span class="beat-metric">700+ plots · NDA</span>
+    </article>
+
+    <article class="panel panel--4 panel--tilt reveal">
+      <span class="panel-caption">EPILOGUE — HINDSIGHT</span>
+      <h2>Redo: the pipeline.</h2>
+      <p>Restarted tomorrow, the grid stays and the pipeline gets rebuilt for efficiency. The first version grew organically, one platform at a time. The rebuild would treat orchestration as the product from day one, so adding model eighteen costs an afternoon, not a week.</p>
+    </article>
+
+    <article class="panel panel--4 reveal">
+      <span class="panel-caption">RELATED · PUBLIC</span>
+      <h2>The public sibling.</h2>
+      <p>The study's code and data are private to KLIV. The adjacent public artifact is <b>advance-conv-benchmarks</b>, a documented Python library that counts and races convolution variants across PyTorch and TensorFlow.</p>
+      <p class="panel-links"><a href="https://github.com/ZaGrayWolf/advance-conv-benchmarks">repo ↗</a> · <a href="https://pypi.org/project/advance-conv-benchmarks/">pypi ↗</a></p>
+    </article>
+    <p class="folio panel--12" aria-hidden="true"><span>ONE-SHOT — EDGE BENCHMARKS</span><span>p.3 / 4</span></p>
+  </section>
+
+  <!-- ════ p.4 — payoff ════ -->
+  <section class="page" aria-label="Takeaway" data-narrate="closing the one-shot">
+    <article class="payoff reveal">
+      <h2>THE TABLE EXISTS NOW.</h2>
+      <p>pick your constraints · read off what runs · jetson nano to edgetpu</p>
+    </article>
+    <p class="folio panel--12" aria-hidden="true"><span>ONE-SHOT — EDGE BENCHMARKS</span><span>p.4 / 4 — end</span></p>
+  </section>
+
+  <p class="about-sign" aria-label="signed, K Abhuday">K Abhuday</p>
+  <a class="next-chapter" href="projects.html" data-narrate="returning to PROJECTS">BACK: CH.02 — PROJECTS →</a>
+</main>
+
+<nav class="hud-map" aria-label="Site minimap">[<a href="index.html" data-node="alley" aria-label="Alley — home">#</a>]─[<a href="work.html" data-node="work" aria-label="Chapter 1 — work">1</a>]─[<a href="projects.html" data-node="projects" aria-label="Chapter 2 — projects">2</a>]─[<a href="papers.html" data-node="papers" aria-label="Chapter 3 — wins">3</a>]─[<a href="resume.html" data-node="resume" aria-label="Chapter 4 — resume">4</a>]─[<a href="stall.html" data-node="stall" aria-label="Chapter 5 — the stall">5</a>]</nav>
+
+<canvas id="curator-canvas" class="fx-canvas" aria-hidden="true"></canvas>
+<script type="module" src="js/main.js?v=4.39"></script>
+</body>
+</html>

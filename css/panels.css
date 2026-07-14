@@ -1,0 +1,460 @@
+/* panels.css — the manga panel system (P2; A4/A7 + Dandadan-anniversary
+   energy: marquee strips, rotated panels, SFX type, halftone bursts).
+   Grammar over costume: panel size encodes weight, gutter distance encodes
+   time, one deliberate grid-break per page. Pure ink on paper — zero neon. */
+
+/* ---- faded manga-panel backdrop ---------------------------------------
+   Photos as ambient texture behind the whole chapter — the field-notes are
+   still here, just as faint ink-ghosting instead of a content wall. Fixed at
+   z-index:-1 so it sits above the paper canvas but below every panel and all
+   text (same trick as .panel--tone::after). multiply blend on light paper
+   reads like ghosted screentone; opacity is low enough that ink stays ~16:1.
+   Decorative, pointer-events:none, aria-hidden in markup. */
+.manga-bg{ position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
+.manga-bg img{
+  position:absolute; width:30%; max-width:24rem; aspect-ratio:4/3;
+  object-fit:cover; filter:grayscale(1) contrast(1.12);
+  opacity:.07; mix-blend-mode:multiply;
+}
+.manga-bg img:nth-child(1){ top:-3%;   left:-5%;  transform:rotate(-6deg); }
+.manga-bg img:nth-child(2){ top:8%;    right:-6%; transform:rotate(5deg);  width:26%; }
+.manga-bg img:nth-child(3){ top:44%;   left:-7%;  transform:rotate(4deg);  width:26%; }
+.manga-bg img:nth-child(4){ bottom:5%; right:-5%; transform:rotate(-5deg); }
+.manga-bg img:nth-child(5){ bottom:-4%; left:7%;  transform:rotate(3deg);  width:24%; }
+.manga-bg img:nth-child(6){ top:32%;   right:5%;  transform:rotate(-3deg); width:19%; opacity:.05; }
+@media (max-width:900px){ .manga-bg img{ opacity:.045; } }   /* fainter where the column is narrow */
+
+/* ---- chapter shell ----------------------------------------------------- */
+.chapter{
+  max-width:72rem;
+  margin:0 auto;
+  padding:var(--s-8) var(--s-3) var(--s-8);
+}
+.chapter-kicker{
+  font-family:var(--mono); font-size:var(--t-1);
+  color:var(--ink-soft); letter-spacing:.05em;
+  text-align:center;
+}
+
+/* cover */
+.cover{ text-align:center; margin-bottom:var(--s-8); position:relative; }
+.cover h1{
+  font-size:clamp(var(--t-5), 9vw, 6rem);
+  font-weight:800; letter-spacing:.02em;
+  line-height:1.05;
+  color:var(--ink);
+}
+.cover h1 .jp{
+  display:block;
+  font-size:var(--t-3); font-weight:600; letter-spacing:.5em; text-indent:.5em;
+  color:var(--ink-soft);
+  margin-top:var(--s-1);
+}
+.cover-sub{
+  margin-top:var(--s-2);
+  font-family:var(--mono); font-size:var(--t-1);
+  color:var(--ink-soft); letter-spacing:.08em;
+}
+/* halftone burst behind the cover title */
+.cover::before{
+  content:"";
+  position:absolute; left:50%; top:50%;
+  width:34rem; height:34rem; max-width:90vw;
+  transform:translate(-50%,-54%);
+  background:radial-gradient(circle, var(--ink) 22%, transparent 24%) 0 0/9px 9px;
+  -webkit-mask-image:radial-gradient(circle, rgba(0,0,0,.16), transparent 62%);
+          mask-image:radial-gradient(circle, rgba(0,0,0,.16), transparent 62%);
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* ---- marquee strip (the anniversary-site energy) ------------------------ */
+.marquee{
+  overflow:hidden;
+  border-block:3px solid var(--ink);
+  padding:var(--s-1) 0;
+  margin:var(--s-6) calc(-1 * var(--s-3));
+  white-space:nowrap;
+}
+.marquee span{
+  display:inline-block;
+  font-weight:800; font-size:var(--t-2); letter-spacing:.18em;
+  color:var(--ink);
+  animation:marquee 22s linear infinite;
+}
+@keyframes marquee{ to{ transform:translateX(-50%); } }
+
+/* ---- recruiter TL;DR strip ---------------------------------------------- */
+.tldr{
+  border:3px solid var(--ink);
+  margin-bottom:var(--s-8);
+}
+.tldr-title{
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.2em;
+  background:var(--ink); color:var(--paper);
+  padding:var(--s-1) var(--s-2);
+}
+.tldr ul{ list-style:none; padding:0; }
+.tldr li{
+  display:flex; flex-wrap:wrap; gap:var(--s-1) var(--s-2); align-items:baseline;
+  padding:var(--s-2);
+  border-top:1px solid color-mix(in srgb, var(--ink) 22%, var(--paper));
+  font-size:var(--t-1);
+}
+.tldr li:first-child{ border-top:0; }
+.tldr b{ font-weight:700; min-width:11rem; }
+.tldr .mono{ font-family:var(--mono); font-size:var(--t-0); color:var(--ink-soft); margin-left:auto; }
+
+/* ---- pages & panels ------------------------------------------------------ */
+.page{
+  display:grid;
+  grid-template-columns:repeat(12, 1fr);
+  gap:var(--s-3);
+  margin-block:var(--s-8);
+}
+/* gutter = time: a held breath before a payoff page */
+.page--beat{ margin-top:calc(var(--s-8) * 2.5); }
+
+.panel{
+  position:relative;
+  grid-column:span 6;
+  border:3px solid var(--ink);
+  background:var(--paper);
+  padding:var(--s-4) var(--s-3) var(--s-3);
+  color:var(--ink-soft);
+  line-height:1.55;
+}
+.panel--12{ grid-column:1 / -1; }
+.panel--8{ grid-column:span 8; }
+.panel--4{ grid-column:span 4; }
+.panel--tilt{ transform:rotate(-1.5deg); }
+.panel--tilt2{ transform:rotate(1deg); }
+
+/* ---- morphing ASCII border (js/glyphborder.js, PROJECTS only) ----------
+   The glyph ring replaces the solid frame; only the four edge strips carry
+   content, so the panel interior stays clear of text. Cells are fixed-size
+   boxes with the glyph centred + clipped (CJK full-width glyphs can't break
+   the grid). No-JS / reduced-motion keep the solid border floor; touch gets a
+   STATIC always-on frame, fine pointers get morph-on-hover (js/glyphborder.js). */
+.panel.has-glyph-border{ border-color:transparent; }
+.glyph-border{
+  position:absolute; inset:0; pointer-events:none; z-index:1;
+  font-family:var(--mono); font-size:12px; line-height:1;
+  color:color-mix(in srgb, var(--ink) 52%, var(--paper));
+  opacity:0;                                    /* only on hover */
+  transition:opacity var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+}
+.panel.has-glyph-border .glyph-border{ opacity:1; }
+.panel.has-glyph-border:hover .glyph-border,
+.panel.has-glyph-border:focus-within .glyph-border{ color:var(--ink); }   /* "I'm watching" */
+.gb-strip{ position:absolute; overflow:hidden; }
+.gb-top{    top:0;    left:0; right:0; height:14px; white-space:nowrap; }
+.gb-bottom{ bottom:0; left:0; right:0; height:14px; white-space:nowrap; }
+.gb-left{   left:0;  top:14px; bottom:14px; width:12px; }
+.gb-right{  right:0; top:14px; bottom:14px; width:12px; }
+.gb-cell{ width:12px; height:14px; text-align:center; overflow:hidden; }
+.gb-top .gb-cell, .gb-bottom .gb-cell{ display:inline-block; vertical-align:top; }
+.gb-left .gb-cell, .gb-right .gb-cell{ display:block; }
+
+/* screentone fill (A4) — faint dots so it reads as texture, never over the
+   text. The dots are light (ink 16%) and the ::after clears most of the
+   interior, leaving only a thin screentone frame at the edges. */
+.panel--tone{
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--ink) 16%, transparent) 25%, transparent 27%) 0 0/6px 6px,
+    var(--paper);
+  background-blend-mode:multiply;
+}
+/* content MUST sit above the clear-veil ::after below (an absolute ::after
+   paints over position:relative siblings otherwise — which was hiding the
+   text); z-index:1 lifts it clear */
+.panel--tone > *{ position:relative; z-index:1; }
+.panel--tone::after{ /* clear the interior so text stays clean; tone only at the rim */
+  content:""; position:absolute; inset:0; z-index:0;
+  background:radial-gradient(ellipse 90% 80% at center, var(--paper) 62%, transparent 100%);
+  pointer-events:none;
+}
+
+/* a deliberately broken border — one per page, max */
+.panel--broken::after{
+  content:"";
+  position:absolute; top:-3px; right:15%;
+  width:22%; height:3px;
+  background:var(--paper);
+}
+
+/* panel anatomy */
+.panel-caption{
+  position:absolute; top:-3px; left:-3px;
+  background:var(--ink); color:var(--paper);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.14em;
+  padding:2px var(--s-1);
+}
+.panel h3,
+:is([data-page="work"],[data-page="projects"],[data-page="papers"]) .panel h2{
+  font-size:var(--t-3); font-weight:800; line-height:1.15;
+  color:var(--ink);
+  margin-bottom:var(--s-2);
+}
+.panel .mono{ font-family:var(--mono); font-size:var(--t-0); color:var(--ink-soft); }
+.panel p + p{ margin-top:var(--s-2); }
+
+/* metric beat: the number that changes between repeated panels */
+.beat-metric{
+  display:block;
+  font-family:var(--mono); font-weight:700;
+  font-size:var(--t-4); letter-spacing:.02em;
+  color:var(--ink);
+  margin-top:var(--s-2);
+}
+
+/* speech bubble — taller than wide, hand-drawn irregularity */
+.bubble{
+  display:inline-block;
+  max-width:26rem;
+  margin-top:var(--s-3);
+  padding:var(--s-2) var(--s-3);
+  border:2.5px solid var(--ink);
+  border-radius:50% 45% 55% 48% / 60% 55% 45% 50%;
+  color:var(--ink);
+  font-size:var(--t-1); line-height:1.5;
+}
+
+/* SFX lettering — ≤2 per chapter (A3) */
+.sfx{
+  position:absolute;
+  font-weight:900; font-size:clamp(var(--t-4), 6vw, var(--t-6));
+  letter-spacing:.04em;
+  color:var(--paper);
+  -webkit-text-stroke:2.5px var(--ink);
+  transform:rotate(-8deg);
+  pointer-events:none;
+  z-index:var(--z-content);
+}
+
+/* stack tags as ticket stubs */
+.tags{ display:flex; flex-wrap:wrap; gap:var(--s-1); margin-top:var(--s-2); padding:0; list-style:none; }
+.tags li{
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.06em;
+  color:var(--ink);
+  border:1.5px solid var(--ink); border-left:5px double var(--ink);
+  padding:1px var(--s-1);
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--ink) 30%, transparent) 25%, transparent 27%) 0 0/5px 5px,
+    var(--paper);
+}
+
+/* link row */
+.panel-links{ margin-top:var(--s-2); font-family:var(--mono); font-size:var(--t-0); letter-spacing:.04em; }
+.panel-links a{ color:var(--ink); text-underline-offset:3px; }
+.panel-links a:hover{ color:var(--ink-soft); }
+/* touch: the repo/pypi/one-shot links sit tight on one line — grow the hit area
+   and space them so fingers don't mis-tap. Desktop (fine pointer) unchanged. */
+@media (pointer:coarse){
+  .panel-links{ line-height:2.6; }
+  .panel-links a{ display:inline-block; padding:10px 2px; margin-right:var(--s-1); }
+  .tldr a{ display:inline-block; padding:6px 0; }
+}
+
+/* payoff spread — the full-bleed beat, once per chapter (A1) */
+.payoff{
+  grid-column:1 / -1;
+  border:3px solid var(--ink);
+  background:var(--ink); color:var(--paper);
+  padding:clamp(var(--s-4), 8vw, var(--s-8)) var(--s-3);
+  text-align:center;
+  position:relative; overflow:hidden;
+}
+.payoff h3,
+:is([data-page="work"],[data-page="projects"],[data-page="papers"]) .payoff h2{
+  font-size:clamp(var(--t-4), 6vw, var(--t-6));
+  font-weight:900; line-height:1.1; letter-spacing:.01em;
+  color:var(--paper);
+}
+.payoff p{ margin-top:var(--s-2); font-family:var(--mono); font-size:var(--t-1); color:color-mix(in srgb, var(--paper) 75%, var(--ink)); }
+.payoff::before{ /* speedlines */
+  content:"";
+  position:absolute; inset:0;
+  background:repeating-conic-gradient(from 0deg at 50% 50%,
+    transparent 0deg 7deg,
+    color-mix(in srgb, var(--paper) 9%, transparent) 7deg 8deg);
+  pointer-events:none;
+}
+
+/* chapter chrome */
+.folio{
+  display:flex; justify-content:space-between;
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.1em;
+  color:var(--ink-soft);
+  margin-top:var(--s-2);
+}
+.next-chapter{
+  display:block;
+  margin:var(--s-8) auto 0;
+  width:fit-content;
+  font-family:var(--mono); font-size:var(--t-1); letter-spacing:.14em;
+  color:var(--ink); text-decoration:none;
+  border:3px solid var(--ink);
+  padding:var(--s-2) var(--s-4);
+  transition:background var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+}
+.next-chapter:hover, .next-chapter:focus-visible{ background:var(--ink); color:var(--paper); }
+
+/* ---- scroll reveal (vanilla; pinned spreads arrive with GSAP later) -----
+   Panels are visible by default (no-JS stays readable, C1); panels.js adds
+   .is-pending up front, then removes it as panels enter the viewport, so
+   each transitions back to its natural styles (tilts included). */
+.reveal{
+  transition:opacity var(--dur-3) var(--ease-out), transform var(--dur-3) var(--ease-out);
+  /* scroll parallax (js/panels.js sets --py): the independent `translate`
+     property so it never clobbers the tilt/reveal `transform`. */
+  translate:0 var(--py, 0);
+}
+.reveal.is-pending{
+  opacity:0;
+  /* panels assemble: slide in from their grid side (--rvx, js-set) + settle.
+     The transform interpolates to each panel's natural rotate/none on reveal. */
+  transform:translate(var(--rvx, 0), var(--rvy, 16px)) scale(.985);
+}
+
+/* ---- anime breadcrumbs (taste layer on work pages) ---------------------- */
+.anime-crumb{
+  display:block;
+  margin-top:var(--s-2);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.07em;
+  color:var(--ink-soft);
+}
+.anime-crumb::before{ content:'→ '; opacity:.55; }
+.anime-crumb a{ color:var(--ink-soft); text-decoration:underline; text-underline-offset:3px; }
+.anime-crumb a:hover{ color:var(--ink); }
+
+/* ---- project confidence + pairs-with (personality layer) ---------------- */
+.confidence{
+  margin-top:var(--s-2);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.04em;
+  color:var(--ink-soft);
+}
+.confidence .bar{ font-size:1.05rem; color:var(--ink); letter-spacing:.01em; }
+.pairs-with{
+  margin-top:var(--s-1);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.04em;
+  color:var(--ink-soft);
+}
+.pairs-with a{ color:var(--ink-soft); text-decoration:underline; text-underline-offset:3px; }
+.pairs-with a:hover{ color:var(--ink); }
+
+/* ---- per-chapter accent (plan A7) --------------------------------------- */
+/* the CH.03 kicker stays ink like every other chapter (no magenta) */
+[data-page="papers"] .bracket-team{ color:color-mix(in srgb, var(--neon-mag) 64%, var(--ink-soft)); }   /* 64%: clears WCAG AA 4.5:1 on paper (was 70% = 4.4) */
+[data-page="papers"] .bracket-path{ color:color-mix(in srgb, var(--neon-mag) 80%, var(--ink)); font-weight:700; }
+
+/* ---- tournament bracket (CH.03 WINS) ------------------------------------ */
+.bracket-pre{
+  font-family:var(--mono); font-size:var(--t-0);
+  line-height:1.7; color:var(--ink-soft);
+  white-space:pre; overflow-x:auto;
+  margin:0;
+}
+.bracket-node{
+  color:var(--amber);
+  font-weight:700;
+  text-shadow:0 0 12px color-mix(in srgb, var(--amber) 60%, transparent);
+}
+.bracket-team{
+  color:var(--ink);
+  font-weight:700;
+  letter-spacing:.04em;
+}
+
+/* ---- photo panels (manga panel art — grayscale→color on hover) ----------- */
+.panel--photo{
+  padding:0;
+  overflow:hidden;
+}
+.panel--photo img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:grayscale(1) contrast(1.08);
+  transition:filter var(--dur-3) var(--ease-out);
+}
+.panel--photo:hover img,
+.panel--photo:focus-within img{
+  filter:none;
+}
+/* halftone over photo — fades on hover so the color reads */
+.panel--photo::after{
+  content:"";
+  position:absolute; inset:0;
+  background:radial-gradient(circle, color-mix(in srgb, var(--ink) 42%, transparent) 22%, transparent 24%) 0 0/7px 7px;
+  mix-blend-mode:multiply;
+  pointer-events:none;
+  transition:opacity var(--dur-3) var(--ease-out);
+}
+.panel--photo:hover::after{ opacity:.3; }
+.panel--photo figcaption{
+  position:absolute; bottom:0; left:0; right:0;
+  padding:var(--s-1) var(--s-2);
+  background:color-mix(in srgb, var(--ink) 68%, transparent);
+  color:var(--paper);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.08em;
+}
+/* WHO spread: each photo is a panel card, 4:3 default */
+.page--who{ gap:var(--s-2); align-items:start; }
+.page--who .panel--photo{ aspect-ratio:4/3; min-height:10rem; }
+/* role insets: cinematic band */
+.panel--photo.role-photo{ aspect-ratio:16/9; min-height:9rem; }
+
+/* ---- responsive (A8): single column, no tilts, calm gutters -------------- */
+@media (max-width: 900px){
+  /* every panel is full-width here, so collapse the 12-track grid to ONE column.
+     Keeping 12 tracks meant each full-span panel also spanned the 11 internal
+     column-gaps (11 × gap) — at phone width that gap sum alone exceeds the
+     container and inflates every panel past the viewport (352 in a 312 column
+     at 360). One column = no internal column gaps; the row-gap still spaces them. */
+  .page{ grid-template-columns:1fr; }
+  .panel, .panel--8, .panel--4{ grid-column:1 / -1; }
+  /* belt to the above: grid items default to min-width:auto and can refuse to
+     shrink below their content's min-content — let them shrink so text wraps. */
+  .panel, .payoff, .folio{ min-width:0; }
+  /* tilt stays flat on mobile: full ±1.5deg overflows a full-width panel, and a
+     safe ~0.6deg is imperceptible — not worth it. */
+  .panel--tilt, .panel--tilt2,
+  .reveal.panel--tilt.is-in, .reveal.panel--tilt2.is-in{ transform:none; }
+  .page--beat{ margin-top:calc(var(--s-8) * 1.5); }
+  .tldr b{ min-width:0; }
+  /* #3 mobile character: keep the SFX lettering (was hidden). The clamp already
+     shrinks it on small viewports; right-anchored + body clip keeps it in-bounds. */
+  .sfx{ font-size:clamp(var(--t-3), 9vw, var(--t-5)); }
+}
+/* phones: a long .panel-caption (e.g. "ESTABLISHING SHOT — NOIDA / MANIPAL,
+   INDIA") wraps to 2-3 lines in its absolute box and lands on top of the panel
+   heading (the panel's top padding only clears a 1-line tab). Drop it into flow
+   on narrow screens so it always pushes the content down instead of overlapping. */
+@media (max-width:700px){
+  .panel-caption{
+    position:relative;   /* relative, NOT static — static drops it below the
+                            .panel--tone clear-veil ::after (z-index:0), washing
+                            out the headliner/establishing captions. relative
+                            keeps it in flow AND lets .panel--tone>* z-index:1 win. */
+    display:inline-block;
+    top:auto; left:auto;
+    margin:0 0 var(--s-2);
+    max-width:100%;
+  }
+  .panel{ padding-top:var(--s-3); line-height:1.62; }   /* roomier reading on phones */
+  .page{ gap:var(--s-4); }                              /* more breathing room between panels */
+  /* skip painting/layout for offscreen panels on the long chapters — a real
+     scroll/paint win on phones. Scoped to ≤700 on purpose: glyph borders are
+     desktop-only (pointer:fine), so this never triggers their resize-rebuild.
+     contain-intrinsic-size: auto <est> reserves space and remembers each panel's
+     real size after first paint, so the scrollbar doesn't jump. */
+  .panel, .payoff{ content-visibility:auto; contain-intrinsic-size:auto 420px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .marquee span{ animation:none; }
+  .reveal{ opacity:1; transform:none; translate:none; }
+  .manga-bg{ translate:none !important; }   /* no scroll parallax when stilled */
+}

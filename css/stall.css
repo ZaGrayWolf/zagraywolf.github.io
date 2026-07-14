@@ -1,0 +1,399 @@
+/* stall.css — CH.05 THE STALL: an interactive night-world yatai cart.
+   The one deliberately non-paper chapter — amber on night, like the alley.
+   SVG art is decorative (aria-hidden); real <button> hotspots layered over it
+   drive the menu. Art rules are ported from alley.css (token-based, identical)
+   so the cart reads the same as the one on the home street. */
+
+body[data-page="stall"]{
+  background:
+    /* the lit-cart warmth, then a faint time-of-day horizon haze, then the
+       real-clock night tint (js/timeofday.js; --tod-* default to --bg) */
+    radial-gradient(80% 60% at 50% 42%, color-mix(in srgb, var(--amber) 7%, transparent) 0%, transparent 70%),
+    radial-gradient(120% 80% at 50% 100%, color-mix(in srgb, var(--tod-haze) 30%, transparent) 0%, transparent 60%),
+    var(--tod-bg);
+  color:var(--label);
+  min-height:100svh;   /* svh, not vh — avoids the mobile address-bar gap/jump (matches alley/paper/about) */
+  overflow-x:clip;   /* decorative SVG art (overflow:visible) + manga-bg bleed past the edge on phones; clip the horizontal scroll, keep vertical */
+}
+
+.stall-night{
+  max-width:64rem;
+  margin:0 auto;
+  padding:var(--s-8) var(--s-3) var(--s-6);
+  overflow-x:clip;   /* contain the decorative SVG bleed (overflow:visible art) so phones get no horizontal scroll */
+}
+
+/* the "About me" arrow: --neon-mag is magenta off-alley, so pin it cyan here
+   (the alley/about override it to white; the stall has no such override) */
+body[data-page="stall"] .tbc-svg{ color:var(--neon-cyan); }
+
+/* ── header ──────────────────────────────────────────────────────── */
+.stall-head{ text-align:center; margin-bottom:var(--s-4); }
+.stall-title{
+  font-family:var(--mono); font-weight:800;
+  font-size:clamp(var(--t-4), 8vw, var(--t-6));
+  letter-spacing:.14em; color:var(--amber);
+  text-shadow:0 0 24px color-mix(in srgb, var(--amber) 45%, transparent);
+}
+.stall-sub{
+  margin-top:var(--s-2);
+  font-family:var(--mono); font-size:var(--t-1); color:var(--label);
+}
+
+/* ── the stage: aspect-locked so HTML hotspots pixel-track the SVG ── */
+.stall-stage{
+  position:relative;
+  width:min(58rem, 100%);
+  margin:var(--s-4) auto 0;
+  aspect-ratio:480 / 300;          /* == viewBox */
+  min-height:13rem;                /* keeps lantern hotspots tappable at 320px */
+}
+.stall-svg-big{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+
+/* ---- ported yatai art (token-based; mirrors alley.css .stall-*) ---- */
+.s-ink{ fill:color-mix(in srgb, var(--dim) 70%, var(--bg)); }
+.s-line{ stroke:var(--dim); stroke-width:2; }
+
+.stall-fringe rect:nth-child(odd){ fill:color-mix(in srgb, var(--amber) 30%, var(--bg)); }
+.stall-fringe rect:nth-child(even){ fill:color-mix(in srgb, var(--dim) 85%, var(--bg)); }
+
+.stall-sign rect{
+  fill:color-mix(in srgb, var(--bg) 88%, var(--amber));
+  stroke:color-mix(in srgb, var(--amber) 65%, var(--dim)); stroke-width:1.5;
+}
+.stall-sign text{
+  font-family:var(--mono); font-size:26px; letter-spacing:.22em; fill:var(--amber);
+  text-shadow:0 0 8px var(--amber);
+}
+
+.stall-board rect{ fill:var(--bg); stroke:var(--dim); stroke-width:1.5; }
+.stall-board line{ stroke:var(--dim); stroke-width:2; stroke-linecap:round; }
+
+.stall-lamp{
+  animation:lantern-sway 5s ease-in-out infinite;
+  transform-box:fill-box; transform-origin:50% 0;
+}
+.stall-lamp:nth-of-type(2){ animation-delay:.6s; }
+.stall-lamp:nth-of-type(3){ animation-delay:1.2s; }
+.stall-lamp:nth-of-type(4){ animation-delay:1.8s; }
+.lamp-glow{ fill:var(--amber); opacity:.26; filter:blur(6px); transition:opacity var(--dur-2) var(--ease-out); }  /* resting glow: was .16, too dim to read as "lit" on dark/phone; select still brightens to .5 */
+.lamp-body{ fill:color-mix(in srgb, var(--amber) 80%, var(--bg)); transition:fill var(--dur-2) var(--ease-out); }
+.lamp-rib{ fill:none; stroke:color-mix(in srgb, var(--bg) 60%, var(--amber)); stroke-width:1.5; }
+.lamp-label{
+  font-family:var(--mono); font-size:13px; letter-spacing:.14em;
+  fill:color-mix(in srgb, var(--amber) 55%, var(--label));
+  transition:fill var(--dur-2) var(--ease-out);
+}
+/* lit state — driven by the matching hotspot button */
+.stall-lamp.is-lit .lamp-glow{ opacity:.5; }
+.stall-lamp.is-lit .lamp-body{ fill:var(--amber); }
+.stall-lamp.is-lit .lamp-label{ fill:var(--amber); }
+@keyframes lantern-sway{
+  0%,100%{ transform:rotate(2.2deg); }
+  50%{ transform:rotate(-2.2deg); }
+}
+
+.stall-bowls path{ fill:var(--bg); stroke:color-mix(in srgb, var(--amber) 45%, var(--dim)); stroke-width:1.5; }
+
+.stall-steam path{
+  stroke:color-mix(in srgb, var(--label) 70%, var(--amber));
+  opacity:0; animation:steam-rise 3.4s ease-in-out infinite;
+}
+.stall-steam path:nth-child(2){ animation-delay:.9s; }
+.stall-steam path:nth-child(3){ animation-delay:1.8s; }
+.stall-steam path:nth-child(4){ animation-delay:2.6s; }
+.stall-steam path:nth-child(5){ animation-delay:3.4s; }
+@keyframes steam-rise{
+  0%{ opacity:0; transform:translateY(5px); }
+  30%{ opacity:.5; }
+  100%{ opacity:0; transform:translateY(-12px); }
+}
+
+.stall-bodywood rect{ fill:color-mix(in srgb, var(--bg) 84%, var(--amber)); stroke:var(--dim); stroke-width:1.5; }
+.stall-bodywood line{ stroke:color-mix(in srgb, var(--dim) 60%, var(--bg)); stroke-width:1.5; }
+.stall-stool rect{ fill:color-mix(in srgb, var(--dim) 80%, var(--bg)); }
+.stall-stool line{ stroke:var(--dim); stroke-width:2.5; }
+.stall-wheel circle{ fill:none; stroke:var(--dim); stroke-width:3; }
+.stall-wheel line{ stroke:var(--dim); stroke-width:2; }
+
+/* ── hotspot buttons over the lanterns ───────────────────────────── */
+.stall-hotspots{ position:absolute; inset:0; }
+.stall-hotspot{
+  position:absolute;
+  background:none; border:1.5px solid transparent; border-radius:8px;
+  cursor:pointer; padding:0;
+  transition:border-color var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out);
+}
+.stall-hotspot:hover{ border-color:color-mix(in srgb, var(--amber) 45%, transparent); background:color-mix(in srgb, var(--amber) 6%, transparent); }
+.stall-hotspot:focus-visible{ outline:2px solid var(--neon-cyan); outline-offset:2px; }
+.stall-hotspot[aria-expanded="true"]{ border-color:var(--amber); background:color-mix(in srgb, var(--amber) 10%, transparent); }
+
+/* ── the card that slides across the counter ─────────────────────── */
+.stall-card-area{
+  width:min(46rem, 100%);
+  margin:var(--s-4) auto 0;
+}
+.stall-card-slot{ position:relative; min-height:9rem; }
+.stall-card-slot::before{
+  content:'pick a lantern — your card slides out here';
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:var(--t-0);
+  color:color-mix(in srgb, var(--label) 60%, var(--bg)); opacity:.7; pointer-events:none;
+  text-align:center; padding:var(--s-2);
+}
+.stall-card-slot.has-card::before{ display:none; }
+
+.stall-card{
+  position:absolute; inset:0;
+  display:grid; gap:var(--s-1); align-content:start;
+  padding:var(--s-3);
+  /* a warm slip handed across the dark counter */
+  background:color-mix(in srgb, var(--paper) 92%, var(--amber));
+  color:var(--ink);
+  border:2px solid color-mix(in srgb, var(--amber) 55%, var(--ink));
+  box-shadow:0 6px 28px color-mix(in srgb, var(--amber) 22%, transparent);
+  transform:translateX(-110%); opacity:0;
+  transition:transform 350ms var(--ease-out), opacity 200ms var(--ease-out);
+  will-change:transform;
+}
+.stall-card.is-active{ transform:translateX(0) rotate(-.5deg); opacity:1; }
+.stall-card.is-exiting{
+  transform:translateX(110%); opacity:0;
+  transition:transform 280ms var(--ease-in), opacity 200ms var(--ease-in);
+}
+.stall-card-garnish{ font-size:1.5rem; line-height:1; color:color-mix(in srgb, var(--amber) 60%, var(--ink)); }
+.stall-card-title{ font-family:var(--mono); font-size:var(--t-2); font-weight:800; letter-spacing:.03em; color:var(--ink); }
+.stall-card-write{ font-size:var(--t-1); line-height:1.6; color:var(--ink-soft); max-width:52ch; }
+.stall-card-pairs{ font-family:var(--mono); font-size:var(--t-0); color:var(--ink-soft); }
+.stall-card-pairs::before{ content:'pairs well with → '; }
+.stall-card-pairs a{ color:color-mix(in srgb, var(--ink) 70%, var(--amber)); text-underline-offset:3px; }
+.stall-card-pairs a:hover{ color:var(--ink); }
+
+/* ── rec lists ───────────────────────────────────────────────────── */
+#stall-menu{ width:min(46rem, 100%); margin:var(--s-4) auto 0; }
+.stall-reclist{ margin-bottom:var(--s-3); }
+.stall-reclist h2{
+  font-family:var(--mono); font-size:var(--t-1); letter-spacing:.16em;
+  color:var(--amber); border-bottom:1px solid color-mix(in srgb, var(--amber) 30%, var(--bg));
+  padding-bottom:var(--s-1); margin-bottom:var(--s-1);
+}
+.stall-reclist dl{ margin:0; }
+.stall-reclist dt{ font-family:var(--mono); font-weight:700; color:var(--label); margin-top:var(--s-1); }
+.stall-reclist dd{ margin:0 0 var(--s-1); color:color-mix(in srgb, var(--label) 80%, var(--bg)); line-height:1.5; }
+
+/* when JS takes over: a single revealed category's rec buttons */
+.stall-menu-list{ list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:var(--s-1); }
+.stall-rec-btn{
+  background:none; border:1.5px solid color-mix(in srgb, var(--amber) 40%, var(--dim));
+  color:var(--label);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.04em;
+  padding:.3rem .9rem; cursor:pointer;
+  transition:border-color .12s, color .12s, background .12s;
+}
+.stall-rec-btn:hover, .stall-rec-btn:active, .stall-rec-btn.is-selected{
+  border-color:var(--amber); color:var(--amber);
+  background:color-mix(in srgb, var(--amber) 8%, transparent);
+}
+.stall-rec-btn:focus-visible{ outline:2px solid var(--neon-cyan); outline-offset:2px; }
+.stall-menu-hint{ font-family:var(--mono); font-size:var(--t-0); color:color-mix(in srgb, var(--label) 60%, var(--bg)); margin-bottom:var(--s-1); }
+
+/* ── chef's choice + bell ────────────────────────────────────────── */
+.chef-choice{
+  display:block; margin:var(--s-6) auto var(--s-2);
+  background:none; border:2px solid var(--amber); color:var(--amber);
+  font-family:var(--mono); font-size:var(--t-1); font-weight:700; letter-spacing:.08em;
+  padding:.5rem var(--s-4); cursor:pointer;
+  transition:background .15s, color .15s;
+}
+.chef-choice:hover, .chef-choice:active{ background:var(--amber); color:var(--bg); }
+.chef-choice:focus-visible{ outline:2px solid var(--amber); outline-offset:3px; }
+.stall-bell{ display:inline-block; font-style:normal; animation:bell-ring .45s ease-out forwards; }
+@keyframes bell-ring{
+  0%{ transform:rotate(-14deg) scale(1.3); opacity:1; }
+  30%{ transform:rotate(11deg) scale(1.15); }
+  65%{ transform:rotate(-7deg) scale(1.05); }
+  100%{ transform:rotate(0) scale(1); opacity:1; }
+}
+
+/* ── payoff ──────────────────────────────────────────────────────── */
+.stall-payoff{
+  max-width:56ch; margin:var(--s-6) auto var(--s-4); text-align:center;
+  font-family:var(--mono); font-size:var(--t-0); line-height:1.7;
+  color:color-mix(in srgb, var(--label) 75%, var(--bg));
+}
+
+/* paper-world chrome shouldn't apply here, but keep the minimap readable */
+body[data-page="stall"] .next-chapter{
+  display:block; width:max-content; margin:0 auto;
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.1em;
+  color:var(--label); border:1px solid var(--dim); padding:var(--s-1) var(--s-3);
+  text-decoration:none;
+}
+body[data-page="stall"] .next-chapter:hover,
+body[data-page="stall"] .next-chapter:focus-visible{ color:var(--amber); border-color:var(--amber); }
+
+/* ── faded photo backdrop, night variant ─────────────────────────── */
+/* The structural .manga-bg rules live in panels.css, which the paper
+   chapters load — but the stall only loads tokens/base/stall, so we MUST
+   restate the fixed-backdrop geometry here or the 6 images render as
+   full-size in-flow blocks stacked above the cart (the "scroll past the
+   panels to reach the shop" bug). On the dark stall, multiply vanishes —
+   use screen + low opacity so the photos read as faint ghosts behind it. */
+body[data-page="stall"] .manga-bg{ position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
+body[data-page="stall"] .manga-bg img{
+  position:absolute; width:30%; max-width:24rem; aspect-ratio:4/3; object-fit:cover;
+  mix-blend-mode:screen; opacity:.1; filter:grayscale(1) contrast(1);
+}
+body[data-page="stall"] .manga-bg img:nth-child(1){ top:-3%;   left:-5%;  transform:rotate(-6deg); }
+body[data-page="stall"] .manga-bg img:nth-child(2){ top:8%;    right:-6%; transform:rotate(5deg);  width:26%; }
+body[data-page="stall"] .manga-bg img:nth-child(3){ top:44%;   left:-7%;  transform:rotate(4deg);  width:26%; }
+body[data-page="stall"] .manga-bg img:nth-child(4){ bottom:5%; right:-5%; transform:rotate(-5deg); }
+body[data-page="stall"] .manga-bg img:nth-child(5){ bottom:-4%; left:7%;  transform:rotate(3deg);  width:24%; }
+body[data-page="stall"] .manga-bg img:nth-child(6){ top:32%;   right:5%;  transform:rotate(-3deg); width:19%; opacity:.06; }
+@media (max-width:900px){ body[data-page="stall"] .manga-bg img{ opacity:.07; } }
+
+/* ── drifting embers (warm night air) ────────────────────────────── */
+.stall-embers{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.stall-embers span{
+  position:absolute; bottom:8%; left:var(--ex);
+  width:3px; height:3px; border-radius:50%;
+  background:var(--amber); opacity:0;
+  box-shadow:0 0 6px var(--amber);
+  animation:ember-rise var(--edur, 8s) var(--ease-out) var(--edelay, 0s) infinite;
+}
+@keyframes ember-rise{
+  0%{ opacity:0; transform:translateY(0) translateX(0) scale(.6); }
+  15%{ opacity:.7; }
+  70%{ opacity:.5; }
+  100%{ opacity:0; transform:translateY(-46vh) translateX(18px) scale(1); }
+}
+
+/* ── lit-lantern pulse + sign glow (the "open" beat) ─────────────── */
+.stall-lamp.is-lit .lamp-glow{ animation:lamp-pulse 2.2s var(--ease-in-out) infinite; }
+@keyframes lamp-pulse{ 0%,100%{ opacity:.4; } 50%{ opacity:.62; } }
+.stall-sign text{ animation:sign-glow 3.6s var(--ease-in-out) infinite; }
+@keyframes sign-glow{
+  0%,100%{ filter:drop-shadow(0 0 5px color-mix(in srgb, var(--amber) 55%, transparent)); }
+  50%{ filter:drop-shadow(0 0 12px var(--amber)); }
+}
+/* lanterns fade in one-by-one on load — the cart "wakes" (by id; the 4 lamp
+   groups aren't sequential <g> siblings, so :nth-of-type won't target them) */
+.stall-lamp{ opacity:0; animation:lamp-wake .5s var(--ease-out) forwards, lantern-sway 5s ease-in-out infinite; }
+#lamp-anime { animation-delay:.15s, .15s; }
+#lamp-manga { animation-delay:.35s, .35s; }
+#lamp-movies{ animation-delay:.55s, .55s; }
+#lamp-books { animation-delay:.75s, .75s; }
+#lamp-shows { animation-delay:.95s, .95s; }
+@keyframes lamp-wake{ to{ opacity:1; } }
+
+/* ── Casper the cat ──────────────────────────────────────────────── */
+.stall-cat{
+  /* centred — the host at his counter, just below the lifted lanterns */
+  position:absolute; left:50%; bottom:26%;
+  transform:translateX(-50%);
+  width:clamp(72px, 14%, 112px); height:auto;
+  pointer-events:none;
+  filter:drop-shadow(0 0 12px color-mix(in srgb, var(--amber) 28%, transparent));
+  z-index:2;
+}
+.cat-fur{ fill:color-mix(in srgb, var(--paper) 90%, var(--amber)); }
+.cat-ear-in{ fill:var(--neon-mag); opacity:.5; }
+.cat-eye{ fill:var(--ink); transform-box:fill-box; transform-origin:center; }
+.cat-nose{ fill:var(--neon-mag); }
+.cat-whisker line{ stroke:var(--dim); stroke-width:1.2; stroke-linecap:round; }
+.cat-collar{ fill:none; stroke:var(--amber); stroke-width:3; stroke-linecap:round; }
+.cat-tail{ transform-box:fill-box; transform-origin:0% 100%; animation:cat-tail 5s var(--ease-in-out) infinite; }
+.cat-body{ transform-box:fill-box; transform-origin:50% 100%; animation:cat-breathe 4s var(--ease-in-out) infinite; }
+.cat-eye{ animation:cat-blink 6s steps(1) infinite; }
+@keyframes cat-breathe{ 0%,100%{ transform:scaleY(1); } 50%{ transform:scaleY(1.025); } }
+@keyframes cat-blink{ 0%,92%,100%{ transform:scaleY(1); } 96%{ transform:scaleY(.1); } }
+@keyframes cat-tail{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(-9deg); } }
+/* speaking — a couple of small nods while a bubble shows */
+.stall-cat.is-speaking .cat-head{ transform-box:fill-box; transform-origin:50% 100%; animation:cat-speak .5s var(--ease-out) 2; }
+@keyframes cat-speak{ 0%,100%{ transform:translateY(0) rotate(0); } 50%{ transform:translateY(-2px) rotate(-1.5deg); } }
+
+/* ── concierge chat ──────────────────────────────────────────────── */
+.stall-concierge{ width:min(46rem, 100%); margin:var(--s-3) auto 0; }
+.casper-bubble{
+  position:relative;
+  background:color-mix(in srgb, var(--paper) 92%, var(--amber));
+  color:var(--ink);
+  border:2px solid color-mix(in srgb, var(--amber) 55%, var(--ink));
+  border-radius:14px; padding:var(--s-2) var(--s-3);
+  font-size:var(--t-1); line-height:1.55; max-width:60ch;
+  opacity:0; transform:translateY(6px);
+  transition:opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+}
+.casper-bubble:empty{ display:none; }
+.casper-bubble.is-in{ opacity:1; transform:none; }
+.casper-bubble::after{           /* tail pointing up toward Casper */
+  content:""; position:absolute; top:-9px; left:var(--s-6);
+  border:5px solid transparent;
+  border-bottom-color:color-mix(in srgb, var(--amber) 55%, var(--ink));
+}
+.casper-bubble .you-asked{ display:block; font-family:var(--mono); font-size:var(--t-0); color:var(--ink-soft); margin-bottom:var(--s-1); }
+.casper-bubble a{ color:color-mix(in srgb, var(--ink) 70%, var(--amber)); text-underline-offset:3px; }
+
+.casper-form{ margin-top:var(--s-2); }
+.casper-label{ display:block; font-family:var(--mono); font-size:var(--t-0); color:color-mix(in srgb, var(--label) 75%, var(--bg)); margin-bottom:var(--s-1); }
+.casper-inputrow{ display:flex; gap:var(--s-1); }
+.casper-input{
+  flex:1 1 auto; min-width:0;
+  font-family:var(--mono); font-size:var(--t-1);
+  color:var(--label);
+  background:color-mix(in srgb, var(--bg) 84%, var(--amber));
+  border:1.5px solid color-mix(in srgb, var(--amber) 40%, var(--dim));
+  padding:.45rem .7rem;
+}
+.casper-input::placeholder{ color:color-mix(in srgb, var(--label) 55%, var(--bg)); }
+.casper-input:focus-visible{ outline:2px solid var(--neon-cyan); outline-offset:2px; }
+.casper-send{
+  background:none; border:1.5px solid var(--amber); color:var(--amber);
+  font-family:var(--mono); font-size:var(--t-2); line-height:1;
+  padding:0 var(--s-2); cursor:pointer;
+  transition:background .15s, color .15s;
+}
+.casper-send:hover{ background:var(--amber); color:var(--bg); }
+.casper-send:focus-visible{ outline:2px solid var(--neon-cyan); outline-offset:2px; }
+.casper-chips{ list-style:none; padding:0; margin:var(--s-2) 0 0; display:flex; flex-wrap:wrap; gap:var(--s-1); }
+/* chips reuse the rec-button look */
+.casper-chips .stall-rec-btn{ font-size:var(--t-0); }
+
+/* ── responsive ──────────────────────────────────────────────────── */
+@media (max-width:600px){
+  .stall-stage{ width:96vw; }
+  .lamp-label{ font-size:15px; }       /* keep labels readable when scaled down */
+  .stall-cat{ width:clamp(64px, 20%, 100px); }
+}
+/* phones: (1) quiet the amber curator glyph swarm that drifts behind the cart so
+   the lantern labels read clearly; (2) give the labels a dark halo (paint-order
+   stroke) so they pop over whatever's behind; (3) clear the chat input above the
+   fixed curator:// + clock lines at the bottom (works with the focus scroll in
+   stall.js). Desktop unchanged. */
+@media (max-width:700px){
+  body[data-page="stall"] #curator-canvas{ opacity:.5; }
+  .lamp-label{ paint-order:stroke; stroke:var(--bg); stroke-width:2.5px; stroke-linejoin:round; }
+  .stall-concierge{ padding-bottom:var(--s-8); }
+}
+/* touch: bigger lantern hit-zones + ≥44px chat/rec controls. Hotspots are
+   positioned inline in the markup, so override the vertical span with !important */
+@media (pointer: coarse){
+  .stall-hotspot{ top:20% !important; height:52% !important; }
+  .casper-input, .stall-rec-btn, .chef-choice{ min-height:44px; }
+  .casper-send{ min-width:44px; min-height:44px; }
+}
+
+/* ── reduced motion: freeze the scene, card crossfades ───────────── */
+@media (prefers-reduced-motion: reduce){
+  .stall-lamp{ animation:none; opacity:1; }
+  .stall-lamp.is-lit .lamp-glow{ animation:none; }
+  .stall-steam path{ animation:none; opacity:.3; }
+  .stall-sign text{ animation:none; }
+  .stall-embers span{ animation:none; opacity:0; }
+  .cat-body, .cat-eye, .cat-tail, .stall-cat.is-speaking .cat-head{ animation:none; }
+  .casper-bubble{ transition:opacity .15s; transform:none; }
+  .casper-bubble.is-in{ transform:none; }
+  .stall-card, .stall-card.is-active, .stall-card.is-exiting{
+    transition:opacity .15s; transform:none;
+  }
+}

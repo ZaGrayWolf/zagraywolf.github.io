@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ZaGrayWolf — Abhuday Singh · ML × Robotics</title>
+<meta name="description" content="Kunwar Abhuday Singh (ZaGrayWolf) — ML, robotics, and things that see. A night-alley portfolio: work, projects, papers, resume, and a recommendations stall.">
+<link rel="canonical" href="https://zagraywolf.github.io/">
+<meta name="theme-color" content="#07070c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ZaGrayWolf — Abhuday Singh">
+<meta property="og:description" content="ML × Autonomy × Fullstack × things that matter. Step into the alley.">
+<meta property="og:url" content="https://zagraywolf.github.io/">
+<meta property="og:image" content="https://zagraywolf.github.io/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://zagraywolf.github.io/assets/img/og.png">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<!-- modulepreload: flatten the ES-module boot waterfall (all always-loaded; pure load speedup, no behaviour change). ?v= bumped by the site-wide sed. -->
+<link rel="modulepreload" href="/js/main.js?v=4.39">
+<link rel="modulepreload" href="/js/config.js?v=4.39">
+<link rel="modulepreload" href="/js/ticker.js?v=4.39">
+<link rel="modulepreload" href="/js/curator.js?v=4.39">
+<link rel="modulepreload" href="/js/cat.js?v=4.39">
+<link rel="modulepreload" href="/js/hud.js?v=4.39">
+<link rel="modulepreload" href="/js/transition.js?v=4.39">
+<link rel="modulepreload" href="/js/timeofday.js?v=4.39">
+<link rel="modulepreload" href="/js/narrator.js?v=4.39">
+<link rel="modulepreload" href="/js/analytics.js?v=4.39">
+<link rel="modulepreload" href="/js/palette.js?v=4.39">
+<link rel="modulepreload" href="/js/resume-preview.js?v=4.39">
+<link rel="modulepreload" href="/js/dynamic-menu.js?v=4.39">
+<link rel="stylesheet" href="css/tokens.css?v=4.39">
+<link rel="stylesheet" href="css/base.css?v=4.39">
+<link rel="stylesheet" href="css/alley.css?v=4.39">
+<link rel="stylesheet" href="css/game.css?v=4.39">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Kunwar Abhuday Singh",
+  "alternateName": "ZaGrayWolf",
+  "url": "https://zagraywolf.github.io/",
+  "email": "mailto:abhuday2656@gmail.com",
+  "jobTitle": "Software Engineer (ML, DevOps, Agentic AI)",
+  "alumniOf": "Manipal Institute of Technology",
+  "address": { "@type": "PostalAddress", "addressLocality": "Noida", "addressCountry": "IN" },
+  "sameAs": [
+    "https://github.com/ZaGrayWolf",
+    "https://www.linkedin.com/in/kunwar-abhuday-singh-280836284",
+    "https://www.kaggle.com/abhuday7",
+    "https://pypi.org/project/advance-conv-benchmarks/"
+  ]
+}
+</script>
+</head>
+<body data-page="alley" class="preboot">
+<a class="skip-link" href="#main">skip to street level</a>
+<a class="hud-resume" href="resume.html">RESUME ↓</a>
+
+<div class="alley">
+
+  <!-- L0 · sky -->
+  <div class="layer layer-sky" data-parallax="0.2" aria-hidden="true">
+<pre class="skyline">
+                               ╻                                                                 ╱╲
+                               ┼                                                        ╻       ╱  ╲
+                           ▄▄▄▄▄▄▄▄▄                             ╻                    ▄▄╀      ╱    ╲
+            ╻              ███████░█                             |                 ▄▄▄▄▄▄▄▄▄▄ |      |
+            |              ████░████                       ▄▄▄▄▄▄▄▄▄▄▄▄            █░███░████
+         ▄▄▄▄▄▄            █████████                       ████████████            ███░██████
+         ██████            █████████                       ████████░███            ████████░█
+         ██████            ███████░█ ▄▄▄▄▄▄▄▄▄▄▄▄          ████████████            ██████████ ▄▄▄▄▄▄▄▄▄▄
+         ██░███ ▄▄▄▄▄▄▄▄▄▄ █████████ ▓▓▓▓▓▓▓▓▓▓▓▓          ████████████ ▄▄▄▄▄▄▄▄▄▄ █░████████ ▓▓▓▓▓░▓▓▓▓
+         ██████ ▓▓▓▓▓▓▓▓▓▓ ██░██████ ▓░▓▓▓▓░▓▓▓▓▓ ▄▄▄▄▄▄▄▄ ████░██░████ ▓▓▓▓▓▓▓▓▓▓ █████░████ ▓▓▓▓▓▓▓▓▓▓
+▄▄▄▄▄▄▄▄ ██████ ▓▓▓▓▓▓▓▓▓▓ ████░░███ ▓▓▓▓▓▓▓▓▓▓▓▓ ▒▒▒▒▒▒▒▒ ████████████ ▓▓▓▓▓▓▓▓▓▓ ██████░█░█ ▓▓▓▓▓▓▓▓▓▓ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+▒▒▒▒▒▒▒▒ ██░░██ ▓░▓▓▓▓▓▓▓▓ ██░░███░█ ▓▓▓▓▓▓▓▓░░▓▓ ▒▒▒▒▒▒▒▒ ████████████ ▓▓▓▓▓▓▓▓▓▓ ██████████ ▓▓▓▓▓░▓▓▓▓ ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+▒░▒░▒░▒▒ ██████ ▓▓▓▓▓▓▓░▓▓ █████████ ▓▓▓▓▓▓▓▓▓▓▓▓ ▒▒▒▒▒▒▒▒ ████████████ ▓▓▓▓▓▓░▓▓▓ ██████████ ▓▓▓░▓▓▓░░▓ ▒▒░▒▒▒▒▒▒▒▒▒▒▒▒
+▒▒▒▒▒▒▒▒ ██████ ▓▓▓▓▓▓▓▓▓▓ █████████ ▓▓▓▓▓▓▓▓▓▓▓▓ ▒▒▒▒▒▒▒▒ ████████████ ▓▓▓▓▓▓▓▓▓▓ ██████████ ▓▓▓▓▓▓▓▓▓▓ ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+</pre>
+  </div>
+
+  <!-- L1 · layered skyline — Spider-Verse depth in the Tokyo-night palette -->
+  <!-- ── SKYLINE: revert by restoring this block from git (7bf1932) ── -->
+  <!-- inverted city hanging from the top (the upside-down mirror) -->
+  <div class="layer layer-skyline-top" data-parallax="0.16" aria-hidden="true">
+    <svg viewBox="0 0 1440 360" preserveAspectRatio="none">
+      <path class="sky-near" d="M0,360 L0,182 L45,182 L45,248 L88,248 L88,158 L130,158 L130,115 L175,115 L175,202 L215,202 L215,148 L258,148 L258,86 L305,86 L305,195 L348,195 L348,162 L390,162 L390,235 L432,235 L432,138 L475,138 L475,172 L518,172 L518,108 L562,108 L562,192 L605,192 L605,142 L648,142 L648,236 L688,236 L688,160 L730,160 L730,95 L775,95 L775,215 L818,215 L818,168 L860,168 L860,122 L905,122 L905,198 L948,198 L948,152 L990,152 L990,238 L1032,238 L1032,142 L1075,142 L1075,178 L1118,178 L1118,102 L1162,102 L1162,228 L1205,228 L1205,162 L1248,162 L1248,198 L1292,198 L1292,138 L1335,138 L1335,172 L1385,172 L1385,156 L1440,156 L1440,360 Z"/>
+    </svg>
+  </div>
+  <div class="layer layer-skyline-back" data-parallax="0.22" aria-hidden="true">
+    <svg viewBox="0 0 1440 360" preserveAspectRatio="none">
+      <path class="sky-far" d="M0,360 L0,310 L180,310 L180,296 L360,296 L360,315 L540,315 L540,300 L720,300 L720,308 L900,308 L900,295 L1080,295 L1080,305 L1260,305 L1260,298 L1440,298 L1440,360 Z"/>
+      <path class="sky-mid" d="M0,360 L0,270 L68,270 L68,305 L140,305 L140,258 L218,258 L218,285 L295,285 L295,250 L378,250 L378,280 L458,280 L458,262 L535,262 L535,288 L615,288 L615,254 L698,254 L698,282 L778,282 L778,264 L862,264 L862,288 L942,288 L942,257 L1025,257 L1025,282 L1105,282 L1105,268 L1188,268 L1188,294 L1268,294 L1268,270 L1350,270 L1350,285 L1440,285 L1440,360 Z"/>
+      <g>
+        <rect class="sky-win" x="148" y="272" width="6" height="8"/><rect class="sky-win dim" x="162" y="272" width="6" height="8"/><rect class="sky-win" x="176" y="272" width="6" height="8"/>
+        <rect class="sky-win dim" x="464" y="276" width="6" height="8"/><rect class="sky-win" x="478" y="276" width="6" height="8"/><rect class="sky-win" x="492" y="276" width="6" height="8"/>
+        <rect class="sky-win" x="704" y="278" width="6" height="8"/><rect class="sky-win dim" x="718" y="278" width="6" height="8"/><rect class="sky-win" x="704" y="293" width="6" height="8"/>
+        <rect class="sky-win dim" x="948" y="271" width="6" height="8"/><rect class="sky-win" x="962" y="271" width="6" height="8"/><rect class="sky-win" x="976" y="271" width="6" height="8"/>
+        <rect class="sky-win" x="1194" y="282" width="6" height="8"/><rect class="sky-win dim" x="1208" y="282" width="6" height="8"/><rect class="sky-win" x="1275" y="284" width="6" height="8"/>
+      </g>
+    </svg>
+  </div>
+  <!-- mid-depth layer — remove this div + .layer-skyline-mid in alley.css to revert -->
+  <div class="layer layer-skyline-mid" data-parallax="0.35" aria-hidden="true">
+    <svg viewBox="0 0 1440 360" preserveAspectRatio="none">
+      <path class="sky-mid" d="M0,360 L0,222 L56,222 L56,268 L112,268 L112,190 L165,190 L165,245 L218,245 L218,205 L265,205 L265,178 L320,178 L320,242 L372,242 L372,196 L420,196 L420,268 L468,268 L468,212 L515,212 L515,186 L568,186 L568,234 L618,234 L618,192 L665,192 L665,220 L715,220 L715,178 L765,178 L765,248 L815,248 L815,204 L862,204 L862,218 L910,218 L910,186 L960,186 L960,255 L1008,255 L1008,208 L1055,208 L1055,232 L1102,232 L1102,194 L1152,194 L1152,228 L1198,228 L1198,214 L1248,214 L1248,238 L1298,238 L1298,192 L1348,192 L1348,222 L1440,222 L1440,360 Z"/>
+      <g>
+        <rect class="sky-win" x="116" y="203" width="8" height="8"/><rect class="sky-win" x="130" y="203" width="8" height="8"/><rect class="sky-win dim" x="144" y="203" width="8" height="8"/><rect class="sky-win dim" x="116" y="218" width="8" height="8"/><rect class="sky-win" x="130" y="218" width="8" height="8"/>
+        <rect class="sky-win" x="269" y="192" width="8" height="8"/><rect class="sky-win dim" x="283" y="192" width="8" height="8"/><rect class="sky-win" x="297" y="192" width="8" height="8"/><rect class="sky-win dim" x="269" y="208" width="8" height="8"/><rect class="sky-win" x="283" y="208" width="8" height="8"/><rect class="sky-win" x="297" y="208" width="8" height="8"/>
+        <rect class="sky-win" x="519" y="200" width="8" height="8"/><rect class="sky-win dim" x="533" y="200" width="8" height="8"/><rect class="sky-win" x="547" y="200" width="8" height="8"/><rect class="sky-win dim" x="519" y="216" width="8" height="8"/><rect class="sky-win" x="533" y="216" width="8" height="8"/>
+        <rect class="sky-win" x="719" y="192" width="8" height="8"/><rect class="sky-win" x="733" y="192" width="8" height="8"/><rect class="sky-win dim" x="747" y="192" width="8" height="8"/><rect class="sky-win warm" x="719" y="208" width="8" height="8"/><rect class="sky-win dim" x="733" y="208" width="8" height="8"/>
+        <rect class="sky-win" x="914" y="200" width="8" height="8"/><rect class="sky-win dim" x="928" y="200" width="8" height="8"/><rect class="sky-win" x="942" y="200" width="8" height="8"/><rect class="sky-win dim" x="914" y="216" width="8" height="8"/><rect class="sky-win" x="928" y="216" width="8" height="8"/>
+        <rect class="sky-win" x="1106" y="208" width="8" height="8"/><rect class="sky-win dim" x="1120" y="208" width="8" height="8"/><rect class="sky-win" x="1134" y="208" width="8" height="8"/><rect class="sky-win" x="1106" y="222" width="8" height="8"/><rect class="sky-win dim" x="1120" y="222" width="8" height="8"/>
+        <rect class="sky-win dim" x="1302" y="206" width="8" height="8"/><rect class="sky-win" x="1316" y="206" width="8" height="8"/><rect class="sky-win" x="1330" y="206" width="8" height="8"/><rect class="sky-win" x="1302" y="220" width="8" height="8"/><rect class="sky-win dim" x="1316" y="220" width="8" height="8"/>
+      </g>
+    </svg>
+  </div>
+  <div class="layer layer-skyline-front" data-parallax="0.5" aria-hidden="true">
+    <svg viewBox="0 0 1440 360" preserveAspectRatio="none">
+      <!-- chromatic-aberration edge: cyan left, magenta right — ±5px for stronger glitch -->
+      <path class="sky-cyan" transform="translate(-5 0)" d="M0,360 L0,182 L45,182 L45,248 L88,248 L88,158 L130,158 L130,115 L175,115 L175,202 L215,202 L215,148 L258,148 L258,86 L305,86 L305,195 L348,195 L348,162 L390,162 L390,235 L432,235 L432,138 L475,138 L475,172 L518,172 L518,108 L562,108 L562,192 L605,192 L605,142 L648,142 L648,236 L688,236 L688,160 L730,160 L730,95 L775,95 L775,215 L818,215 L818,168 L860,168 L860,122 L905,122 L905,198 L948,198 L948,152 L990,152 L990,238 L1032,238 L1032,142 L1075,142 L1075,178 L1118,178 L1118,102 L1162,102 L1162,228 L1205,228 L1205,162 L1248,162 L1248,198 L1292,198 L1292,138 L1335,138 L1335,172 L1385,172 L1385,156 L1440,156 L1440,360 Z"/>
+      <path class="sky-mag" transform="translate(5 0)" d="M0,360 L0,182 L45,182 L45,248 L88,248 L88,158 L130,158 L130,115 L175,115 L175,202 L215,202 L215,148 L258,148 L258,86 L305,86 L305,195 L348,195 L348,162 L390,162 L390,235 L432,235 L432,138 L475,138 L475,172 L518,172 L518,108 L562,108 L562,192 L605,192 L605,142 L648,142 L648,236 L688,236 L688,160 L730,160 L730,95 L775,95 L775,215 L818,215 L818,168 L860,168 L860,122 L905,122 L905,198 L948,198 L948,152 L990,152 L990,238 L1032,238 L1032,142 L1075,142 L1075,178 L1118,178 L1118,102 L1162,102 L1162,228 L1205,228 L1205,162 L1248,162 L1248,198 L1292,198 L1292,138 L1335,138 L1335,172 L1385,172 L1385,156 L1440,156 L1440,360 Z"/>
+      <path class="sky-near" d="M0,360 L0,182 L45,182 L45,248 L88,248 L88,158 L130,158 L130,115 L175,115 L175,202 L215,202 L215,148 L258,148 L258,86 L305,86 L305,195 L348,195 L348,162 L390,162 L390,235 L432,235 L432,138 L475,138 L475,172 L518,172 L518,108 L562,108 L562,192 L605,192 L605,142 L648,142 L648,236 L688,236 L688,160 L730,160 L730,95 L775,95 L775,215 L818,215 L818,168 L860,168 L860,122 L905,122 L905,198 L948,198 L948,152 L990,152 L990,238 L1032,238 L1032,142 L1075,142 L1075,178 L1118,178 L1118,102 L1162,102 L1162,228 L1205,228 L1205,162 L1248,162 L1248,198 L1292,198 L1292,138 L1335,138 L1335,172 L1385,172 L1385,156 L1440,156 L1440,360 Z"/>
+      <!-- rooftop antennae + water towers -->
+      <g class="sky-detail">
+        <line x1="152" y1="115" x2="152" y2="85"/>
+        <line x1="236" y1="148" x2="236" y2="120"/>
+        <line x1="278" y1="86" x2="278" y2="55"/>
+        <line x1="463" y1="138" x2="463" y2="110"/>
+        <line x1="540" y1="108" x2="540" y2="78"/>
+        <line x1="626" y1="142" x2="626" y2="116"/>
+        <line x1="752" y1="95" x2="752" y2="62"/>
+        <line x1="882" y1="122" x2="882" y2="95"/>
+        <line x1="969" y1="152" x2="969" y2="124"/>
+        <line x1="1053" y1="142" x2="1053" y2="115"/>
+        <line x1="1140" y1="102" x2="1140" y2="72"/>
+        <line x1="1226" y1="162" x2="1226" y2="136"/>
+        <line x1="1312" y1="138" x2="1312" y2="110"/>
+        <line x1="1403" y1="156" x2="1403" y2="130"/>
+      </g>
+      <path class="sky-near" d="M270,86 L270,71 L296,71 L296,86 Z"/>
+      <path class="sky-near" d="M742,95 L742,80 L768,80 L768,95 Z"/>
+      <!-- dense lit windows -->
+      <g>
+        <rect class="sky-win" x="92" y="172" width="8" height="10"/><rect class="sky-win" x="106" y="172" width="8" height="10"/><rect class="sky-win dim" x="120" y="172" width="8" height="10"/><rect class="sky-win dim" x="92" y="190" width="8" height="10"/>
+        <rect class="sky-win" x="134" y="129" width="8" height="10"/><rect class="sky-win" x="148" y="129" width="8" height="10"/><rect class="sky-win dim" x="162" y="129" width="8" height="10"/>
+        <rect class="sky-win dim" x="134" y="147" width="8" height="10"/><rect class="sky-win" x="148" y="147" width="8" height="10"/><rect class="sky-win" x="162" y="147" width="8" height="10"/>
+        <rect class="sky-win" x="134" y="165" width="8" height="10"/><rect class="sky-win dim" x="162" y="165" width="8" height="10"/>
+        <rect class="sky-win dim" x="148" y="183" width="8" height="10"/>
+        <rect class="sky-win" x="219" y="162" width="8" height="10"/><rect class="sky-win dim" x="232" y="162" width="8" height="10"/><rect class="sky-win" x="245" y="162" width="8" height="10"/>
+        <rect class="sky-win dim" x="219" y="180" width="8" height="10"/><rect class="sky-win" x="232" y="180" width="8" height="10"/>
+        <rect class="sky-win" x="219" y="197" width="8" height="10"/>
+        <rect class="sky-win" x="262" y="100" width="8" height="10"/><rect class="sky-win" x="276" y="100" width="8" height="10"/><rect class="sky-win dim" x="290" y="100" width="8" height="10"/>
+        <rect class="sky-win dim" x="262" y="118" width="8" height="10"/><rect class="sky-win" x="276" y="118" width="8" height="10"/><rect class="sky-win" x="290" y="118" width="8" height="10"/>
+        <rect class="sky-win" x="262" y="136" width="8" height="10"/><rect class="sky-win dim" x="276" y="136" width="8" height="10"/><rect class="sky-win" x="290" y="136" width="8" height="10"/>
+        <rect class="sky-win" x="262" y="154" width="8" height="10"/><rect class="sky-win warm" x="276" y="154" width="8" height="10"/>
+        <rect class="sky-win dim" x="262" y="172" width="8" height="10"/>
+        <rect class="sky-win" x="352" y="176" width="8" height="10"/><rect class="sky-win dim" x="366" y="176" width="8" height="10"/><rect class="sky-win" x="379" y="176" width="8" height="10"/>
+        <rect class="sky-win dim" x="352" y="194" width="8" height="10"/><rect class="sky-win" x="366" y="194" width="8" height="10"/>
+        <rect class="sky-win" x="436" y="152" width="8" height="10"/><rect class="sky-win dim" x="450" y="152" width="8" height="10"/><rect class="sky-win" x="463" y="152" width="8" height="10"/>
+        <rect class="sky-win dim" x="436" y="170" width="8" height="10"/><rect class="sky-win" x="450" y="170" width="8" height="10"/><rect class="sky-win" x="463" y="170" width="8" height="10"/>
+        <rect class="sky-win" x="522" y="122" width="8" height="10"/><rect class="sky-win" x="536" y="122" width="8" height="10"/><rect class="sky-win dim" x="550" y="122" width="8" height="10"/>
+        <rect class="sky-win dim" x="522" y="140" width="8" height="10"/><rect class="sky-win" x="536" y="140" width="8" height="10"/><rect class="sky-win" x="550" y="140" width="8" height="10"/>
+        <rect class="sky-win" x="522" y="158" width="8" height="10"/><rect class="sky-win dim" x="550" y="158" width="8" height="10"/>
+        <rect class="sky-win dim" x="536" y="175" width="8" height="10"/>
+        <rect class="sky-win" x="609" y="156" width="8" height="10"/><rect class="sky-win dim" x="623" y="156" width="8" height="10"/><rect class="sky-win" x="636" y="156" width="8" height="10"/>
+        <rect class="sky-win dim" x="609" y="174" width="8" height="10"/><rect class="sky-win" x="623" y="174" width="8" height="10"/>
+        <rect class="sky-win" x="609" y="191" width="8" height="10"/>
+        <rect class="sky-win" x="692" y="174" width="8" height="10"/><rect class="sky-win dim" x="706" y="174" width="8" height="10"/><rect class="sky-win" x="720" y="174" width="8" height="10"/>
+        <rect class="sky-win dim" x="692" y="192" width="8" height="10"/><rect class="sky-win" x="706" y="192" width="8" height="10"/>
+        <rect class="sky-win" x="734" y="109" width="8" height="10"/><rect class="sky-win" x="748" y="109" width="8" height="10"/><rect class="sky-win dim" x="762" y="109" width="8" height="10"/>
+        <rect class="sky-win dim" x="734" y="127" width="8" height="10"/><rect class="sky-win" x="748" y="127" width="8" height="10"/><rect class="sky-win" x="762" y="127" width="8" height="10"/>
+        <rect class="sky-win" x="734" y="145" width="8" height="10"/><rect class="sky-win warm" x="762" y="145" width="8" height="10"/>
+        <rect class="sky-win dim" x="748" y="163" width="8" height="10"/><rect class="sky-win" x="734" y="163" width="8" height="10"/>
+        <rect class="sky-win" x="734" y="181" width="8" height="10"/><rect class="sky-win dim" x="762" y="181" width="8" height="10"/>
+        <rect class="sky-win" x="822" y="182" width="8" height="10"/><rect class="sky-win dim" x="836" y="182" width="8" height="10"/><rect class="sky-win" x="850" y="182" width="8" height="10"/>
+        <rect class="sky-win dim" x="822" y="200" width="8" height="10"/><rect class="sky-win" x="836" y="200" width="8" height="10"/>
+        <rect class="sky-win" x="864" y="136" width="8" height="10"/><rect class="sky-win dim" x="878" y="136" width="8" height="10"/><rect class="sky-win" x="892" y="136" width="8" height="10"/>
+        <rect class="sky-win dim" x="864" y="154" width="8" height="10"/><rect class="sky-win" x="878" y="154" width="8" height="10"/><rect class="sky-win" x="892" y="154" width="8" height="10"/>
+        <rect class="sky-win" x="864" y="172" width="8" height="10"/><rect class="sky-win dim" x="892" y="172" width="8" height="10"/>
+        <rect class="sky-win" x="952" y="166" width="8" height="10"/><rect class="sky-win dim" x="966" y="166" width="8" height="10"/><rect class="sky-win" x="980" y="166" width="8" height="10"/>
+        <rect class="sky-win dim" x="952" y="184" width="8" height="10"/><rect class="sky-win" x="966" y="184" width="8" height="10"/>
+        <rect class="sky-win" x="1036" y="156" width="8" height="10"/><rect class="sky-win dim" x="1050" y="156" width="8" height="10"/><rect class="sky-win" x="1064" y="156" width="8" height="10"/>
+        <rect class="sky-win dim" x="1036" y="174" width="8" height="10"/><rect class="sky-win" x="1050" y="174" width="8" height="10"/>
+        <rect class="sky-win" x="1122" y="116" width="8" height="10"/><rect class="sky-win" x="1136" y="116" width="8" height="10"/><rect class="sky-win dim" x="1150" y="116" width="8" height="10"/>
+        <rect class="sky-win dim" x="1122" y="134" width="8" height="10"/><rect class="sky-win" x="1136" y="134" width="8" height="10"/><rect class="sky-win" x="1150" y="134" width="8" height="10"/>
+        <rect class="sky-win" x="1122" y="152" width="8" height="10"/><rect class="sky-win dim" x="1136" y="152" width="8" height="10"/><rect class="sky-win warm" x="1150" y="152" width="8" height="10"/>
+        <rect class="sky-win" x="1122" y="170" width="8" height="10"/><rect class="sky-win dim" x="1136" y="170" width="8" height="10"/>
+        <rect class="sky-win" x="1209" y="176" width="8" height="10"/><rect class="sky-win dim" x="1223" y="176" width="8" height="10"/><rect class="sky-win" x="1236" y="176" width="8" height="10"/>
+        <rect class="sky-win dim" x="1209" y="194" width="8" height="10"/><rect class="sky-win" x="1223" y="194" width="8" height="10"/>
+        <rect class="sky-win" x="1296" y="152" width="8" height="10"/><rect class="sky-win dim" x="1310" y="152" width="8" height="10"/><rect class="sky-win" x="1324" y="152" width="8" height="10"/>
+        <rect class="sky-win dim" x="1296" y="170" width="8" height="10"/><rect class="sky-win" x="1310" y="170" width="8" height="10"/>
+        <rect class="sky-win" x="1389" y="170" width="8" height="10"/><rect class="sky-win dim" x="1403" y="170" width="8" height="10"/><rect class="sky-win" x="1417" y="170" width="8" height="10"/>
+        <rect class="sky-win dim" x="1389" y="188" width="8" height="10"/><rect class="sky-win" x="1403" y="188" width="8" height="10"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- embedded glyphs strewn into the scene (signage/graffiti) -->
+  <div class="layer layer-glyphs" data-parallax="0.62" aria-hidden="true">
+    <span class="g-sm" style="left:7%;  top:19%">ア</span>
+    <span class="g-bright" style="left:21%; top:34%">◉</span>
+    <span style="left:13%; top:63%">カ</span>
+    <span class="g-sm" style="left:31%; top:82%">十</span>
+    <span class="g-lg" style="left:41%; top:13%">サ</span>
+    <span style="left:49%; top:71%">╱╲</span>
+    <span class="g-sm" style="left:58%; top:27%">ナ</span>
+    <span class="g-bright g-sm" style="left:67%; top:86%">ハ</span>
+    <span style="left:75%; top:17%">マ</span>
+    <span class="g-lg" style="left:84%; top:54%">ヤ</span>
+    <span class="g-sm" style="left:92%; top:37%">◇</span>
+    <span style="left:95%; top:73%">ラ</span>
+    <span class="g-sm" style="left:9%;  top:87%">┌┐</span>
+    <span class="g-bright g-sm" style="left:88%; top:11%">ワ</span>
+    <span class="g-sm" style="left:70%; top:46%">二</span>
+    <span style="left:35%; top:49%">◆</span>
+    <!-- NEON SIGN · remove this line + the CSS block in alley.css to revert -->
+    <span class="neon-wall-sign" style="left:4%; top:40%">狼</span>
+  </div>
+
+  <main id="main">
+    <header class="hero" data-narrate="entering the street">
+      <h1 class="name-sign" aria-label="K Abhuday / ZAGRAYWOLF"><span class="name-en">K Abhuday</span> <span class="name-sep" aria-hidden="true">/</span> <span class="name-tag">ZAGRAYWOLF</span></h1>
+      <p class="hero-sub">ML × Autonomy × Fullstack × things that matter.</p>
+    </header>
+
+    <!-- L2 · the five signs -->
+    <nav class="layer layer-signs" data-parallax="0.75" aria-label="Chapters" data-narrate="reading the signs">
+      <a class="sign" href="work.html" aria-label="WORK — chapter 1" data-ch="CH.1"><b data-scramble>WORK</b></a>
+      <a class="sign" href="projects.html" aria-label="PROJECTS — chapter 2" data-ch="CH.2"><b data-scramble>PROJECTS</b></a>
+      <a class="sign" href="papers.html" aria-label="WINS — chapter 3" data-ch="CH.3"><b data-scramble>WINS</b></a>
+      <a class="sign" href="resume.html" aria-label="RESUME — chapter 4" data-ch="CH.4"><b data-scramble>RESUME</b></a>
+      <a class="sign" href="stall.html" aria-label="THE STALL — chapter 5" data-ch="CH.5"><b data-scramble>STALL</b></a>
+      <span class="sign-break" aria-hidden="true"></span><!-- flex row break: the special hangs on its own line -->
+      <a class="sign sign--special" href="oneshot.html" aria-label="CASE STUDY — the one-shot special" data-ch="ONE-SHOT"><b data-scramble>CASE STUDY</b></a>
+    </nav>
+
+    <!-- L3 · street level -->
+    <div class="layer layer-street" data-parallax="1">
+      <a class="stall" href="stall.html" aria-label="The stall — open now" data-narrate="approaching the stall">
+        <svg class="stall-svg" viewBox="0 0 260 204" aria-hidden="true">
+          <defs>
+            <radialGradient id="stall-warm" cx="50%" cy="85%" r="75%">
+              <stop offset="0%" stop-color="var(--amber)" stop-opacity=".30"/>
+              <stop offset="55%" stop-color="var(--amber)" stop-opacity=".10"/>
+              <stop offset="100%" stop-color="var(--amber)" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <!-- steam over the bowls -->
+          <g class="stall-steam" fill="none" stroke-linecap="round" stroke-width="2.5">
+            <path d="M118 104 q -5 -10 1 -19 q 6 -9 0 -18"/>
+            <path d="M132 102 q 6 -9 -1 -18 q -6 -9 1 -17"/>
+            <path d="M170 104 q -5 -11 1 -20 q 5 -8 0 -16"/>
+          </g>
+
+          <!-- roof -->
+          <path class="s-ink" d="M12 50 Q 130 26 248 50 L 244 58 Q 130 36 16 58 Z"/>
+          <!-- awning fringe -->
+          <g class="stall-fringe">
+            <rect x="20"  y="55" width="20" height="14"/><rect x="40" y="56" width="20" height="12"/>
+            <rect x="60"  y="55" width="20" height="14"/><rect x="80" y="56" width="20" height="12"/>
+            <rect x="100" y="55" width="20" height="14"/><rect x="120" y="56" width="20" height="12"/>
+            <rect x="140" y="55" width="20" height="14"/><rect x="160" y="56" width="20" height="12"/>
+            <rect x="180" y="55" width="20" height="14"/><rect x="200" y="56" width="20" height="12"/>
+            <rect x="220" y="55" width="20" height="14"/>
+          </g>
+
+          <!-- neon-trimmed STALL sign on the roof -->
+          <g class="stall-sign">
+            <rect x="93" y="8" width="74" height="26" rx="3"/>
+            <text x="130" y="26" text-anchor="middle">STALL</text>
+          </g>
+
+          <!-- posts -->
+          <rect class="s-ink" x="34" y="56" width="5" height="62"/>
+          <rect class="s-ink" x="221" y="56" width="5" height="62"/>
+
+          <!-- warm interior glow -->
+          <rect x="39" y="60" width="182" height="56" fill="url(#stall-warm)"/>
+
+          <!-- noren curtain strips -->
+          <g class="stall-curtain">
+            <rect x="46"  y="60" width="22" height="27"/>
+            <rect x="72"  y="60" width="22" height="31"/>
+            <rect x="98"  y="60" width="22" height="28"/>
+            <rect x="124" y="60" width="22" height="32"/>
+            <rect x="150" y="60" width="22" height="27"/>
+            <rect x="176" y="60" width="22" height="30"/>
+          </g>
+
+          <!-- menu board -->
+          <g class="stall-board">
+            <rect x="50" y="64" width="34" height="44"/>
+            <line x1="56" y1="74" x2="78" y2="74"/>
+            <line x1="56" y1="83" x2="74" y2="83"/>
+            <line x1="56" y1="92" x2="78" y2="92"/>
+            <line x1="56" y1="101" x2="70" y2="101"/>
+          </g>
+
+          <!-- hanging lantern -->
+          <g class="stall-lamp">
+            <line class="s-line" x1="232" y1="56" x2="232" y2="66"/>
+            <ellipse class="lamp-glow" cx="232" cy="82" rx="22" ry="26"/>
+            <ellipse class="lamp-body" cx="232" cy="82" rx="11" ry="15"/>
+            <path class="lamp-rib" d="M222 76 q 10 4 20 0 M222 88 q 10 4 20 0"/>
+          </g>
+
+          <!-- bowls + chopsticks on the counter -->
+          <g class="stall-bowls">
+            <path d="M108 112 a 14 9 0 0 0 28 0 z"/>
+            <path d="M160 112 a 14 9 0 0 0 28 0 z"/>
+            <line x1="140" y1="103" x2="156" y2="99"/>
+          </g>
+
+          <!-- counter + cart body -->
+          <rect class="s-ink" x="24" y="116" width="212" height="10" rx="2"/>
+          <g class="stall-bodywood">
+            <rect x="32" y="126" width="196" height="48"/>
+            <line x1="32" y1="142" x2="228" y2="142"/>
+            <line x1="32" y1="158" x2="228" y2="158"/>
+          </g>
+
+          <!-- stools -->
+          <g class="stall-stool">
+            <rect x="78" y="146" width="28" height="7" rx="2"/>
+            <line x1="83" y1="153" x2="83" y2="176"/><line x1="101" y1="153" x2="101" y2="176"/>
+            <rect x="152" y="146" width="28" height="7" rx="2"/>
+            <line x1="157" y1="153" x2="157" y2="176"/><line x1="175" y1="153" x2="175" y2="176"/>
+          </g>
+
+          <!-- wheels -->
+          <g class="stall-wheel">
+            <circle cx="62" cy="182" r="15"/><circle cx="198" cy="182" r="15"/>
+            <line x1="62" y1="170" x2="62" y2="194"/><line x1="50" y1="182" x2="74" y2="182"/>
+            <line x1="198" y1="170" x2="198" y2="194"/><line x1="186" y1="182" x2="210" y2="182"/>
+          </g>
+        </svg>
+        <span class="stall-tag">OPEN NOW</span>
+      </a>
+      <button class="arcade" type="button" aria-label="GAME CAT — play NEKO CATCHER">
+        <i aria-hidden="true">GAME</i>
+        <b aria-hidden="true">CAT</b>
+      </button>
+      <div class="puddle" aria-hidden="true"><span>K Abhuday/ZAGRAYWOLF</span></div>
+      <a class="alley-down" href="#contact">▼ DAWN</a>
+    </div>
+  </main>
+</div>
+
+<!-- the signs go out at dawn — contact -->
+<section class="dawn" id="contact" aria-label="Contact" data-narrate="watching the lights dim">
+  <h2 class="dawn-title">the signs go out at dawn.</h2>
+  <p><span class="availability">OPEN TO WORK · ML / DevOps / Agentic AI</span></p>
+  <p class="dawn-sub">but these stay on. find me:</p>
+  <ul class="dawn-signs">
+    <li><a class="dawn-sign" href="https://github.com/ZaGrayWolf" rel="me">GITHUB</a></li>
+    <li><a class="dawn-sign" href="https://www.linkedin.com/in/kunwar-abhuday-singh-280836284" rel="me">LINKEDIN</a></li>
+    <li><a class="dawn-sign" href="https://www.kaggle.com/abhuday7" rel="me">KAGGLE</a></li>
+    <li><a class="dawn-sign" href="mailto:abhuday2656@gmail.com">MAIL</a></li>
+  </ul>
+  <p style="margin-top:var(--s-6)"><a class="contact-cta" href="mailto:abhuday2656@gmail.com">✉ let's talk →</a></p>
+
+  <!-- leave a note — JS posts it to the (owner-run) backend; with JS off the
+       mailto action opens the visitor's mail client. dawn-contact styled in alley.css -->
+  <form class="dawn-contact" id="contact-form"
+        action="mailto:abhuday2656@gmail.com" method="post" enctype="text/plain">
+    <p class="dawn-sub">or leave a note right here:</p>
+    <input id="cf-name" name="name" type="text" placeholder="name" autocomplete="name"
+           aria-label="Your name" required>
+    <input id="cf-email" name="email" type="email" placeholder="email (so I can reply)"
+           autocomplete="email" aria-label="Your email" required>
+    <textarea id="cf-msg" name="message" placeholder="what's on your mind?" rows="3"
+              aria-label="Your message" required></textarea>
+    <!-- honeypot: real people leave it blank; bots fill it -->
+    <input class="cf-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button type="submit" class="contact-cta">send →</button>
+    <p class="cf-status" id="cf-status" role="status" aria-live="polite"></p>
+  </form>
+
+  <p class="dawn-wave" aria-hidden="true">o/</p>
+  <p class="dawn-fine">© 2026 Kunwar Abhuday Singh · built by hand, no framework, one cat named casper · anonymous analytics, no cookies</p>
+
+  <!-- JoJo-style "About me" arrow → the about page (hand-built SVG, no box) -->
+  <a class="tbc tbc--center" href="about.html" aria-label="About me">
+    <svg class="tbc-svg" viewBox="0 0 300 84" role="img" aria-hidden="true">
+      <g fill="currentColor">
+        <polygon points="11,26 21,26 11,58 1,58"/>
+        <polygon points="31,26 39,26 29,58 21,58"/>
+        <path d="M54,28 L236,28 L236,15 L298,43 L236,71 L236,58 L54,58 Z"/>
+      </g>
+      <text x="145" y="52" text-anchor="middle">About me</text>
+    </svg>
+  </a>
+</section>
+
+<!-- HUD (A7) — static links so fast travel works without JS -->
+<nav class="hud-map" aria-label="Site minimap">[<a href="index.html" data-node="alley" aria-label="Alley — home">#</a>]─[<a href="work.html" data-node="work" aria-label="Chapter 1 — work">1</a>]─[<a href="projects.html" data-node="projects" aria-label="Chapter 2 — projects">2</a>]─[<a href="papers.html" data-node="papers" aria-label="Chapter 3 — wins">3</a>]─[<a href="resume.html" data-node="resume" aria-label="Chapter 4 — resume">4</a>]─[<a href="stall.html" data-node="stall" aria-label="Chapter 5 — the stall">5</a>]</nav>
+<p class="hud-state" aria-live="off">curator://<b>waking</b></p>
+
+<canvas id="curator-canvas" class="fx-canvas" aria-hidden="true"></canvas>
+<div class="scan" aria-hidden="true"></div>
+
+<script type="module" src="js/main.js?v=4.39"></script>
+</body>
+</html>

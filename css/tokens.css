@@ -1,0 +1,67 @@
+/* A2 — design tokens. Single source for color/type/space/z. No magic values elsewhere. */
+:root{
+  /* night world */
+  --bg:        #07070c;
+  --bg-dawn:   #11131d;   /* contact scene */
+  --neon-cyan: #7df9ff;   /* curator, primary signs */
+  --neon-mag:  #ff3da6;   /* hover, startle, alerts */
+  --amber:     #ffb347;   /* the stall ONLY (+ cat collar, session counter) */
+  --dim:       #2a3142;   /* ambient glyphs */
+  --label:     #8a93a8;   /* HUD text */
+
+  /* paper world */
+  --paper:     #f6f4ef;
+  --ink:       #111111;
+  --ink-soft:  #3a3a3a;
+
+  /* type scale (1.25 ratio, 16px base) */
+  --t-0: 0.8rem;  --t-1: 1rem;  --t-2: 1.25rem;
+  --t-3: 1.563rem; --t-4: 1.953rem; --t-5: 2.441rem; --t-6: 3.052rem;
+
+  /* type faces (A3) */
+  --mono: "MS Gothic","Osaka-Mono","Noto Sans Mono CJK JP",ui-monospace,monospace;
+
+  /* motion vocabulary — every transition/animation draws from these */
+  --ease-out:    cubic-bezier(.22,.61,.36,1);
+  --ease-in-out: cubic-bezier(.65,.05,.36,1);
+  --dur-1: .15s;  /* taps, focus */
+  --dur-2: .25s;  /* hovers, wakes */
+  --dur-3: .6s;   /* scene shifts */
+  --dur-4: .8s;   /* veils, reveals */
+
+  /* spacing (8px grid) */
+  --s-1: .5rem; --s-2: 1rem; --s-3: 1.5rem; --s-4: 2rem; --s-6: 3rem; --s-8: 4rem;
+
+  /* z-layers (fixed, documented, never improvised) */
+  --z-flows: 1;      /* helix/streams canvas */
+  --z-content: 10;   /* panels, text */
+  --z-cat: 50;
+  --z-curator: 60;
+  --z-hud: 70;       /* minimap, state line */
+  --z-transition: 90;
+  --z-game: 100;     /* CRT window */
+
+  /* time-of-day: js/timeofday.js sets body[data-tod]; the map below tints the
+     night sky per phase, drawn only from the tokens above (no magic colors).
+     Default = deep night, so JS-off / unset reads exactly as before. */
+  --tod-bg:   var(--bg);
+  --tod-haze: transparent;
+  --tod-day:  0;   /* 0 night … 1 bright midday — js/timeofday.js drives the alley day-cycle */
+}
+
+/* phase → night-sky tint. The alley stays nocturnal; these are subtle shifts
+   in the *quality* of the dark, never a bright day. --tod-haze is the horizon
+   glow color the scene reaches for. */
+/* Tokyo-night CRT palette: the shift stays in the COOL family at every hour
+   (indigo bg-dawn / blue-grey dim / cyan) — never warm, so the alley keeps its
+   bluish neon look around the clock. Subtle by design (87–100% base). */
+body[data-tod="dead-night"]{ --tod-bg: var(--bg); --tod-haze: color-mix(in srgb, var(--neon-cyan) 18%, transparent); }
+body[data-tod="predawn"]   { --tod-bg: color-mix(in srgb, var(--bg) 90%, var(--bg-dawn)); --tod-haze: color-mix(in srgb, var(--neon-cyan) 22%, var(--bg-dawn)); }
+body[data-tod="dawn"]      { --tod-bg: color-mix(in srgb, var(--bg) 89%, var(--bg-dawn)); --tod-haze: color-mix(in srgb, var(--neon-cyan) 30%, var(--bg-dawn)); }
+body[data-tod="day"]       { --tod-bg: color-mix(in srgb, var(--bg) 87%, var(--dim));     --tod-haze: color-mix(in srgb, var(--neon-cyan) 28%, var(--dim)); }
+body[data-tod="dusk"]      { --tod-bg: color-mix(in srgb, var(--bg) 89%, var(--bg-dawn)); --tod-haze: color-mix(in srgb, var(--neon-cyan) 24%, var(--bg-dawn)); }
+body[data-tod="night"]     { --tod-bg: color-mix(in srgb, var(--bg) 93%, var(--bg-dawn)); --tod-haze: color-mix(in srgb, var(--neon-cyan) 30%, var(--bg)); }
+
+/* phones: nudge the smallest text up (~+7%) so mono meta/caption lines read
+   better; desktop keeps 0.8rem. */
+@media (max-width:700px){ :root{ --t-0: 0.86rem; } }

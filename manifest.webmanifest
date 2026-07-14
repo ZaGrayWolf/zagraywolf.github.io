@@ -1,0 +1,15 @@
+{
+  "name": "ZaGrayWolf — Kunwar Abhuday Singh",
+  "short_name": "ZaGrayWolf",
+  "description": "A night Tokyo back-alley portfolio: ML, robotics, quant, and the DevOps that ships it.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#07070c",
+  "theme_color": "#07070c",
+  "icons": [
+    { "src": "/assets/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/assets/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

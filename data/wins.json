@@ -1,0 +1,57 @@
+[
+  {
+    "class": "panel--8 panel--tone",
+    "narrate": "the biggest win · Germany, Top 8",
+    "caption": "THE BIGGEST WIN · ROBOCUP@WORK 2025 · MAGDEBURG, GERMANY",
+    "title": "24 countries. One robot from India.",
+    "body": "The international robotics finals at Otto-von-Guericke University. Team RoboManipal entered as the only team from the subcontinent and finished inside the top eight. Quarterfinals at the world stage.",
+    "metric": "TOP 8"
+  },
+  {
+    "class": "panel--4 panel--tilt",
+    "narrate": "the return · Brazil, Top 10",
+    "caption": "THE RETURN · ROBOCUP@WORK 2025 · SÃO PAULO, BRAZIL",
+    "title": "Same robot. Different hemisphere.",
+    "body": "The year's second international final. The robot still knew where it was.",
+    "metric": "TOP 10"
+  },
+  {
+    "class": "panel--6",
+    "narrate": "the near-perfect · 99 of 100",
+    "caption": "THE NEAR-PERFECT · ABU ROBOCON 2024 NATIONALS",
+    "title": "Systematic testing until the scoresheet said 99.",
+    "body": "ABU Robocon national qualification, stage 1. Every subsystem validated twice. One point left on the table.",
+    "metric": "99 / 100"
+  },
+  {
+    "class": "panel--6 panel--tilt2",
+    "narrate": "underwater · runners-up",
+    "caption": "UNDERWATER · IISc ROBONAUTICA 2025",
+    "title": "Runners-up, autonomous underwater vehicles.",
+    "body": "Building and racing an AUV at IISc Bangalore. The team placed second, one bracket away from first.",
+    "metric": "RUNNERS-UP",
+    "links": [
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/RoboNautica_2025" }
+    ]
+  },
+  {
+    "class": "panel--4 panel--broken",
+    "narrate": "national winners · algorithms",
+    "caption": "ALGORITHMS · AETHER BYTESBATTLE 2025",
+    "title": "National winners.",
+    "body": "Competitive programming. The kind of contest you prep for at 2 AM and solve at 2:03 AM.",
+    "metric": "1ST"
+  },
+  {
+    "class": "panel--8",
+    "narrate": "the published library",
+    "caption": "OPEN SOURCE · ADVANCE-CONV-BENCHMARKS",
+    "title": "Published. Installable. Public.",
+    "body": "A Python library benchmarking every convolution variant: FLOPs, parameters, PyTorch and TensorFlow. Ships via <span class=\"mono\">pip install advance-conv-benchmarks</span> and runs anywhere.",
+    "tags": ["Python", "PyPI", "PyTorch", "TensorFlow"],
+    "links": [
+      { "label": "pypi ↗", "href": "https://pypi.org/project/advance-conv-benchmarks/" },
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/advance-conv-benchmarks" }
+    ]
+  }
+]

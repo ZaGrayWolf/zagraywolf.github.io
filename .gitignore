@@ -1,0 +1,20 @@
+# macOS / editor junk
+.DS_Store
+**/.DS_Store
+
+# Claude Code local settings
+/.claude/
+
+# internal-only — kept on disk, never published
+dev_doc.md
+GUIDE.md
+MIGRATION.md
+portfolio-plan-v2.md
+DECISIONS.md
+MANIFESTO.md
+/panels/
+/reference/
+/analytics/
+
+# the ID'd résumé copy at root (the site serves data/Resume.pdf, which IS tracked)
+/*.pdf

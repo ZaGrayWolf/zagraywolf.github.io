@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Casper — white cat face on transparent (B3) -->
+  <g fill="#f6f4ef">
+    <polygon points="6,14 7,3 15,9"/>
+    <polygon points="26,14 25,3 17,9"/>
+    <ellipse cx="16" cy="18" rx="11" ry="10"/>
+  </g>
+  <polygon points="7.5,5.5 8,11 12,8.5" fill="#ff3da6" opacity=".55"/>
+  <polygon points="24.5,5.5 24,11 20,8.5" fill="#ff3da6" opacity=".55"/>
+  <circle cx="11.5" cy="17" r="1.6" fill="#11111f"/>
+  <circle cx="20.5" cy="17" r="1.6" fill="#11111f"/>
+  <polygon points="16,20 14.6,21.6 17.4,21.6" fill="#ff3da6"/>
+  <path d="M16 21.6v2.2M16 23.8q-2 1.6-3.6.4M16 23.8q2 1.6 3.6.4" stroke="#11111f" stroke-width="1" fill="none" stroke-linecap="round"/>
+  <rect x="9" y="26.5" width="14" height="2.5" rx="1.2" fill="#ffb347"/>
+</svg>

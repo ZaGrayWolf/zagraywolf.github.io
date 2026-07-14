@@ -1,0 +1,149 @@
+[
+  {
+    "class": "panel--8 panel--tone",
+    "narrate": "★ the favorite: advance-conv-benchmarks",
+    "caption": "HEADLINER · PUBLISHED",
+    "title": "advance-conv-benchmarks",
+    "desc": "Every convolution variant, counted and raced: FLOPs and parameters across PyTorch and TensorFlow, packaged as a documented Python library anyone can <span class=\"mono\">pip install</span>.",
+    "tags": ["Python", "PyTorch", "TensorFlow", "PyPI"],
+    "links": [
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/advance-conv-benchmarks" },
+      { "label": "pypi ↗", "href": "https://pypi.org/project/advance-conv-benchmarks/" },
+      { "label": "read the one-shot →", "href": "oneshot.html" }
+    ],
+    "confidence": 5,
+    "pairs": { "title": "DEATH NOTE", "cat": "manga" }
+  },
+  {
+    "class": "panel--4 panel--tilt",
+    "narrate": "reviewing the convolution zoo",
+    "caption": "COMPANION",
+    "title": "Types_of_Convolutions",
+    "desc": "The convolution zoo: depthwise, dilated, transposed, separable. Explained and implemented, one notebook at a time.",
+    "tags": ["Python", "DL"],
+    "links": [
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/Types_of_Convolutions" }
+    ],
+    "confidence": 4,
+    "pairs": { "title": "BLUE PERIOD", "cat": "manga" }
+  },
+  {
+    "class": "",
+    "narrate": "reviewing the vision stack",
+    "caption": "VISION",
+    "title": "Custom Aruco 6-DOF tracking",
+    "desc": "Millimeter-level marker pose estimation with custom calibration and DLT, tuned until it held 20+ FPS on real robot hardware. The same stack that went to RoboCup.",
+    "tags": ["OpenCV", "C++", "ROS"],
+    "links": [
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/Custom_ArucoMarker_Detection" }
+    ],
+    "confidence": 5,
+    "pairs": { "title": "NEON GENESIS EVANGELION", "cat": "anime" }
+  },
+  {
+    "class": "panel--broken",
+    "narrate": "reviewing the quant engine",
+    "caption": "QUANT",
+    "title": "Option pricing engine",
+    "desc": "Black-Scholes and Monte Carlo pricing with full Greeks, risk estimation, and a simulation engine that chews through thousands of paths with automated rebalancing.",
+    "tags": ["Python", "NumPy", "SciPy", "pandas"],
+    "links": [
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/QUANT_Option_Pricing_Model" }
+    ],
+    "confidence": 5,
+    "pairs": { "title": "NO COUNTRY FOR OLD MEN", "cat": "movies" }
+  },
+  {
+    "class": "panel--4",
+    "narrate": "reviewing the detector",
+    "caption": "DETECTION",
+    "title": "Ensemble object detection",
+    "desc": "YOLOv8 + ResNet50 + MobileNet-SSD ensembles, validated to 98%+ accuracy, deployed with sub-second response.",
+    "tags": ["PyTorch", "YOLOv8"],
+    "links": [
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/ObjectDetection_RESNET50" },
+      { "label": "ssd ↗", "href": "https://github.com/ZaGrayWolf/MobileNetv3_SSD" }
+    ],
+    "confidence": 5,
+    "pairs": { "title": "TOKYO GHOUL", "cat": "manga" }
+  },
+  {
+    "class": "panel--4",
+    "narrate": "reviewing the physics bridge",
+    "caption": "RESEARCH TOOLING",
+    "title": "rootml-bridge",
+    "desc": "A Python bridge wiring modern ML into CERN's ROOT analysis framework. Particle physics meets PyTorch.",
+    "tags": ["Python", "ROOT"],
+    "links": [
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/rootml-bridge" }
+    ],
+    "confidence": 4,
+    "pairs": { "title": "3 BODY PROBLEM", "cat": "shows" }
+  },
+  {
+    "class": "panel--4 panel--tilt2",
+    "narrate": "reviewing the fun one: Treble",
+    "caption": "OFF PANEL · FUN",
+    "title": "Treble",
+    "desc": "A desktop music player handling 500+ tracks on SQLite + PyGame, with sub-second queries. Casper-approved.",
+    "tags": ["Python", "SQLite", "PyGame"],
+    "links": [
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/Treble_MusicPlayingApp" }
+    ],
+    "confidence": 4,
+    "pairs": { "title": "YOUR LIE IN APRIL", "cat": "anime" }
+  },
+  {
+    "class": "panel--8",
+    "narrate": "reviewing the RAG system",
+    "caption": "AGENTIC AI · RAG",
+    "title": "Scientific RAG",
+    "desc": "Retrieval-augmented generation over scientific literature: embed the corpus, search it by meaning, and let an LLM answer with grounded, cited context instead of guesses.",
+    "tags": ["Python", "RAG", "LLM", "embeddings"],
+    "links": [
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/Scientific_RAG" }
+    ],
+    "confidence": 4,
+    "pairs": { "title": "THINKING, FAST AND SLOW", "cat": "books" }
+  },
+  {
+    "class": "panel--4",
+    "narrate": "reviewing the physics-ML one",
+    "caption": "RESEARCH · ML4Sci / GSoC",
+    "title": "Particle track reconstruction",
+    "desc": "Deep learning that turns raw detector hits into particle trajectories, an ML4Sci / Google Summer of Code project at the seam of physics and ML.",
+    "tags": ["Python", "PyTorch", "Physics"],
+    "links": [
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/gsoc-ml4sci-2026-track-reconstruction" }
+    ],
+    "confidence": 4,
+    "pairs": { "title": "CHERNOBYL", "cat": "shows" }
+  },
+  {
+    "class": "panel--4 panel--tilt",
+    "narrate": "reviewing the edge work",
+    "caption": "EDGE · QUANTIZATION",
+    "title": "Edge model quantization",
+    "desc": "Squeezing networks down for the edge: INT8 quantization through Intel Neural Compressor and ONNX, trading size and latency for as little accuracy as it can.",
+    "tags": ["Python", "ONNX", "INT8"],
+    "links": [
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/Neural_Compressor_Model_Quantisation" },
+      { "label": "onnx ↗", "href": "https://github.com/ZaGrayWolf/ONNX-Quantisation" }
+    ],
+    "confidence": 4,
+    "pairs": { "title": "WHIPLASH", "cat": "movies" }
+  },
+  {
+    "class": "panel--4",
+    "narrate": "reviewing the depth-cam one",
+    "caption": "VISION · DEPTH",
+    "title": "ZED depth-cam pose extraction",
+    "desc": "Pulling 3D pose straight from a ZED stereo depth stream: position and orientation out of the point cloud, ready to feed a robot.",
+    "tags": ["C++", "ZED", "OpenCV"],
+    "links": [
+      { "label": "repo ↗", "href": "https://github.com/ZaGrayWolf/ZED_DepthCam_PoseExtraction" }
+    ],
+    "confidence": 3,
+    "pairs": { "title": "PERFECT BLUE", "cat": "movies" }
+  }
+]

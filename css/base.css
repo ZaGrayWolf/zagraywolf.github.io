@@ -1,0 +1,587 @@
+/* base.css — reset, type, focus, skip-link (B1/A8). World-agnostic. */
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;   /* kill the grey/blue tap flash on touch; :active gives our own feedback */
+  overscroll-behavior-y:none;                /* no rubber-band scroll-chaining into the address bar */
+}
+
+body{
+  margin:0;
+  font-family:var(--mono);
+  font-size:var(--t-1);
+  line-height:1.6;
+  background:var(--bg);
+  color:var(--label);
+}
+
+img,canvas,svg,video{ display:block; max-width:100%; }
+
+h1,h2,h3,p,ul,ol,figure,pre{ margin:0; }
+
+a{ color:inherit; }
+
+button{
+  font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer;
+}
+
+/* ---- worlds ------------------------------------------------------- */
+.world-paper{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif; /* self-hosted subset arrives with P2+ chapters */
+  overflow-x:clip;   /* contain the .marquee full-bleed negative margins + any panel spill so phones get no horizontal scroll / right-edge clipping (alley + stall already do this in their own files) */
+}
+.world-paper a{ color:var(--ink); }
+
+/* ---- skip link (A8) ------------------------------------------------ */
+.skip-link{
+  position:absolute; left:var(--s-2); top:calc(-1 * var(--s-8));
+  z-index:var(--z-hud);
+  padding:var(--s-1) var(--s-2);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.08em;
+  background:var(--bg); color:var(--neon-cyan);
+  border:1px solid var(--neon-cyan);
+  transition:top var(--dur-1) var(--ease-out);
+}
+.skip-link:focus-visible{ top:var(--s-2); z-index:var(--z-transition); }
+
+/* recruiter escape hatch — whimsy for explorers, 30-second clarity for
+   everyone hiring. Always visible, every page. */
+.hud-resume{
+  position:fixed; left:calc(var(--s-2) + env(safe-area-inset-left)); top:calc(var(--s-2) + env(safe-area-inset-top));
+  z-index:var(--z-hud);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.18em;
+  text-decoration:none;
+  color:var(--label);
+  border:1px solid var(--dim);
+  padding:var(--s-1) var(--s-2);
+  transition:color var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out);
+}
+.hud-resume:hover, .hud-resume:focus-visible{
+  color:var(--neon-cyan);
+  border-color:color-mix(in srgb, var(--neon-cyan) 55%, var(--dim));
+}
+/* the alley is the landing page — the hatch runs 15% bigger there */
+body[data-page="alley"] .hud-resume{
+  font-size:calc(var(--t-0) * 1.15);
+  padding:calc(var(--s-1) * 1.15) calc(var(--s-2) * 1.15);
+}
+.world-paper .hud-resume{ color:var(--ink-soft); border-color:color-mix(in srgb, var(--ink) 25%, var(--paper)); }
+.world-paper .hud-resume:hover, .world-paper .hud-resume:focus-visible{ color:var(--ink); border-color:var(--ink); }
+
+/* dwell-to-peek thumbnail (js/resume-preview.js) — 2s hover on the hatch.
+   A pre-rendered PNG of page 1 (assets/img/resume-thumb.png), cropped to the
+   top ~55% by the card height. An image, not a PDF iframe: no viewer chrome
+   can leak (Safari's PDF controls escape overflow clipping). Click = open full. */
+.resume-peek{
+  --peek-w:180px;          /* displayed thumbnail width */
+  --peek-crop:.55;         /* show ~the top 55% of the page */
+  display:block; position:fixed; left:var(--s-2); top:calc(var(--s-2) + var(--s-8));
+  z-index:var(--z-hud);
+  width:var(--peek-w);
+  height:calc(var(--peek-w) * 1.294 * var(--peek-crop)); /* thumb ratio (621/480) × crop */
+  border:1px solid var(--dim); border-radius:10px;
+  background:var(--paper);
+  box-shadow:0 8px 30px rgba(0,0,0,.45);
+  overflow:hidden; cursor:pointer; text-decoration:none;
+  opacity:0; transform:translateY(-6px);
+  transition:opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out);
+}
+.resume-peek.is-on{ opacity:1; transform:none; }
+.resume-peek:hover, .resume-peek:focus-visible{ border-color:var(--neon-cyan); }
+.resume-peek img{
+  width:100%; display:block;   /* top of the page shows; card height crops the rest */
+}
+.resume-peek-hint{
+  position:absolute; left:0; right:0; bottom:0;
+  padding:var(--s-1) var(--s-2);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.12em;
+  color:var(--paper); background:color-mix(in srgb, var(--ink) 82%, transparent);
+  text-align:center; white-space:nowrap;
+}
+@media (prefers-reduced-motion:reduce){
+  .resume-peek{ transition:none; transform:none; }
+}
+
+/* ---- focus (A8) ----------------------------------------------------- */
+:focus{ outline:none; }
+:focus-visible{
+  outline:2px solid var(--neon-cyan);
+  outline-offset:3px;
+}
+.world-paper :focus-visible{ outline-color:var(--ink); }
+
+/* ---- shared decorations -------------------------------------------- */
+[aria-hidden="true"]{ user-select:none; }
+
+.fx-canvas{
+  position:fixed; inset:0;
+  width:100%; height:100%;
+  pointer-events:none;
+}
+#curator-canvas{ z-index:var(--z-curator); }
+#flows-canvas{ z-index:var(--z-flows); }
+
+/* subtle CRT scanlines — atmosphere, not costume (from curator demo) */
+.scan{
+  position:fixed; inset:0; pointer-events:none;
+  z-index:var(--z-curator);
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px);
+  mix-blend-mode:multiply;
+}
+
+/* ---- cat (C5) ------------------------------------------------------- */
+.cat{
+  position:fixed; left:0; top:0;
+  width:32px; height:32px;
+  z-index:var(--z-cat);
+  image-rendering:pixelated;
+  background-repeat:no-repeat;
+  cursor:pointer;
+}
+.cat::after{ /* 44px pet hitbox (C5) */
+  content:""; position:absolute; inset:-6px;
+}
+.cat-heart{
+  position:fixed;
+  z-index:var(--z-cat);
+  color:var(--neon-mag);
+  font-family:var(--mono); font-size:var(--t-2);
+  pointer-events:none;
+  animation:heart-float 1s ease-out forwards;
+}
+@keyframes heart-float{
+  from{ opacity:1; transform:translateY(0); }
+  to{ opacity:0; transform:translateY(-48px); }
+}
+
+/* ---- HUD (A7) -------------------------------------------------------- */
+.hud-state{
+  position:fixed; left:calc(var(--s-2) + env(safe-area-inset-left)); bottom:calc(var(--s-2) + env(safe-area-inset-bottom));
+  z-index:var(--z-hud);
+  pointer-events:none;
+  font-size:var(--t-0); letter-spacing:.06em;
+  color:var(--label);
+}
+.hud-state b{ font-weight:normal; color:var(--neon-cyan); }
+.hud-state b.is-hot{ color:var(--neon-mag); }
+/* the narrator flicks the label on each change — a brief life, not a strobe */
+.hud-state b.is-narrate{ animation:narrate-flick var(--dur-3) var(--ease-out); }
+@keyframes narrate-flick{
+  0%{ opacity:.25; }
+  30%{ opacity:1; }
+  100%{ opacity:1; }
+}
+
+.hud-map{
+  position:fixed; right:calc(var(--s-2) + env(safe-area-inset-right)); top:calc(var(--s-2) + env(safe-area-inset-top));
+  z-index:var(--z-hud);
+  font-size:var(--t-0); letter-spacing:.04em;
+  color:var(--dim);
+}
+.hud-map a{
+  color:var(--label); text-decoration:none;
+  padding:var(--s-1) 2px; /* generous tap/click target without changing the glyph look */
+}
+.hud-map a.is-visited{ color:var(--amber); }                       /* breadcrumb: been here */
+.hud-map a[aria-current="page"]{ color:var(--neon-cyan); text-shadow:0 0 8px var(--neon-cyan); }   /* active */
+/* hovering a node = the curator is considering that route — glows cyan (its
+   colour), echoed by the swarm drifting toward it + the "escorting to…" line */
+.hud-map a:hover, .hud-map a:focus-visible{ color:var(--neon-cyan); text-shadow:0 0 8px color-mix(in srgb, var(--neon-cyan) 55%, transparent); }
+
+/* ---- constellation layout (js/dynamic-menu.js enhances the static line) ----
+   The straight "[#]─[1]─…" becomes a scattered star-chart route: the same
+   nodes at non-collinear coords, joined by a flowing ASCII-dash trail, the
+   current node pulsing. No-JS keeps the inline line. */
+.hud-map.is-constellation{ width:9.5rem; height:5.25rem; }
+.hud-map.is-constellation a{
+  position:absolute; transform:translate(-50%, -50%);
+  padding:1px 3px;                       /* compact so nodes don't collide */
+}
+.hud-lines{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; z-index:-1; }
+.hud-lines polyline{
+  fill:none; stroke:var(--dim); stroke-width:1.3; vector-effect:non-scaling-stroke;
+  stroke-dasharray:3 5; opacity:.75;
+  animation:route-flow 7s linear infinite;     /* energy flows along the trail */
+}
+@keyframes route-flow{ to{ stroke-dashoffset:-32; } }
+.hud-map.is-constellation a.is-active{ animation:node-pulse 3.2s var(--ease-in-out) infinite; }
+@keyframes node-pulse{ 0%,100%{ opacity:.82; } 50%{ opacity:1; } }
+@media (max-width:560px){ .hud-map.is-constellation{ width:8rem; height:4.5rem; } }
+@media (max-width:380px){ .hud-map.is-constellation{ width:7rem; height:4rem; } }
+/* touch: enlarge the corner HUD controls to real tap targets (≥44px) */
+@media (pointer: coarse){
+  .hud-resume{ padding:var(--s-2) var(--s-3); }
+  .hud-audio{ padding:var(--s-1) var(--s-2); }
+  .hud-map.is-constellation a{ padding:7px 9px; }
+}
+
+/* ---- time-of-day clock (JS-injected, night world only) ----------------
+   The site reading the visitor's real hour, etched faint in the free corner.
+   Decorative + aria-hidden; the phase tint it announces lives on the body. */
+.tod-clock{
+  position:fixed; right:calc(var(--s-2) + env(safe-area-inset-right)); bottom:calc(var(--s-2) + env(safe-area-inset-bottom));
+  z-index:var(--z-hud); pointer-events:none;
+  display:flex; flex-direction:column; align-items:flex-end;
+  font-size:var(--t-0); letter-spacing:.08em; line-height:1.25;
+  color:var(--label); opacity:.62;
+}
+.tod-clock .tod-time{ color:color-mix(in srgb, var(--label) 55%, var(--tod-haze)); font-variant-numeric:tabular-nums; }
+.tod-clock .tod-label{ font-size:.7rem; opacity:.8; }
+
+/* ---- ambient-sound toggle (JS-injected, alley only) -------------------
+   Sits just above the time-of-day clock in the free bottom-right corner.
+   Off by default; lights cyan when the generative lo-fi is playing. */
+.hud-audio{
+  position:fixed; right:var(--s-2); bottom:calc(var(--s-2) + 2.4rem);
+  z-index:var(--z-hud);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.08em;
+  color:var(--label); opacity:.7;
+  border:1px solid var(--dim); padding:2px var(--s-1);
+  transition:color var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out), opacity var(--dur-2) var(--ease-out);
+}
+.hud-audio:hover, .hud-audio:focus-visible{ opacity:1; color:var(--neon-cyan); border-color:color-mix(in srgb, var(--neon-cyan) 50%, var(--dim)); }
+.hud-audio.is-on{ color:var(--neon-cyan); border-color:color-mix(in srgb, var(--neon-cyan) 55%, var(--dim)); opacity:1; text-shadow:0 0 8px color-mix(in srgb, var(--neon-cyan) 50%, transparent); }
+
+/* ---- edge tabs: peek-then-expand nav (A7) ----------------------------------
+   A slim tab anchored to a screen edge, vertically centred (clear of the busy
+   corners and the curator's bottom line). Collapsed it shows just its glyph;
+   on hover/focus it slides the label open. `--start` returns to the alley (left,
+   « ); `--about` jumps to the about page (right, » ). World-agnostic — the
+   paper-world override below swaps neon for ink. */
+.edge-tab{
+  position:fixed; top:50%; transform:translateY(-50%);
+  z-index:var(--z-hud);
+  display:flex; align-items:center; gap:var(--s-1);
+  padding:var(--s-2) var(--s-1);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.2em;
+  text-decoration:none; white-space:nowrap;
+  color:color-mix(in srgb, var(--neon-cyan) 42%, var(--label));
+  background:color-mix(in srgb, var(--bg) 80%, var(--neon-cyan));
+  border:1px solid var(--dim);
+  box-shadow:inset 0 0 14px rgba(0,0,0,.35);
+  transition:color var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out);
+}
+.edge-tab-icon{ font-size:var(--t-2); line-height:1; }
+.edge-tab-label{
+  max-width:0; overflow:hidden; opacity:0;
+  transition:max-width var(--dur-3) var(--ease-out), opacity var(--dur-2) var(--ease-out);
+}
+.edge-tab--prev{ left:0; border-left:0; border-radius:0 5px 5px 0; }
+.edge-tab--next{ right:0; border-right:0; border-radius:5px 0 0 5px; flex-direction:row-reverse; }
+.edge-tab:hover, .edge-tab:focus-visible, .edge-tab:active{
+  color:var(--neon-cyan);
+  border-color:color-mix(in srgb, var(--neon-cyan) 55%, var(--dim));
+  box-shadow:0 0 12px color-mix(in srgb, var(--neon-cyan) 18%, transparent), inset 0 0 14px color-mix(in srgb, var(--neon-cyan) 8%, transparent);
+}
+.edge-tab:hover .edge-tab-label, .edge-tab:focus-visible .edge-tab-label, .edge-tab:active .edge-tab-label{
+  max-width:11rem; opacity:1;
+}
+/* paper world: ink, no neon */
+.world-paper .edge-tab{
+  color:var(--ink-soft);
+  background:color-mix(in srgb, var(--paper) 90%, var(--ink));
+  border-color:color-mix(in srgb, var(--ink) 22%, var(--paper));
+  box-shadow:none;
+}
+.world-paper .edge-tab:hover, .world-paper .edge-tab:focus-visible{
+  color:var(--ink); border-color:var(--ink); box-shadow:none;
+}
+@media (max-width: 700px){
+  /* on phones the label would crowd the reading column — keep just the glyph */
+  .edge-tab-label{ display:none; }
+  .edge-tab{ padding:var(--s-1); }
+}
+@media (pointer: coarse){ .edge-tab{ min-width:40px; min-height:44px; justify-content:center; } }
+@media (prefers-reduced-motion: reduce){ .edge-tab, .edge-tab-label{ transition:none; } }
+
+/* ---- "About me" arrow (JoJo-style, hand-built SVG) -------------------------
+   Used full-size on the home dawn strip and the stall (both via `--center`,
+   in normal flow so it never fights the fixed corner HUD). White-neon arrow,
+   speed-stripes, "About me" hand-lettered in; no raster, no box. */
+.tbc{ display:inline-block; text-decoration:none; z-index:var(--z-content); }
+.tbc--center{ display:block; width:max-content; max-width:90vw; margin:var(--s-6) auto var(--s-2); }
+.tbc-svg{
+  width:clamp(9rem, 16vw, 12.5rem); height:auto;
+  color:var(--neon-mag);
+  filter:drop-shadow(0 0 7px color-mix(in srgb, var(--neon-cyan) 60%, transparent));
+  transition:transform var(--dur-2) var(--ease-out);
+}
+.tbc-svg text{
+  font-family:"Bradley Hand","Segoe Print","Comic Sans MS",cursive;
+  font-size:27px; font-weight:700; letter-spacing:.01em;
+  fill:var(--bg);
+}
+.tbc:hover .tbc-svg, .tbc:focus-visible .tbc-svg{ transform:translateX(6px); }
+
+/* ---- availability badge + contact CTA (A7) -----------------------------
+   "Open to work" pill with a live pulsing dot, and a prominent mail CTA. Both
+   world-agnostic with a .world-paper ink override. */
+.availability{
+  display:inline-flex; align-items:center; gap:var(--s-1);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.16em;
+  color:color-mix(in srgb, var(--neon-cyan) 72%, var(--label));
+  border:1px solid color-mix(in srgb, var(--neon-cyan) 40%, var(--dim));
+  border-radius:999px; padding:4px var(--s-2);
+}
+.availability::before{
+  content:""; width:8px; height:8px; border-radius:50%; flex:none;
+  background:var(--neon-cyan); box-shadow:0 0 8px var(--neon-cyan);
+  animation:avail-pulse 2s var(--ease-in-out) infinite;
+}
+@keyframes avail-pulse{ 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.35; transform:scale(.65); } }
+.world-paper .availability{ color:var(--ink-soft); border-color:color-mix(in srgb, var(--ink) 28%, var(--paper)); }
+.world-paper .availability::before{ background:var(--ink); box-shadow:none; }
+
+.contact-cta{
+  display:inline-block;
+  font-family:var(--mono); font-size:var(--t-1); letter-spacing:.16em;
+  text-decoration:none;
+  color:var(--neon-cyan);
+  border:1px solid color-mix(in srgb, var(--neon-cyan) 50%, var(--dim));
+  padding:var(--s-2) var(--s-4); border-radius:3px;
+  text-shadow:0 0 8px color-mix(in srgb, var(--neon-cyan) 45%, transparent);
+  transition:color var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out);
+}
+.contact-cta:hover, .contact-cta:focus-visible{
+  color:var(--neon-mag); border-color:var(--neon-mag);
+}
+/* homepage CTA sits a touch smaller than the about-page one */
+body[data-page="alley"] .contact-cta{ font-size:calc(var(--t-1) * 0.87); padding:calc(var(--s-2) * 0.87) calc(var(--s-4) * 0.87); }
+.world-paper .contact-cta{ color:var(--ink); border-color:var(--ink); text-shadow:none; }
+.world-paper .contact-cta:hover, .world-paper .contact-cta:focus-visible{ background:var(--ink); color:var(--paper); }
+@media (prefers-reduced-motion: reduce){ .availability::before{ animation:none; } }
+
+/* ---- boot veil (JS-injected; no-JS users never see it) ---------------- */
+.boot-veil{
+  position:fixed; inset:0;
+  z-index:var(--z-transition);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:var(--s-2);
+  background:var(--bg);
+  font-family:var(--mono); font-size:var(--t-1); letter-spacing:.08em;
+  color:var(--neon-cyan);
+  transition:opacity var(--dur-2) var(--ease-out);
+}
+.boot-veil.is-done{ opacity:0; pointer-events:none; }
+.boot-veil .boot-box{
+  display:flex; flex-direction:column; gap:var(--s-2); align-items:flex-start;
+  transition:transform var(--dur-3) var(--ease-out), opacity var(--dur-3) var(--ease-out);
+}
+.boot-veil.is-done .boot-box{ transform:translateY(-14px); opacity:0; }
+.boot-veil .boot-cursor{ animation:boot-blink 1s steps(1) infinite; opacity:.9; }
+.boot-veil .boot-bar{ color:var(--dim); font-size:var(--t-0); letter-spacing:0; }
+/* a stub visited cold still boots in its own world's colors */
+.world-paper .boot-veil{ background:var(--paper); color:var(--ink); }
+.world-paper .boot-veil .boot-bar{ color:var(--ink-soft); }
+@keyframes boot-blink{ 50%{ opacity:0; } }
+
+/* ---- transition veil (C7) — the dark beat between pages ---------------- */
+.transition-veil{
+  position:fixed; inset:0;
+  z-index:var(--z-transition);
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 1px, transparent 1px 3px),
+    radial-gradient(120% 90% at 50% 50%, var(--bg) 60%, #000),
+    var(--bg);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity var(--dur-3) var(--ease-in-out);
+}
+.transition-veil.is-on{ opacity:1; }
+
+/* photo flashes that ride the veil between chapters — grayscale field-notes,
+   now translucent + soft-blurred so they drift past like a half-remembered
+   dream rather than slapping the screen. Self-removing; never under
+   reduced-motion (transitions don't run there). */
+.transition-flash{
+  position:fixed; inset:0;
+  z-index:calc(var(--z-transition) + 1);
+  width:100%; height:100%;
+  object-fit:cover;
+  filter:grayscale(1) contrast(.92) blur(3px);
+  mix-blend-mode:screen;        /* ghosts over the dark veil instead of covering it */
+  opacity:0;
+  pointer-events:none;
+  animation:flash-pulse 440ms var(--ease-in-out) forwards;
+}
+@keyframes flash-pulse{
+  0%{   opacity:0;   transform:scale(1.1); }
+  45%{  opacity:.32; transform:scale(1.04); }
+  70%{  opacity:.26; transform:scale(1.02); }
+  100%{ opacity:0;   transform:scale(1); }
+}
+
+/* glyph-swarm portal — the minimap (fast-travel) departure ceremony. ASCII
+   glyphs flick across the veil and scatter for ~0.5s; self-removing. Cyan on
+   the dark veil reads on every page. (transitions don't run under reduced-motion) */
+.glyph-swarm{
+  position:fixed; inset:0;
+  z-index:calc(var(--z-transition) + 1);
+  pointer-events:none;
+  font-family:var(--mono);
+  color:var(--neon-cyan);
+}
+.glyph-swarm span{
+  position:absolute;
+  font-size:var(--t-3);
+  opacity:0;
+  text-shadow:0 0 10px color-mix(in srgb, var(--neon-cyan) 60%, transparent);
+  animation:glyph-fly 400ms var(--ease-out) forwards;
+}
+@keyframes glyph-fly{
+  0%{   opacity:0; transform:translate(0,0) scale(.4); }
+  40%{  opacity:1; transform:translate(calc(var(--dx) * .5), calc(var(--dy) * .5)) scale(1.1); }
+  100%{ opacity:0; transform:translate(var(--dx), var(--dy)) scale(.7); }
+}
+
+/* ---- keyboard shortcuts overlay (? key) -------------------------------- */
+.key-overlay{
+  position:fixed;
+  bottom:var(--s-4); left:var(--s-4);
+  z-index:var(--z-hud);
+  background:color-mix(in srgb, var(--bg) 94%, transparent);
+  border:1px solid var(--neon-cyan);
+  padding:var(--s-3) var(--s-4);
+  font-family:var(--mono); font-size:var(--t-0);
+  color:var(--label);
+  letter-spacing:.06em;
+  -webkit-backdrop-filter:blur(4px);          /* Safari needs the prefix or the blur silently no-ops */
+  backdrop-filter:blur(4px);
+}
+.world-paper .key-overlay{
+  background:color-mix(in srgb, var(--paper) 94%, transparent);
+  border-color:var(--ink-soft);
+  color:var(--ink-soft);
+}
+.key-overlay[hidden]{ display:none; }
+.key-overlay-title{
+  font-weight:700; letter-spacing:.2em;
+  color:var(--neon-cyan);
+  margin-bottom:var(--s-2);
+}
+.world-paper .key-overlay-title{ color:var(--ink); }
+.key-overlay ul{ list-style:none; padding:0; display:flex; flex-direction:column; gap:var(--s-1); }
+.key-overlay li{ display:flex; gap:var(--s-2); align-items:center; }
+.key-overlay kbd{
+  display:inline-block;
+  min-width:1.4rem; text-align:center;
+  border:1px solid var(--label);
+  padding:1px 4px; border-radius:2px;
+  font-family:var(--mono); font-size:var(--t-0);
+  color:var(--neon-cyan);
+  flex-shrink:0;
+}
+.world-paper .key-overlay kbd{ border-color:var(--ink-soft); color:var(--ink); }
+
+/* ---- motion discipline (A8) ----------------------------------------- */
+@media (prefers-reduced-motion: reduce){
+  .scan{ display:none; }
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+
+/* ── command palette (palette.js) — the curator's command line ──────────
+   A terminal-styled overlay summoned with "/" or ⌘K. Dark glass on every
+   page (night + paper worlds) so it reads as one consistent surface. */
+.cmdk{ position:fixed; inset:0; z-index:9000; display:none; }
+.cmdk.is-open{ display:block; }
+.cmdk-backdrop{ position:absolute; inset:0; background:rgba(4,4,9,.66); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+.cmdk-box{
+  position:relative; max-width:34rem; margin:14vh auto 0;
+  background:rgba(10,11,20,.96); border:1px solid rgba(125,249,255,.32);
+  border-radius:12px; overflow:hidden; font-family:var(--mono,monospace);
+  box-shadow:0 24px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(125,249,255,.05);
+}
+.cmdk-prompt{ display:flex; align-items:center; gap:.55rem; padding:.85rem 1rem; border-bottom:1px solid rgba(125,249,255,.16); }
+.cmdk-caret{ color:#7df9ff; font-size:.82rem; opacity:.8; white-space:nowrap; }
+.cmdk-input{ flex:1; min-width:0; background:transparent; border:0; outline:0; color:#eaf6ff; font:inherit; font-size:1rem; }
+.cmdk-input::placeholder{ color:rgba(234,246,255,.4); }
+.cmdk-list{ list-style:none; margin:0; padding:.35rem; max-height:46vh; overflow:auto; }
+.cmdk-item{ display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:.6rem .75rem; border-radius:8px; color:#cfe6ef; cursor:pointer; font-size:.92rem; }
+.cmdk-item .cmdk-hint{ color:rgba(125,249,255,.55); font-size:.74rem; }
+.cmdk-item.is-sel{ background:rgba(125,249,255,.14); color:#fff; }
+.cmdk-item.is-sel .cmdk-hint{ color:#7df9ff; }
+.cmdk-empty{ padding:.9rem .75rem; color:rgba(234,246,255,.5); font-size:.9rem; }
+.cmdk-foot{ margin:0; padding:.5rem 1rem; border-top:1px solid rgba(125,249,255,.12); color:rgba(234,246,255,.4); font-size:.72rem; letter-spacing:.04em; }
+@media (max-width:560px){
+  .cmdk-box{ margin-top:8vh; max-width:92vw; }
+  .cmdk-caret{ display:none; }
+}
+
+/* launcher chip (palette.js) — a low-key, borderless entry to the palette (and
+   the only way in on touch). Tucked low on the left edge, just above the
+   curator:// HUD line; dim by default, brightens on hover. */
+.cmdk-fab{
+  position:fixed; left:calc(var(--s-2) + env(safe-area-inset-left)); bottom:calc(var(--s-2) + 1.7rem + env(safe-area-inset-bottom));
+  z-index:var(--z-hud);
+  display:inline-flex; align-items:center; gap:.3rem;
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.1em;
+  color:var(--neon-cyan); background:none; border:0; padding:2px 0;
+  cursor:pointer; will-change:opacity;
+  text-shadow:0 0 8px var(--neon-cyan);
+  animation:cmdk-glow 2.6s var(--ease-in-out) infinite;
+  transition:color var(--dur-2) var(--ease-out);
+}
+.cmdk-fab::before{ content:"/"; opacity:.85; }
+.cmdk-fab:hover, .cmdk-fab:focus-visible{ animation:none; opacity:1; }
+/* once opened, stop the discovery pulse — user has found it */
+.cmdk-fab.is-used{ animation:none; opacity:.55; }
+.cmdk-fab.is-used:hover, .cmdk-fab.is-used:focus-visible{ opacity:1; }
+/* a small neon glow that breathes — opacity ONLY so it composites cheaply (the
+   static text-shadow fades in/out with it; no per-frame repaint, no canvas jank) */
+@keyframes cmdk-glow{ 0%, 100%{ opacity:.4; } 50%{ opacity:1; } }
+/* paper world: cyan can't read on light paper, so no glow, just the opacity pulse */
+.world-paper .cmdk-fab{ color:var(--ink-soft); text-shadow:none; }
+.world-paper .cmdk-fab:hover, .world-paper .cmdk-fab:focus-visible{ color:var(--ink); }
+/* touch: no slash key, so drop "/" and centre the chip so it doesn't crowd
+   the bottom-left HUD line; safe-area clears the iOS home indicator */
+@media (pointer:coarse){
+  .cmdk-fab{
+    left:50%; transform:translateX(-50%);
+    bottom:calc(var(--s-2) + 2.4rem + env(safe-area-inset-bottom, 0px));
+  }
+  .cmdk-fab::before{ display:none; }
+}
+
+/* handwritten sign-off — appears at the end of every chapter page.
+   about.css overrides the color for the about page (neon tint).
+   Paper/chapter pages get the watermark treatment below. */
+.about-sign{
+  margin-top:var(--s-3);
+  text-align:right;
+  font-family:"Bradley Hand","Segoe Print","Comic Sans MS",cursive;
+  font-size:var(--t-4); font-weight:700;
+  color:var(--label);
+  transform:rotate(-3deg);
+  display:block;
+}
+
+/* .back-top — phone-only "↑ TOP" for the long paper chapters (backtop.js).
+   Bottom-centre so it clears the curator:// line (bottom-left) + companion cat
+   (bottom-right). JS gates it to ≤700px; this min-width hide is the belt to
+   that suspenders so desktop never renders it even if the module loads. */
+.back-top{
+  position:fixed; z-index:var(--z-hud);
+  left:50%; bottom:calc(var(--s-2) + env(safe-area-inset-bottom, 0px));
+  transform:translateX(-50%) translateY(8px);
+  padding:var(--s-1) var(--s-3);
+  font-family:var(--mono); font-size:var(--t-0); letter-spacing:.2em;
+  color:var(--ink-soft);
+  background:color-mix(in srgb, var(--paper) 90%, var(--ink));
+  border:1px solid color-mix(in srgb, var(--ink) 22%, var(--paper));
+  border-radius:6px; cursor:pointer;
+  opacity:0; pointer-events:none;
+  transition:opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+}
+.back-top.is-shown{ opacity:.9; pointer-events:auto; transform:translateX(-50%) translateY(0); }
+.back-top:hover, .back-top:focus-visible, .back-top:active{ color:var(--ink); border-color:color-mix(in srgb, var(--ink) 40%, var(--paper)); }
+@media (min-width:701px){ .back-top{ display:none; } }
+@media (prefers-reduced-motion:reduce){ .back-top{ transition:opacity var(--dur-2) var(--ease-out); transform:translateX(-50%); } }
