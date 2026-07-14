@@ -5,8 +5,8 @@
    enhancement — the scene composes correctly with JS off, and everything is
    gated on a fine pointer + not prefers-reduced-motion. */
 
-import { subscribe } from './ticker.js?v=4.47';
-import { scramble } from './scramble.js?v=4.47';
+import { subscribe } from './ticker.js?v=4.48';
+import { scramble } from './scramble.js?v=4.48';
 
 export function initAbout(curator){
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -2,6 +2,19 @@
 
 *,*::before,*::after{ box-sizing:border-box; }
 
+/* Brave/Chromium "auto dark" (night mode) DISABLES itself on any page that uses
+   the prefers-color-scheme media feature — it assumes the author handles dark and
+   stops inverting. We're an always-dark site, so we never needed a dark query...
+   which is exactly why Brave felt free to wash us out. Declaring one here is the
+   documented opt-out (brave-browser issues #51447 / #51725). Reaffirms our intent;
+   changes nothing visually since the site is already dark. */
+@media (prefers-color-scheme: dark){
+  :root{ color-scheme: dark; background-color: var(--bg); }
+}
+@media (prefers-color-scheme: light){
+  .world-paper{ color-scheme: light; background-color: var(--paper); }
+}
+
 html{
   -webkit-text-size-adjust:100%;
   -webkit-tap-highlight-color:transparent;   /* kill the grey/blue tap flash on touch; :active gives our own feedback */
