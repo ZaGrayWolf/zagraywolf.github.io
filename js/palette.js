@@ -7,7 +7,7 @@
    site is fully navigable without it. Suppressed while typing in a field so it
    never steals Casper's "/" or the converter's input. */
 
-import { PAGES } from './config.js?v=4.39';
+import { PAGES } from './config.js?v=4.40';
 
 const HOST = 'https://zagraywolf.github.io/';
 
