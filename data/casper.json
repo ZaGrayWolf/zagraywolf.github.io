@@ -3,13 +3,13 @@
   "config": {
     "threshold": 1.0,
     "greeting": "*Casper blinks slowly* …you came to the counter. Ask me about the menu: anime, manga, films, books, shows. Or about the human who runs this cart.",
-    "fallback": "*tilts head* I didn't quite catch that. Try one of these:",
+    "fallback": "*flicks an ear, a little sheepish* That one's past me, I just run the counter and keep the recs warm. But I know Abhuday's whole story by heart, his work, wins, skills, how to reach him, and I can slide you something good off the menu. Try:",
     "fallbackChips": [
-      "who runs this?",
-      "recommend an anime",
+      "what's he working on now?",
       "why hire him?",
-      "tell me about the one-shot",
-      "surprise me",
+      "what are his skills?",
+      "what did he win?",
+      "recommend something",
       "👋 leave my name"
     ]
   },
@@ -91,9 +91,9 @@
         "who",
         "whose",
         "owner",
-        "run",
         "runs",
-        "this",
+        "runs this",
+        "who runs",
         "about him",
         "about you",
         "kunwar",
@@ -251,7 +251,6 @@
         "languages",
         "language",
         "tools",
-        "know",
         "good at",
         "python",
         "c++",
@@ -484,7 +483,6 @@
       "keywords": [
         "cat",
         "casper",
-        "you",
         "who are you",
         "kitty",
         "pet",
@@ -497,6 +495,76 @@
         "recommend something",
         "who runs this?"
       ]
+    },
+    {
+      "id": "hobbies",
+      "keywords": ["hobby","hobbies","fun","free time","off panel","off-panel","after hours","interests","outside work","for fun","finova","mentor","mentoring","competitive programming","leadership","the club"],
+      "answer": "*stretches out* Off the clock he heads ML and Data Analytics at FINOVA, Manipal's fintech club, mentored 100+ juniors, does competitive programming (national winner), and curates this very stall. That's why the recs are good.",
+      "action": null,
+      "followups": ["why hire him?","recommend something","what did he win?"]
+    },
+    {
+      "id": "the-name",
+      "keywords": ["why zagraywolf","zagraywolf","why wolf","the wolf","wolf mean","why that name","the handle","gray wolf","grey wolf","alias","nickname","called","named"],
+      "answer": "*tail curls* ZaGrayWolf is his handle. A gray wolf, lone but still part of a pack. Between us, I keep a little wolf-ear tuft as a quiet joke about it.",
+      "action": null,
+      "followups": ["who runs this?","what's he working on now?"]
+    },
+    {
+      "id": "the-site",
+      "keywords": ["this site","the site","website","how was this made","how did you make","built this","this page","made this","tech behind","no framework","how is this built","who built this site"],
+      "answer": "*paws at the counter* This whole place is hand-written. Vanilla HTML, CSS, and JavaScript. No framework, no build step. The canvas critters and I run on plain code. He's stubborn like that.",
+      "action": null,
+      "followups": ["what are his skills?","tell me about a project"]
+    },
+    {
+      "id": "the-song",
+      "keywords": ["song","music","audio","ambient","the sound","lofi","lo-fi","tune","whats playing","what's playing","the beat"],
+      "answer": "*sways a little* That lo-fi isn't a file, it's generated live in your browser with Web Audio. Am F C G, seventy beats a minute. Flip the little ♪ toggle back in the alley to hear it.",
+      "action": null,
+      "followups": ["how was this made?","recommend something"]
+    },
+    {
+      "id": "the-game",
+      "keywords": ["game","neko","catcher","arcade","minigame","cat game","play a game","the game"],
+      "answer": "*perks up* NEKO CATCHER. Catch the good stuff, dodge the bug. It's back in the alley, or pet my cousin seven times and it pops up. Fair warning, it's a little addictive.",
+      "action": null,
+      "followups": ["who runs this?","recommend something"]
+    },
+    {
+      "id": "availability",
+      "keywords": ["start","join","notice period","when available","when can he start","relocate","relocation","visa","sponsorship","full time","full-time","part time","freelance","remote"],
+      "answer": "*checks a tiny calendar* He's a CS undergrad, class of 2027, so internships and new-grad roles fit best. Happy to work remote, travels when it matters. For dates and specifics, just email him: abhuday2656@gmail.com.",
+      "action": null,
+      "followups": ["why hire him?","how do I reach him?"]
+    },
+    {
+      "id": "favorites",
+      "keywords": ["favorite","favourite","best anime","best movie","personal favorite","his favorite","top pick","favourite anime","favorite film"],
+      "answer": "*grins* He won't crown just one, that's the whole point of this stall. Light a lantern and I'll show you what he actually reaches for.",
+      "action": null,
+      "followups": ["recommend an anime","recommend a movie","surprise me"]
+    },
+    {
+      "id": "age",
+      "keywords": ["age","how old","old is he","born","birthday","what year"],
+      "answer": "*squints* Old enough to ship production code, young enough to pull an all-nighter for a robot. Undergrad, class of 2027. Do the math.",
+      "action": null,
+      "followups": ["where did he study?","what's he working on now?"]
+    },
+    {
+      "id": "thanks",
+      "keywords": ["thanks","thank you","thankyou","appreciate","cheers","thx","much obliged"],
+      "answer": "*dips his head* Anytime. Come back hungry, or curious.",
+      "action": null,
+      "followups": ["recommend something","why hire him?"]
+    },
+    {
+      "id": "bye",
+      "keywords": ["bye","goodbye","see ya","see you","later","cya","gotta go","farewell","good night","goodnight"],
+      "answer": "*yawns* Mind the lanterns on your way out. The night keeps the light on.",
+      "action": null,
+      "followups": ["one more rec","who runs this?"]
     },
     {
       "id": "rec-anime",
