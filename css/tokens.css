@@ -1,5 +1,9 @@
 /* A2 — design tokens. Single source for color/type/space/z. No magic values elsewhere. */
 :root{
+  /* the night world is intentionally dark — declare it so browsers with a
+     force-dark / "night mode" filter (e.g. Brave) DON'T re-tint it and wash the
+     scene out. Paper chapters override to light (base.css .world-paper). */
+  color-scheme: dark;
   /* night world */
   --bg:        #07070c;
   --bg-dawn:   #11131d;   /* contact scene */
