@@ -581,6 +581,10 @@ body[data-page="alley"]{
      screen: dim the scattered glyphs and the helix/stream canvas */
   .layer-glyphs{ opacity:.5; }
   #flows-canvas{ opacity:.6; }
+  /* smaller scattered kanji on phones — they were oversized for the small screen */
+  .layer-glyphs span{ font-size:var(--t-1); }
+  .layer-glyphs .g-sm{ font-size:var(--t-0); }
+  .layer-glyphs .g-lg{ font-size:var(--t-2); }
 }
 @media (max-width: 480px){
   /* keep the scroll cue off the stall's tag */

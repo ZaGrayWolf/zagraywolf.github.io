@@ -8,7 +8,7 @@
    Petting: click → ♡ floats, zgw.cat.pets++; every 7th dispatches
    nekocatcher:boot (no listener until P4 — by design). */
 
-import { subscribe } from './ticker.js?v=4.40';
+import { subscribe } from './ticker.js?v=4.41';
 
 /* ---- placeholder sprite sheet --------------------------------------
    16×16 pixel maps scaled ×2 to 32×32. Legend:
@@ -201,8 +201,13 @@ export function createCat(){
   el.style.backgroundImage = `url(${buildSheet()})`;
   document.body.appendChild(el);
 
+  // phones: raise Casper's ground line so he clears the bottom HUD band
+  // (curator:// line + ♪ ambient toggle + clock) instead of wandering over it —
+  // the crowded-corner collision. Desktop unchanged.
+  const GROUND = matchMedia('(max-width:700px)').matches ? 90 : 48;
+
   const cat = {
-    x: innerWidth * .7, y: innerHeight - 80,
+    x: innerWidth * .7, y: innerHeight - GROUND,
     tx: 0, ty: 0,
     facing: 1,                                 // 1 right, -1 left
     state: 'sit', stateAt: 0, lastMoveAt: 0,
@@ -224,7 +229,7 @@ export function createCat(){
     el.style.transform = `translate3d(${(cat.x - 16) | 0}px,${(cat.y - 16) | 0}px,0)`;
   }
 
-  function floorY(){ return innerHeight - 48; }     // street level band
+  function floorY(){ return innerHeight - GROUND; }     // street level band (raised on phones)
 
   function pickWaypoint(){
     cat.tx = 40 + Math.random() * (innerWidth - 80);

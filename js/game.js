@@ -10,7 +10,7 @@
    localStorage zgw.sound === "on" (default off; toggle in the title bar).
    Colours are read from the design tokens (css/tokens.css) at boot. */
 
-import { drawPixelMap, SIT_A, WALK_A, WALK_B, STARTLE } from './cat.js?v=4.40';
+import { drawPixelMap, SIT_A, WALK_A, WALK_B, STARTLE } from './cat.js?v=4.41';
 
 const LW = 320, LH = 240;            // logical size
 const CAT_W = 32, CAT_Y = LH - 38;
