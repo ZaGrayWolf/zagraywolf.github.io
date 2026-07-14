@@ -17,7 +17,7 @@ const THUMB = '/assets/img/resume-thumb.png';   // root-absolute: works from 404
 // Pages is case-sensitive, so try both casings and use whichever exists.
 // root-absolute so it resolves from 404.html too; ?v busts the cache on swap.
 const CANDIDATES = ['/data/Resume.pdf', '/data/resume.pdf'];
-const VER = '?v=4.44';
+const VER = '?v=4.45';
 
 // resolve the real PDF url once (memoized). Shared by the peek + the download CTA.
 let resolved;

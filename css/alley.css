@@ -585,6 +585,16 @@ body[data-page="alley"]{
   .layer-glyphs span{ font-size:var(--t-1); }
   .layer-glyphs .g-sm{ font-size:var(--t-0); }
   .layer-glyphs .g-lg{ font-size:var(--t-2); }
+  /* phones: pin the skyline DARK. The night base for the far buildings is a
+     light-ish grey (bg 35% / dim) which reads as "washed" on a small screen, and
+     the day/night lift only made it worse. Override to deep-night silhouettes,
+     dropping the --tod-day lerp entirely so the buildings stay dark at every hour
+     regardless of cache/clock. Desktop keeps its full skyline + cycle. */
+  .alley{
+    --bldg-far:  color-mix(in srgb, var(--bg) 70%, var(--dim));
+    --bldg-mid:  color-mix(in srgb, var(--bg) 84%, var(--bg-dawn));
+    --bldg-near: color-mix(in srgb, var(--bg) 93%, var(--bg-dawn));
+  }
 }
 @media (max-width: 480px){
   /* keep the scroll cue off the stall's tag */

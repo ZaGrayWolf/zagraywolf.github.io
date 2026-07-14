@@ -236,7 +236,12 @@ body[data-page="alley"] .hud-resume{
    Sits just above the time-of-day clock in the free bottom-right corner.
    Off by default; lights cyan when the generative lo-fi is playing. */
 .hud-audio{
-  position:fixed; right:var(--s-2); bottom:calc(var(--s-2) + 2.4rem);
+  /* safe-area on both axes so it rises WITH the clock on notched phones — the
+     clock had the inset but this didn't, so on a home-bar phone the clock climbed
+     into this button. Desktop insets are 0 → unchanged. */
+  position:fixed;
+  right:calc(var(--s-2) + env(safe-area-inset-right));
+  bottom:calc(var(--s-2) + 2.4rem + env(safe-area-inset-bottom));
   z-index:var(--z-hud);
   font-family:var(--mono); font-size:var(--t-0); letter-spacing:.08em;
   color:var(--label); opacity:.7;
