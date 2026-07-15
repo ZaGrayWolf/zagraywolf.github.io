@@ -596,6 +596,23 @@ body[data-page="alley"]{
     --bldg-near: color-mix(in srgb, var(--bg) 93%, var(--bg-dawn));
   }
 }
+/* ── EXPERIMENT · phone only · Brave iOS Night Mode washout ──────────────────
+   Brave's Night Mode is a *selective* invert (it leaves the dark panels dark but
+   re-tints the literal color-mix building fills → washed skyline). currentColor
+   is the semantic signal those engines special-case and tend NOT to invert — the
+   same one keeping the panels dark. So route the skyline fills through
+   currentColor, set to a deep-night tone on the layer wrappers. Layer opacities
+   (.5/.75/.95) still supply the depth. Chrome/Safari/desktop already render fine
+   and are untouched — this only re-expresses the *same dark color* on phones.
+   REVERT: delete this whole block; .sky-* fall back to the pinned var(--bldg-*)
+   above. Only rescues buildings, not the bg gradient (currentColor can't reach
+   a gradient) — test in Brave iOS Night Mode before trusting it. */
+@media (max-width:700px){
+  .layer-skyline-top, .layer-skyline-back, .layer-skyline-mid, .layer-skyline-front{
+    color: color-mix(in srgb, var(--bg) 84%, var(--bg-dawn));
+  }
+  .sky-far, .sky-mid, .sky-near{ fill: currentColor; }
+}
 @media (max-width: 480px){
   /* keep the scroll cue off the stall's tag */
   .alley-down{ left:var(--s-3); transform:none; }

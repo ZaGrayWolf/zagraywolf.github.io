@@ -3,17 +3,17 @@
    then removes .preboot. Everything here is progressive enhancement:
    with JS disabled the page is already fully readable. */
 
-import { PAGES } from './config.js?v=4.48';
-import { createCurator } from './curator.js?v=4.48';
-import { createCat } from './cat.js?v=4.48';
-import { initHUD } from './hud.js?v=4.48';
-import { initTransitions } from './transition.js?v=4.48';
-import { initTimeOfDay } from './timeofday.js?v=4.48';
-import { initNarrator } from './narrator.js?v=4.48';
-import { initAnalytics } from './analytics.js?v=4.48';
-import { initPalette } from './palette.js?v=4.48';
-import { initResumePreview, resolveResumePdf } from './resume-preview.js?v=4.48';
-import { initPrefetch } from './prefetch.js?v=4.48';
+import { PAGES } from './config.js?v=4.52';
+import { createCurator } from './curator.js?v=4.52';
+import { createCat } from './cat.js?v=4.52';
+import { initHUD } from './hud.js?v=4.52';
+import { initTransitions } from './transition.js?v=4.52';
+import { initTimeOfDay } from './timeofday.js?v=4.52';
+import { initNarrator } from './narrator.js?v=4.52';
+import { initAnalytics } from './analytics.js?v=4.52';
+import { initPalette } from './palette.js?v=4.52';
+import { initResumePreview, resolveResumePdf } from './resume-preview.js?v=4.52';
+import { initPrefetch } from './prefetch.js?v=4.52';
 
 const page = document.body.dataset.page;
 
@@ -35,7 +35,7 @@ initPrefetch();
 // the dawn "leave a note" form (index only) — posts to the backend, or falls
 // back to mailto when it's dormant. Only loads on pages that have the form.
 if (document.getElementById('contact-form')){
-  const { initContact } = await import('./contact.js?v=4.48');
+  const { initContact } = await import('./contact.js?v=4.52');
   initContact();
 }
 
@@ -151,7 +151,10 @@ const isPhone = matchMedia('(max-width:700px)').matches;
 // about and the stall scene, just calmer (reduced canvas opacity in CSS) and
 // thinned (×0.45 density). Desktop is completely unchanged.
 const PHONE_NO_CURATOR = new Set(['work', 'projects', 'papers', 'resume', 'oneshot']);
-if (canvas && !(isPhone && PHONE_NO_CURATOR.has(page))){
+// phones also retire the cursor-follow swarm on the HOME hub — with no cursor to
+// chase it's just noise; a calm sine wave takes its place (see the alley branch).
+const phoneWaveHome = isPhone && page === 'alley';
+if (canvas && !(isPhone && PHONE_NO_CURATOR.has(page)) && !phoneWaveHome){
   const cfg = { ...(PAGE_CURATOR[page] || {}) };
   if (isPhone && cfg.density) cfg.density *= 0.45;   // thin the cloud on phones
   curator = createCurator(canvas, cfg);
@@ -162,7 +165,7 @@ if (document.body.dataset.cat !== 'off') createCat();
 // NEKO CATCHER (C8) — lazy: nothing loads until the 7th pet or the arcade
 // cabinet asks for it
 addEventListener('nekocatcher:boot', async () => {
-  const { bootGame } = await import('./game.js?v=4.48');
+  const { bootGame } = await import('./game.js?v=4.52');
   bootGame();
 });
 document.querySelector('.arcade')?.addEventListener('click', () => {
@@ -174,35 +177,40 @@ initTransitions(curator);
 
 // the HUD minimap becomes a curator conversation: hover escorts the swarm +
 // narrates, visited chapters persist amber. Enhances the static map in place.
-const { initDynamicMenu } = await import('./dynamic-menu.js?v=4.48');
+const { initDynamicMenu } = await import('./dynamic-menu.js?v=4.52');
 initDynamicMenu(curator);
 
 if (page === 'alley'){
-  const { initAlley } = await import('./alley.js?v=4.48');
+  const { initAlley } = await import('./alley.js?v=4.52');
   initAlley(curator);
+  // phones: the retired swarm becomes a calm sine wave along the lower screen
+  if (phoneWaveHome){
+    const { initPhoneWave } = await import('./phonewave.js?v=4.52');
+    initPhoneWave(canvas);
+  }
   // flows (the helix + glyph rivers) self-disables below 900px anyway — so on
   // phones don't even load/subscribe the module; it'd just be a no-op per frame.
   if (!isPhone){
-    const { initFlows } = await import('./flows.js?v=4.48');
+    const { initFlows } = await import('./flows.js?v=4.52');
     initFlows();
   }
   // meteors: a subtle full-screen comet loop; skip on phones (battery + heat)
   if (!isPhone){
-    const { initMeteors } = await import('./meteors.js?v=4.48');
+    const { initMeteors } = await import('./meteors.js?v=4.52');
     initMeteors();
   }
   // generative lo-fi lives only in the hub (off by default, one HUD toggle)
-  const { initAmbient } = await import('./audio.js?v=4.48');
+  const { initAmbient } = await import('./audio.js?v=4.52');
   initAmbient();
 }
 
 // the about page (CH.00) reuses the alley scene: parallax + cursor-reactive
 // glyphs. No flows / ambient — those stay in the hub.
 if (page === 'about'){
-  const { initAbout } = await import('./about.js?v=4.48');
+  const { initAbout } = await import('./about.js?v=4.52');
   initAbout(curator);
   if (!isPhone){
-    const { initMeteors } = await import('./meteors.js?v=4.48');
+    const { initMeteors } = await import('./meteors.js?v=4.52');
     initMeteors();
   }
 }
@@ -210,39 +218,39 @@ if (page === 'about'){
 // WORK + PROJECTS: chapter panels render from data/*.json. Must finish BEFORE
 // initPanels / glyphborder / curator-digest below, which query .panel at init.
 if (page === 'work'){
-  const { initWork } = await import('./work.js?v=4.48');
+  const { initWork } = await import('./work.js?v=4.52');
   await initWork();
 }
 if (page === 'projects'){
-  const { initProjects } = await import('./projects.js?v=4.48');
+  const { initProjects } = await import('./projects.js?v=4.52');
   await initProjects();
 }
 if (page === 'papers'){
-  const { initWins } = await import('./wins.js?v=4.48');
+  const { initWins } = await import('./wins.js?v=4.52');
   await initWins();
 }
 
 if (document.querySelector('.chapter')){
-  const { initPanels } = await import('./panels.js?v=4.48');
+  const { initPanels } = await import('./panels.js?v=4.52');
   initPanels();
 }
 
 // Casper pads in from the alley — continuity companion, paper chapters only
 // (the alley has the real cat; the stall has the concierge)
 if (document.body.classList.contains('world-paper')){
-  const { initCompanion } = await import('./companion.js?v=4.48');
+  const { initCompanion } = await import('./companion.js?v=4.52');
   initCompanion();
-  const { initBackTop } = await import('./backtop.js?v=4.48');
+  const { initBackTop } = await import('./backtop.js?v=4.52');
   initBackTop();   // phone-only "↑ TOP" for the long chapters (self-gates)
 }
 
 if (page === 'stall'){
-  const { initStall } = await import('./stall.js?v=4.48');
+  const { initStall } = await import('./stall.js?v=4.52');
   initStall();
 }
 
 if (page === 'resume' && document.getElementById('converter')){
-  const { initConverter } = await import('./converter.js?v=4.48');
+  const { initConverter } = await import('./converter.js?v=4.52');
   initConverter();
 }
 
@@ -278,7 +286,7 @@ if (page === 'projects' && curator){
 // papers/resume) — glyphborder targets `.chapter .panel` and self-gates on
 // reduced-motion/touch, so it's safe wherever there are panels.
 if (document.querySelector('.chapter .panel')){
-  const { initGlyphBorders } = await import('./glyphborder.js?v=4.48');
+  const { initGlyphBorders } = await import('./glyphborder.js?v=4.52');
   initGlyphBorders();
 }
 
@@ -373,7 +381,7 @@ console.log(
 
 /* ---- #debug: fps + degrade readout in the state line --------------------- */
 if (location.hash === '#debug'){
-  const { subscribe, perf } = await import('./ticker.js?v=4.48');
+  const { subscribe, perf } = await import('./ticker.js?v=4.52');
   const line = document.querySelector('.hud-state');
   if (line){
     const out = document.createElement('span');

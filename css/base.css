@@ -569,6 +569,9 @@ body[data-page="alley"] .contact-cta{ font-size:calc(var(--t-1) * 0.87); padding
   }
   .cmdk-fab::before{ display:none; }
 }
+/* phones: drop the cmds chip entirely — no slash key, and it crowds the bottom
+   HUD line / about footer. Palette stays reachable on desktop/tablet. */
+@media (max-width:700px){ .cmdk-fab{ display:none; } }
 
 /* handwritten sign-off — appears at the end of every chapter page.
    about.css overrides the color for the about page (neon tint).

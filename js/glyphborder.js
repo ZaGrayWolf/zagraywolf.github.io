@@ -120,6 +120,9 @@ function initPanelStatic(panel){
 
 export function initGlyphBorders(){
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;   // keep solid borders
+  // phones: the static ring can't morph anyway (no hover) — it's just DOM weight
+  // + visual noise on a small screen, so keep the plain solid border there.
+  if (matchMedia('(max-width:700px)').matches) return;   // ponytail: solid border on phone
   // fine pointer → morph-on-hover; touch → static always-on frame (no hover)
   const build = matchMedia('(pointer: fine)').matches ? initPanel : initPanelStatic;
   document.querySelectorAll('.chapter .panel').forEach(build);

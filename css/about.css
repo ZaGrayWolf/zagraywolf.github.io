@@ -223,6 +223,9 @@ body[data-page="about"] .manga-bg img:nth-child(6){ top:34%;  right:6%;  transfo
   /* on phones a fixed game button would sit over the bio — drop it inline at
      the foot of the column instead */
   .arcade--about{ position:static; margin:var(--s-6) auto 0; }
+  /* clear the footer (socials / back link) from the fixed bottom-left
+     curator:// HUD line so they don't overlap when scrolled to the end */
+  .about-wrap{ padding-bottom:var(--s-8); }
 }
 @media (max-width: 480px){
   .about-wrap{ padding:var(--s-6) var(--s-3); }
