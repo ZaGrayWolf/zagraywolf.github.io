@@ -8,7 +8,7 @@
    Petting: click → ♡ floats, zgw.cat.pets++; every 7th dispatches
    nekocatcher:boot (no listener until P4 — by design). */
 
-import { subscribe } from './ticker.js?v=4.52';
+import { subscribe } from './ticker.js?v=4.53';
 
 /* ---- placeholder sprite sheet --------------------------------------
    16×16 pixel maps scaled ×2 to 32×32. Legend:
