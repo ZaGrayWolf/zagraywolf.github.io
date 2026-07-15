@@ -31,11 +31,11 @@ export function initPhoneWave(canvas){
     const n = Math.ceil(W / STEP) + 2;
     cells = Array.from({ length: n }, () => ({ ch: pick(WAVE_G), next: Math.random() * 4000 }));
     // dim kanji adrift in the background
-    floaters = Array.from({ length: 16 }, () => ({
+    floaters = Array.from({ length: 28 }, () => ({
       x: Math.random() * W, y: Math.random() * H,
       dx: (Math.random() - .5) * .12, dy: (Math.random() - .5) * .12,
       ch: pick(KANJI), size: 14 + Math.random() * 16,
-      a: .08 + Math.random() * .14, next: Math.random() * 6000,
+      a: .16 + Math.random() * .2, next: Math.random() * 6000,
     }));
   }
   build();

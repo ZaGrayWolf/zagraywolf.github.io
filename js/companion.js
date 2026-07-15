@@ -7,7 +7,7 @@
    concierge, so this is purely the bridge between night and day. Progressive:
    JS-injected, so no-JS never sees it; reduced-motion drops the pad-in. */
 
-import { PAGES } from './config.js?v=4.53';
+import { PAGES } from './config.js?v=4.54';
 const CHAPTERS = PAGES.filter(p => p.chapter).map(p => p.slug);
 // ponytail: NAMES is voice copy, not structure — kept local so Casper's phrasing stays independent of mapLabel
 const NAMES = { work: 'WORK', projects: 'PROJECTS', papers: 'the WINS', resume: 'the RESUME', stall: 'the STALL' };
