@@ -6,8 +6,8 @@
    Progressive enhancement: the static #stall-menu rec lists are the no-JS
    floor — this module takes that subtree over on boot. */
 
-import { loadCasper, matchIntent } from './concierge.js?v=4.54';
-import { narrate } from './narrator.js?v=4.54';
+import { loadCasper, matchIntent } from './concierge.js?v=4.55';
+import { narrate } from './narrator.js?v=4.55';
 
 const CATS   = ['anime', 'manga', 'movies', 'books', 'shows'];   // fixed — skips recs.json "_note"
 const LABELS = { anime: 'ANIME', manga: 'MANGA', movies: 'MOVIES', books: 'BOOKS', shows: 'SHOWS' };
@@ -84,6 +84,18 @@ async function initConcierge() {
 
   let awaitingName = false;             // opt-in identity: set after the say-hi prompt
 
+  // variety: intents/greeting/fallback may hold an array of phrasings. Pick one
+  // per turn, never the same one twice in a row, so Casper doesn't sound taped.
+  const lastPick = new Map();
+  const oneOf = (v, key) => {
+    if (!Array.isArray(v)) return v ?? '';
+    if (v.length <= 1) return v[0] ?? '';
+    let i = Math.floor(Math.random() * v.length);
+    if (i === lastPick.get(key)) i = (i + 1) % v.length;   // no immediate repeat
+    lastPick.set(key, i);
+    return v[i];
+  };
+
   section.hidden = false;
 
   // phones: when the input takes focus the on-screen keyboard covers the bottom
@@ -108,18 +120,32 @@ async function initConcierge() {
     renderChips(followups);
   }
 
-  function renderChips(labels) {
+  // chips accept a plain string (re-asks it) or {label, run} (runs a handler).
+  function renderChips(items) {
     chips.innerHTML = '';
-    (labels || []).forEach(label => {
+    (items || []).forEach(item => {
+      const label = typeof item === 'string' ? item : item.label;
       const li  = document.createElement('li');
       const b   = document.createElement('button');
       b.type = 'button';
       b.className = 'stall-rec-btn';
       b.textContent = label;
-      b.addEventListener('click', () => { input.value = label; handleAsk(label); });
+      b.addEventListener('click', () => {
+        if (typeof item === 'object' && item.run) item.run();
+        else { input.value = label; handleAsk(label); }
+      });
       li.appendChild(b);
       chips.appendChild(li);
     });
+  }
+
+  // speak an intent's answer (one of its variants) + run any lantern/chef action.
+  function answerIntent(it, asked) {
+    if (it.id === 'say-hi') awaitingName = true;      // next message is their name
+    renderBubble(oneOf(it.answers ?? it.answer, it.id), it.followups, asked);
+    if (it.action?.type === 'rec')  selectCat(it.action.cat, listEl, hintEl);   // moves focus to titles
+    else if (it.action?.type === 'chef') chefChoice(listEl, hintEl);            // moves focus to titles
+    else input.focus();                  // about-Abhuday answer → stay in the input
   }
 
   function handleAsk(text) {
@@ -138,18 +164,32 @@ async function initConcierge() {
 
     const r = matchIntent(q, kb);
     // analytics: the actual question asked + how Casper read it
-    try { dispatchEvent(new CustomEvent('zgw:track', { detail: { event: 'ask', props: { q: q.slice(0, 120), intent: r.intent?.id || '', fallback: r.status === 'fallback' } } })); } catch {}
-    if (r.intent?.id === 'say-hi') awaitingName = true;   // next message is their name
+    try { dispatchEvent(new CustomEvent('zgw:track', { detail: { event: 'ask', props: { q: q.slice(0, 120), intent: r.intent?.id || '', fallback: r.status === 'fallback', near: r.status === 'near' } } })); } catch {}
+
     if (r.status === 'fallback') {
-      renderBubble(kb.config.fallback, kb.config.fallbackChips, q);
+      renderBubble(oneOf(kb.config.fallback, '_fallback'), kb.config.fallbackChips, q);
       input.focus();                     // bubble-only → stay in the input
       return;
     }
-    const it = r.intent;
-    renderBubble(it.answer, it.followups, q);       // Casper speaks first
-    if (it.action?.type === 'rec')  selectCat(it.action.cat, listEl, hintEl);   // moves focus to titles
-    else if (it.action?.type === 'chef') chefChoice(listEl, hintEl);            // moves focus to titles
-    else input.focus();                  // about-Abhuday answer → stay in the input
+
+    // near-miss: guess the likeliest intent and let them confirm with one tap,
+    // instead of dead-ending on the generic fallback.
+    if (r.status === 'near') {
+      const it = r.intent;
+      const asks = [
+        "*tilts his head* not sure i caught that. were you asking about " + it.label + "?",
+        "*whiskers twitch* hm. did you mean " + it.label + "?",
+        "*one ear swivels* close. were you after " + it.label + "?"
+      ];
+      renderBubble(oneOf(asks, '_near:' + it.id), [
+        { label: 'yes, ' + it.label, run: () => answerIntent(it, 'yes, ' + it.label) },
+        ...kb.config.fallbackChips.slice(0, 2)
+      ], q);
+      input.focus();
+      return;
+    }
+
+    answerIntent(r.intent, q);           // match or greeting → Casper speaks
   }
 
   form.addEventListener('submit', e => {
@@ -160,7 +200,7 @@ async function initConcierge() {
   });
 
   // seed the greeting + starter chips
-  renderBubble(kb.config.greeting, kb.config.fallbackChips);
+  renderBubble(oneOf(kb.config.greeting, '_greeting'), kb.config.fallbackChips);
 }
 
 // ── category selection ─────────────────────────────────────────────

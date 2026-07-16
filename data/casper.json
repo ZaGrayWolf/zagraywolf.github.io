@@ -1,9 +1,18 @@
 {
-  "_note": "Casper's brain — owner-editable. Each intent: id (slug), keywords (lowercase trigger words/phrases; multi-word phrases match as substrings and score higher), answer (Casper's reply, short, in your voice — keep the *action* asterisks for cat gestures), action (null = speak only; {type:'rec',cat:'anime|manga|movies|books|shows'} = light that lantern + reveal titles; {type:'chef'} = chef's choice card), followups (chip labels shown after the answer). Edit freely — the matcher reads this verbatim, nothing is hardcoded in JS. config.threshold tunes how sure a match must be before Casper answers vs. falls back.",
+  "_note": "Casper's brain — owner-editable. Each intent: id (slug), keywords (lowercase trigger words/phrases; multi-word phrases match as substrings and score higher), answers (array of reply variants — Casper picks one per turn, never the same twice in a row; keep the *action* asterisks for cat gestures; a single string still works too), label (short noun phrase used for the 'did you mean X?' near-miss guess), action (null = speak only; {type:'rec',cat:'anime|manga|movies|books|shows'} = light that lantern + reveal titles; {type:'chef'} = chef's choice card), followups (chip labels shown after the answer). config.threshold = how sure a match must be before Casper answers; config.nearThreshold = the floor below which a partial hit becomes a 'did you mean' guess instead of the fallback. greeting/fallback also accept arrays for variety.",
   "config": {
     "threshold": 1.0,
-    "greeting": "*Casper blinks slowly* …you came to the counter. Ask me about the menu: anime, manga, films, books, shows. Or about the human who runs this cart.",
-    "fallback": "*flicks an ear, a little sheepish* That one's past me, I just run the counter and keep the recs warm. But I know Abhuday's whole story by heart, his work, wins, skills, how to reach him, and I can slide you something good off the menu. Try:",
+    "nearThreshold": 0.6,
+    "greeting": [
+      "*Casper blinks slowly* …you came to the counter. Ask me about the menu: anime, manga, films, books, shows. Or about the human who runs this cart.",
+      "*sits up, tail curling* Evening. Lanterns lit, kettle on. I do two things well: recommendations, and gossip about the human who feeds me. Your pick.",
+      "*noses the counter bell* Oh good, company. Ask for a rec, or ask about Abhuday. I know both by heart."
+    ],
+    "fallback": [
+      "*flicks an ear, a little sheepish* That one's past me, I just run the counter and keep the recs warm. But I know Abhuday's whole story by heart, his work, wins, skills, how to reach him, and I can slide you something good off the menu. Try:",
+      "*tail droops slightly* Hm, you lost me there. I'm better with the menu and the human than with riddles. Here's what I definitely know:",
+      "*scratches an ear* Not my department, that one. But ask me about his work, his skills, or let me pick you something to watch or read. Try:"
+    ],
     "fallbackChips": [
       "what's he working on now?",
       "why hire him?",
@@ -16,697 +25,424 @@
   "intents": [
     {
       "id": "greeting",
-      "keywords": [
-        "hi",
-        "hello",
-        "hey",
-        "yo",
-        "sup",
-        "hiya",
-        "greetings",
-        "oi",
-        "good morning",
-        "good evening"
+      "label": "the menu",
+      "keywords": ["hi","hello","hey","yo","sup","hiya","greetings","oi","good morning","good evening"],
+      "answers": [
+        "*sits up* Evening. The lanterns are lit and the kettle's on. Ask about the menu, or about the human who runs the cart.",
+        "*stretches, then settles* Hey yourself. Recs or gossip about the human, that's the whole menu. Where to?",
+        "*blinks* You made it. Ask me anything, I've got recommendations and the human's whole résumé memorized."
       ],
-      "answer": "*sits up* Evening. The lanterns are lit and the kettle's on. Ask about the menu, or about the human who runs the cart.",
       "action": null,
-      "followups": [
-        "recommend something",
-        "who runs this?",
-        "why hire him?"
-      ]
+      "followups": ["recommend something","who runs this?","why hire him?"]
     },
     {
       "id": "say-hi",
-      "keywords": [
-        "leave my name",
-        "leave name",
-        "say hi",
-        "introduce",
-        "introduce myself",
-        "who's asking",
-        "whos asking",
-        "my name",
-        "i'm",
-        "im",
-        "tell him",
-        "let him know",
-        "i am",
-        "name is",
-        "drop my name",
-        "sign the guestbook",
-        "guestbook"
+      "label": "leaving your name",
+      "keywords": ["leave my name","leave name","say hi","introduce","introduce myself","who's asking","whos asking","my name","i'm","im","tell him","let him know","i am","name is","drop my name","sign the guestbook","guestbook"],
+      "answers": [
+        "*ears perk up* Oh, a name? He'd love that. Type your name (and a LinkedIn or where you're from, if you like) and I'll pass it along. Totally optional.",
+        "*sits up straight* A visitor with a name, fancy. Drop it here (LinkedIn or city too, if you want) and I'll make sure he hears about you.",
+        "*tail flicks, pleased* Leaving a calling card? Good manners. Type your name and anything else you'd like him to know, I'm a reliable messenger."
       ],
-      "answer": "*ears perk up* Oh, a name? He'd love that. Type your name (and a LinkedIn or where you're from, if you like) and I'll pass it along. Totally optional.",
       "action": null,
-      "followups": [
-        "why hire him?",
-        "recommend something"
-      ]
+      "followups": ["why hire him?","recommend something"]
     },
     {
       "id": "help",
-      "keywords": [
-        "help",
-        "what can you do",
-        "what do you do",
-        "options",
-        "commands",
-        "menu",
-        "topics",
-        "what can i ask"
+      "label": "what I can do",
+      "keywords": ["help","what can you do","what do you do","options","commands","menu","topics","what can i ask"],
+      "answers": [
+        "*stretches* I take two kinds of orders. Recommendations: anime, manga, films, books, shows. And questions about Abhuday: his work, skills, wins, how to reach him. Pick one ↓",
+        "*taps the counter with a paw* Two menus here. One's what to watch and read. The other's the human, work, projects, wins, contact. What'll it be?",
+        "*sits up helpfully* Ask me for a rec, or ask about the human who runs this place. I'm good for both. Start here ↓"
       ],
-      "answer": "*stretches* I take two kinds of orders. Recommendations: anime, manga, films, books, shows. And questions about Abhuday: his work, skills, wins, how to reach him. Pick one ↓",
       "action": null,
-      "followups": [
-        "recommend an anime",
-        "where has he worked?",
-        "what are his skills?",
-        "how do I reach him?"
-      ]
+      "followups": ["recommend an anime","where has he worked?","what are his skills?","how do I reach him?"]
     },
     {
       "id": "bio",
-      "keywords": [
-        "who",
-        "whose",
-        "owner",
-        "runs",
-        "runs this",
-        "who runs",
-        "about him",
-        "about you",
-        "kunwar",
-        "abhuday",
-        "singh",
-        "zagraywolf",
-        "name",
-        "wolf",
-        "introduce"
+      "label": "who runs this cart",
+      "keywords": ["who","whose","owner","runs","runs this","who runs","about him","about you","kunwar","abhuday","singh","zagraywolf","name","wolf","introduce"],
+      "answers": [
+        "*sits up* This cart belongs to Kunwar Abhuday Singh, aka ZaGrayWolf. A software engineer working where ML, robotics, and DevOps overlap. CS undergrad at Manipal. He feeds me; I run the counter.",
+        "*gestures with a paw* Kunwar Abhuday Singh runs this place, ZaGrayWolf if you've seen him online. ML, robotics, DevOps, that corner. CS undergrad at Manipal. I handle the recs; he handles everything else.",
+        "*proud blink* The human's name is Kunwar Abhuday Singh. Builds things across ML, robotics and DevOps, studies CS at Manipal. Also, crucially, keeps me fed."
       ],
-      "answer": "*sits up* This cart belongs to Kunwar Abhuday Singh, aka ZaGrayWolf. A software engineer working where ML, robotics, and DevOps overlap. CS undergrad at Manipal. He feeds me; I run the counter.",
       "action": null,
-      "followups": [
-        "what's he working on now?",
-        "what are his skills?",
-        "why hire him?"
-      ]
+      "followups": ["what's he working on now?","what are his skills?","why hire him?"]
     },
     {
       "id": "current",
-      "keywords": [
-        "now",
-        "currently",
-        "current",
-        "right now",
-        "these days",
-        "doing now",
-        "working on",
-        "up to",
-        "busy"
+      "label": "what he's working on now",
+      "keywords": ["now","currently","current","right now","these days","doing now","working on","up to","busy"],
+      "answers": [
+        "*counts on a paw* Right now: Agentic OS Platform Engineering at BookMyShow this summer, plus ongoing deep-learning research with KLIV at IIT Kharagpur and robotics with Team RoboManipal. Last summer it was AI agents at Incubyte.",
+        "*ticks them off* These days it's three plates spinning: platform work for the Agentic OS at BookMyShow, edge-ML research with KLIV at IIT Kharagpur, and robotics with Team RoboManipal. The Incubyte agent work was last summer.",
+        "*tail sways* Currently juggling BookMyShow's Agentic OS platform, KLIV research at IIT Kharagpur, and RoboManipal robotics. He does not sit still, if you were wondering."
       ],
-      "answer": "*counts on a paw* Right now: Agentic OS Platform Engineering at BookMyShow this summer, plus ongoing deep-learning research with KLIV at IIT Kharagpur and robotics with Team RoboManipal. Last summer it was AI agents at Incubyte.",
       "action": null,
-      "followups": [
-        "tell me about Incubyte",
-        "tell me about the robotics",
-        "why hire him?"
-      ]
+      "followups": ["tell me about Incubyte","tell me about the robotics","why hire him?"]
     },
     {
       "id": "experience",
-      "keywords": [
-        "work",
-        "worked",
-        "where has he worked",
-        "where did he work",
-        "job",
-        "jobs",
-        "experience",
-        "internship",
-        "internships",
-        "companies",
-        "employ",
-        "employer",
-        "career",
-        "history"
+      "label": "where he's worked",
+      "keywords": ["work","worked","where has he worked","where did he work","job","jobs","experience","internship","internships","companies","employ","employer","career","history"],
+      "answers": [
+        "*nods at the menu board* BookMyShow (Agentic OS Platform), Incubyte (AI agents), KLIV / IIT Kharagpur (edge ML research), and Team RoboManipal (robotics). Ask about any one of them.",
+        "*paw sweeps across the board* Four stops so far: BookMyShow, Incubyte, KLIV at IIT Kharagpur, and Team RoboManipal. Point at one and I'll tell you the story.",
+        "*settles in* The short list: platform work at BookMyShow, AI agents at Incubyte, research at KLIV / IIT Kharagpur, robotics with RoboManipal. Which one do you want the details on?"
       ],
-      "answer": "*nods at the menu board* BookMyShow (Agentic OS Platform), Incubyte (AI agents), KLIV / IIT Kharagpur (edge ML research), and Team RoboManipal (robotics). Ask about any one of them.",
       "action": null,
-      "followups": [
-        "tell me about Incubyte",
-        "tell me about KLIV",
-        "tell me about RoboManipal",
-        "what about BookMyShow?"
-      ]
+      "followups": ["tell me about Incubyte","tell me about KLIV","tell me about RoboManipal","what about BookMyShow?"]
     },
     {
       "id": "company-bookmyshow",
-      "keywords": [
-        "bookmyshow",
-        "book my show",
-        "bms",
-        "devops",
-        "ticketing"
+      "label": "his BookMyShow work",
+      "keywords": ["bookmyshow","book my show","bms","devops","ticketing"],
+      "answers": [
+        "*ears perk* Platform engineering for the Agentic OS at BookMyShow. Pipelines and reliability at the scale where a million people want a ticket to the same show at the same second. The build: a platform that wires AI agents into company workflows so the repetitive ops run themselves.",
+        "*sits tall* BookMyShow, Agentic OS platform work. Think a million people mashing 'buy' on the same show at the same instant, and the pipelines that have to not flinch. He's building the layer that plugs AI agents into the workflows so the boring ops run themselves."
       ],
-      "answer": "*ears perk* Platform engineering for the Agentic OS at BookMyShow. Pipelines and reliability at the scale where a million people want a ticket to the same show at the same second. The build: a platform that wires AI agents into company workflows so the repetitive ops run themselves.",
       "action": null,
-      "followups": [
-        "tell me about Incubyte",
-        "what are his skills?"
-      ]
+      "followups": ["tell me about Incubyte","what are his skills?"]
     },
     {
       "id": "company-incubyte",
-      "keywords": [
-        "incubyte",
-        "agents",
-        "agent",
-        "agno",
-        "ai agents",
-        "automation"
+      "label": "his Incubyte work",
+      "keywords": ["incubyte","agents","agent","agno","ai agents","automation"],
+      "answers": [
+        "*tail flicks* At Incubyte he shipped 20+ enterprise AI agents on Google Cloud with the Agno framework, wired into real corporate systems over RESTful microservices. Manual workload down 60%, throughput up 40%. In production, for real clients.",
+        "*counts it out* Incubyte: 20+ enterprise AI agents on Google Cloud, built with Agno, hooked into live corporate systems through RESTful microservices. Cut manual work by 60%, pushed throughput up 40%. Not a demo, actual clients."
       ],
-      "answer": "*tail flicks* At Incubyte he shipped 20+ enterprise AI agents on Google Cloud with the Agno framework, wired into real corporate systems over RESTful microservices. Manual workload down 60%, throughput up 40%. In production, for real clients.",
       "action": null,
-      "followups": [
-        "tell me about KLIV",
-        "what are his skills?",
-        "why hire him?"
-      ]
+      "followups": ["tell me about KLIV","what are his skills?","why hire him?"]
     },
     {
       "id": "company-kliv",
-      "keywords": [
-        "kliv",
-        "kharagpur",
-        "iit",
-        "research",
-        "edge",
-        "quantization",
-        "quantize",
-        "jetson",
-        "coral",
-        "tinyml",
-        "deep learning research"
+      "label": "the KLIV research",
+      "keywords": ["kliv","kharagpur","iit","research","edge","quantization","quantize","jetson","coral","tinyml","deep learning research"],
+      "answers": [
+        "*perks up* KLIV Group at IIT Kharagpur, deep-learning research. He benchmarked 17 CNNs and Transformers across 8 input resolutions on 4 edge platforms, instrumented for latency, throughput, page faults, and activation memory. Results: 35% faster, 90%+ accuracy, 40% smaller. Not one lucky run, a full study. It has its own one-shot chapter at oneshot.html.",
+        "*leans in* The KLIV work at IIT Kharagpur is the serious one. 17 CNNs and Transformers, 8 resolutions, 4 edge boards, all measured properly, latency, throughput, page faults, activation memory. Came out 35% faster, 90%+ accurate, 40% smaller. There's a whole one-shot chapter on it at oneshot.html."
       ],
-      "answer": "*perks up* KLIV Group at IIT Kharagpur, deep-learning research. He benchmarked 17 CNNs and Transformers across 8 input resolutions on 4 edge platforms, instrumented for latency, throughput, page faults, and activation memory. Results: 35% faster, 90%+ accuracy, 40% smaller. Not one lucky run, a full study. It has its own one-shot chapter at oneshot.html.",
       "action": null,
-      "followups": [
-        "tell me about the one-shot",
-        "tell me about RoboManipal",
-        "what are his skills?"
-      ]
+      "followups": ["tell me about the one-shot","tell me about RoboManipal","what are his skills?"]
     },
     {
       "id": "company-robomanipal",
-      "keywords": [
-        "robomanipal",
-        "robotics",
-        "robot",
-        "ros",
-        "robocup",
-        "robocon",
-        "pose",
-        "vision",
-        "aruco",
-        "6-dof",
-        "manipal robotics"
+      "label": "the RoboManipal robotics",
+      "keywords": ["robomanipal","robotics","robot","ros","robocup","robocon","pose","vision","aruco","6-dof","manipal robotics"],
+      "answers": [
+        "*sits tall* Team RoboManipal: real-time 6-DOF pose estimation in ROS + OpenCV at 20+ FPS. That stack went to RoboCup@Work: Top 8 in Germany, Top 10 in Brazil. The robot always knows exactly where it is.",
+        "*whiskers forward* RoboManipal is the robotics chapter. He built real-time 6-DOF pose estimation in ROS and OpenCV, 20+ FPS, and it carried the team to RoboCup@Work, Top 8 in Germany and Top 10 in Brazil. The robot never loses track of itself."
       ],
-      "answer": "*sits tall* Team RoboManipal: real-time 6-DOF pose estimation in ROS + OpenCV at 20+ FPS. That stack went to RoboCup@Work: Top 8 in Germany, Top 10 in Brazil. The robot always knows exactly where it is.",
       "action": null,
-      "followups": [
-        "what did he win?",
-        "tell me about a project",
-        "why hire him?"
-      ]
+      "followups": ["what did he win?","tell me about a project","why hire him?"]
     },
     {
       "id": "skills",
-      "keywords": [
-        "skill",
-        "skills",
-        "stack",
-        "tech",
-        "technology",
-        "languages",
-        "language",
-        "tools",
-        "good at",
-        "python",
-        "c++",
-        "pytorch",
-        "tensorflow",
-        "docker",
-        "kubernetes",
-        "ros",
-        "opencv",
-        "sql"
+      "label": "his skills",
+      "keywords": ["skill","skills","stack","tech","technology","languages","language","tools","good at","python","c++","pytorch","tensorflow","docker","kubernetes","ros","opencv","sql"],
+      "answers": [
+        "*counts on a paw* Languages: python, c++, javascript, sql. ML: pytorch, tensorflow, scikit-learn, numpy, pandas. Infra: docker, google-cloud, kubernetes, linux, git. Robotics: ros / ros2, opencv, aruco, jetson, coral. Plus quant (black-scholes, monte-carlo) and agent work with agno.",
+        "*ticks the paws* Code: python, c++, javascript, sql. ML stack: pytorch, tensorflow, scikit-learn, numpy, pandas. Ops: docker, google-cloud, kubernetes, linux, git. Robotics: ros/ros2, opencv, aruco, jetson, coral. And a quant streak, black-scholes, monte-carlo, plus agent work in agno.",
+        "*stretches, all business* Short version: python and c++ up front, pytorch and tensorflow for ML, docker/kubernetes/google-cloud for infra, ros/opencv for robots. Plus sql, git, linux, and some quant and agno on the side."
       ],
-      "answer": "*counts on a paw* Languages: python, c++, javascript, sql. ML: pytorch, tensorflow, scikit-learn, numpy, pandas. Infra: docker, google-cloud, kubernetes, linux, git. Robotics: ros / ros2, opencv, aruco, jetson, coral. Plus quant (black-scholes, monte-carlo) and agent work with agno.",
       "action": null,
-      "followups": [
-        "tell me about a project",
-        "what did he win?",
-        "why hire him?"
-      ]
+      "followups": ["tell me about a project","what did he win?","why hire him?"]
     },
     {
       "id": "education",
-      "keywords": [
-        "education",
-        "study",
-        "studied",
-        "studies",
-        "college",
-        "university",
-        "degree",
-        "school",
-        "manipal",
-        "cgpa",
-        "gpa",
-        "graduate",
-        "graduation",
-        "btech",
-        "b.tech",
-        "cs"
+      "label": "where he studied",
+      "keywords": ["education","study","studied","studies","college","university","degree","school","manipal","cgpa","gpa","graduate","graduation","btech","b.tech","cs"],
+      "answers": [
+        "*tilts head* B.Tech in Computer Science at Manipal Institute of Technology (MIT MAHE), 2023 to 2027, CGPA 8.09 / 10.",
+        "*nods* Computer Science, B.Tech, Manipal Institute of Technology (MIT MAHE). Class of 2027, sitting at a 8.09 / 10. The rest of his education happens at this counter, mostly."
       ],
-      "answer": "*tilts head* B.Tech in Computer Science at Manipal Institute of Technology (MIT MAHE), 2023 to 2027, CGPA 8.09 / 10.",
       "action": null,
-      "followups": [
-        "what are his skills?",
-        "what's he working on now?"
-      ]
+      "followups": ["what are his skills?","what's he working on now?"]
     },
     {
       "id": "wins",
-      "keywords": [
-        "win",
-        "wins",
-        "won",
-        "award",
-        "awards",
-        "achievement",
-        "achievements",
-        "competition",
-        "competitions",
-        "prize",
-        "trophy",
-        "accomplishment",
-        "accomplishments"
+      "label": "what he's won",
+      "keywords": ["win","wins","won","award","awards","achievement","achievements","competition","competitions","prize","trophy","accomplishment","accomplishments"],
+      "answers": [
+        "*tail flicks proudly* RoboCup@Work: Top 8 in Germany, Top 10 in Brazil, the only Indian team. ABU Robocon 2024: 99/100. IISc RoboNautica: runners-up. Aether BytesBattle: national winners. And a Python library live on PyPI.",
+        "*sits up, chest out* The trophy shelf: RoboCup@Work, Top 8 Germany and Top 10 Brazil, only Indian team there. ABU Robocon 2024, 99/100. RoboNautica at IISc, runners-up. BytesBattle, national winners. Oh, and a Python library shipping on PyPI.",
+        "*counts, smug* RoboCup@Work top 8 in Germany (top 10 in Brazil, only Indian side), Robocon 2024 at 99/100, RoboNautica runners-up, BytesBattle national win, and a live PyPI package. Good year. Good few years, actually."
       ],
-      "answer": "*tail flicks proudly* RoboCup@Work: Top 8 in Germany, Top 10 in Brazil, the only Indian team. ABU Robocon 2024: 99/100. IISc RoboNautica: runners-up. Aether BytesBattle: national winners. And a Python library live on PyPI.",
       "action": null,
-      "followups": [
-        "what's the PyPI library?",
-        "tell me about the robotics",
-        "why hire him?"
-      ]
+      "followups": ["what's the PyPI library?","tell me about the robotics","why hire him?"]
     },
     {
       "id": "projects",
-      "keywords": [
-        "project",
-        "projects",
-        "built",
-        "build",
-        "made",
-        "open source",
-        "github",
-        "repo",
-        "repos",
-        "side project"
+      "label": "his projects",
+      "keywords": ["project","projects","built","build","made","open source","github","repo","repos","side project"],
+      "answers": [
+        "*slides the menu over* The headliners: advance-conv-benchmarks (a published PyPI library), Custom ArUco 6-DOF tracking, a quant Option-Pricing engine, and an ensemble object detector at 98%+ accuracy. 30+ repos at github.com/ZaGrayWolf.",
+        "*paws over the list* Top of the pile: advance-conv-benchmarks on PyPI, a custom ArUco 6-DOF tracker, an option-pricing quant engine, and an ensemble detector hitting 98%+. That's four of 30-plus repos at github.com/ZaGrayWolf.",
+        "*nudges it toward you* He builds a lot. The ones worth naming: a published PyPI benchmarking library, 6-DOF ArUco tracking, a quant pricing engine, a 98%+ object detector. Rest of them, 30-odd, live at github.com/ZaGrayWolf."
       ],
-      "answer": "*slides the menu over* The headliners: advance-conv-benchmarks (a published PyPI library), Custom ArUco 6-DOF tracking, a quant Option-Pricing engine, and an ensemble object detector at 98%+ accuracy. 30+ repos at github.com/ZaGrayWolf.",
       "action": null,
-      "followups": [
-        "what's the PyPI library?",
-        "tell me about the quant work",
-        "what are his skills?"
-      ]
+      "followups": ["what's the PyPI library?","tell me about the quant work","what are his skills?"]
     },
     {
       "id": "oneshot",
-      "keywords": [
-        "case study",
-        "one shot",
-        "oneshot",
-        "one-shot",
-        "deep dive",
-        "benchmark",
-        "benchmarks",
-        "benchmarking",
-        "int8"
+      "label": "the one-shot case study",
+      "keywords": ["case study","one shot","oneshot","one-shot","deep dive","benchmark","benchmarks","benchmarking","int8"],
+      "answers": [
+        "*taps the counter* His research at KLIV, IIT Kharagpur: 17 models, 8 resolutions, 4 edge devices, all quantized INT8. The whole study is drawn as a one-shot chapter, breakage and all. Find it at oneshot.html, or through the projects floor.",
+        "*points a paw* The one-shot is the KLIV study, laid out end to end: 17 models, 8 resolutions, 4 edge boards, quantized to INT8, warts and all. It's at oneshot.html, or you can reach it from the projects floor."
       ],
-      "answer": "*taps the counter* His research at KLIV, IIT Kharagpur: 17 models, 8 resolutions, 4 edge devices, all quantized INT8. The whole study is drawn as a one-shot chapter, breakage and all. Find it at oneshot.html, or through the projects floor.",
       "action": null,
-      "followups": [
-        "what are his skills?",
-        "where has he worked?",
-        "recommend an anime"
-      ]
+      "followups": ["what are his skills?","where has he worked?","recommend an anime"]
     },
     {
       "id": "project-pypi",
-      "keywords": [
-        "pypi",
-        "library",
-        "package",
-        "pip",
-        "convolution",
-        "benchmarks",
-        "advance-conv",
-        "published"
+      "label": "the PyPI library",
+      "keywords": ["pypi","library","package","pip","convolution","benchmarks","advance-conv","published"],
+      "answers": [
+        "*proud blink* advance-conv-benchmarks: every convolution variant, counted and raced. FLOPs and parameters across PyTorch and TensorFlow, packaged so anyone can `pip install` it. It's live on PyPI.",
+        "*perks up* The PyPI one is advance-conv-benchmarks, it tallies FLOPs and parameters for every convolution variant across PyTorch and TensorFlow, and it's packaged so you can just `pip install` it. Real, public, installable."
       ],
-      "answer": "*proud blink* advance-conv-benchmarks: every convolution variant, counted and raced. FLOPs and parameters across PyTorch and TensorFlow, packaged so anyone can `pip install` it. It's live on PyPI.",
       "action": null,
-      "followups": [
-        "tell me about the quant work",
-        "tell me about a project"
-      ]
+      "followups": ["tell me about the quant work","tell me about a project"]
     },
     {
       "id": "project-quant",
-      "keywords": [
-        "quant",
-        "option",
-        "options",
-        "pricing",
-        "black-scholes",
-        "monte carlo",
-        "finance",
-        "trading",
-        "greeks",
-        "risk"
+      "label": "the quant engine",
+      "keywords": ["quant","option","options","pricing","black-scholes","monte carlo","finance","trading","greeks","risk"],
+      "answers": [
+        "*ears twitch* The Option-Pricing engine: Black-Scholes and Monte Carlo with the full Greeks, risk estimation, and a simulator that chews through thousands of paths with automated rebalancing.",
+        "*tail curls* The quant piece is an option-pricing engine, Black-Scholes and Monte Carlo, all the Greeks, proper risk estimation, and a simulator that runs thousands of paths and rebalances itself. He likes a good number."
       ],
-      "answer": "*ears twitch* The Option-Pricing engine: Black-Scholes and Monte Carlo with the full Greeks, risk estimation, and a simulator that chews through thousands of paths with automated rebalancing.",
       "action": null,
-      "followups": [
-        "what's the PyPI library?",
-        "tell me about the robotics"
-      ]
+      "followups": ["what's the PyPI library?","tell me about the robotics"]
     },
     {
       "id": "hire",
-      "keywords": [
-        "hire",
-        "hiring",
-        "available",
-        "availability",
-        "contact",
-        "reach",
-        "email",
-        "recruit",
-        "recruiter",
-        "resume",
-        "cv",
-        "intern",
-        "open to",
-        "get in touch",
-        "how do i reach"
+      "label": "how to reach him",
+      "keywords": ["hire","hiring","available","availability","contact","reach","email","recruit","recruiter","resume","cv","intern","open to","get in touch","how do i reach"],
+      "answers": [
+        "*slides a card forward* Reach him at abhuday2656@gmail.com, github.com/ZaGrayWolf, or LinkedIn. The RESUME ↓ link up top has the one-page PDF. He's open to good problems.",
+        "*nudges a card across* Easiest door: abhuday2656@gmail.com. Also github.com/ZaGrayWolf and LinkedIn, and the RESUME ↓ up top for the one-pager. He answers, especially for interesting work."
       ],
-      "answer": "*slides a card forward* Reach him at abhuday2656@gmail.com, github.com/ZaGrayWolf, or LinkedIn. The RESUME ↓ link up top has the one-page PDF. He's open to good problems.",
       "action": null,
-      "followups": [
-        "why hire him?",
-        "what are his skills?",
-        "what's he working on now?"
-      ]
+      "followups": ["why hire him?","what are his skills?","what's he working on now?"]
     },
     {
       "id": "why-hire",
-      "keywords": [
-        "why",
-        "why hire",
-        "why should",
-        "what makes",
-        "stand out",
-        "different",
-        "special",
-        "best",
-        "pitch",
-        "sell",
-        "convince"
+      "label": "why hire him",
+      "keywords": ["why","why hire","why should","what makes","stand out","different","special","best","pitch","sell","convince"],
+      "answers": [
+        "*looks you dead in the eye* He ships things that have to work in the real world: agents in production, robots at international finals, a library people actually install. Not demos. Things that run, on deadlines, and either work or don't.",
+        "*steady stare* Because his stuff runs. Agents in production, robots at world finals, a package strangers actually `pip install`. He works where the thing either functions or it doesn't, and his function.",
+        "*flat, confident* Simple: he finishes. Production agents, international robotics finals, a published library, real results with real numbers. He builds things that survive contact with reality."
       ],
-      "answer": "*looks you dead in the eye* He ships things that have to work in the real world: agents in production, robots at international finals, a library people actually install. Not demos. Things that run, on deadlines, and either work or don't.",
       "action": null,
-      "followups": [
-        "what did he win?",
-        "how do I reach him?",
-        "what's he working on now?"
-      ]
+      "followups": ["what did he win?","how do I reach him?","what's he working on now?"]
     },
     {
       "id": "location",
-      "keywords": [
-        "location",
-        "based",
-        "where based",
-        "where does he live",
-        "where is he",
-        "live",
-        "lives",
-        "city",
-        "country",
-        "located",
-        "noida",
-        "india"
+      "label": "where he's based",
+      "keywords": ["location","based","where based","where does he live","where is he","live","lives","city","country","located","noida","india"],
+      "answers": [
+        "*glances out* Noida and Manipal, India. Works remote for most of it; travels for the robotics.",
+        "*nods toward the horizon* India, between Noida and Manipal. Most of the work's remote; the robots are what get him on a plane."
       ],
-      "answer": "*glances out* Noida and Manipal, India. Works remote for most of it; travels for the robotics.",
       "action": null,
-      "followups": [
-        "where has he worked?",
-        "how do I reach him?"
-      ]
+      "followups": ["where has he worked?","how do I reach him?"]
     },
     {
       "id": "fun-cat",
-      "keywords": [
-        "cat",
-        "casper",
-        "who are you",
-        "kitty",
-        "pet",
-        "meow",
-        "your name"
+      "label": "me",
+      "keywords": ["cat","casper","who are you","kitty","pet","meow","your name"],
+      "answers": [
+        "*purrs* I'm Casper. White, calm, behind the counter. There's a pixel version of me roaming the alley back home. That's my cousin. Pet him if you see him.",
+        "*grooms a paw, unbothered* Casper. I run the counter, keep the recs warm, judge people quietly. The little pixel cat wandering the alley is my cousin, he likes being pet.",
+        "*slow blink* Name's Casper. Professional stall cat. Don't mind the scruffy pixel one out in the alley, that's family. He works for pets."
       ],
-      "answer": "*purrs* I'm Casper. White, calm, behind the counter. There's a pixel version of me roaming the alley back home. That's my cousin. Pet him if you see him.",
       "action": null,
-      "followups": [
-        "recommend something",
-        "who runs this?"
-      ]
+      "followups": ["recommend something","who runs this?"]
     },
     {
       "id": "hobbies",
+      "label": "his hobbies",
       "keywords": ["hobby","hobbies","fun","free time","off panel","off-panel","after hours","interests","outside work","for fun","finova","mentor","mentoring","competitive programming","leadership","the club"],
-      "answer": "*stretches out* Off the clock he heads ML and Data Analytics at FINOVA, Manipal's fintech club, mentored 100+ juniors, does competitive programming (national winner), and curates this very stall. That's why the recs are good.",
+      "answers": [
+        "*stretches out* Off the clock he heads ML and Data Analytics at FINOVA, Manipal's fintech club, mentored 100+ juniors, does competitive programming (national winner), and curates this very stall. That's why the recs are good.",
+        "*rolls over lazily* 'Free time' is a strong word. He runs ML and Data Analytics at FINOVA, the Manipal fintech club, has mentored 100-plus juniors, wins at competitive programming, and stocks this stall himself. Hence the taste."
+      ],
       "action": null,
       "followups": ["why hire him?","recommend something","what did he win?"]
     },
     {
       "id": "the-name",
+      "label": "the ZaGrayWolf name",
       "keywords": ["why zagraywolf","zagraywolf","why wolf","the wolf","wolf mean","why that name","the handle","gray wolf","grey wolf","alias","nickname","called","named"],
-      "answer": "*tail curls* ZaGrayWolf is his handle. A gray wolf, lone but still part of a pack. Between us, I keep a little wolf-ear tuft as a quiet joke about it.",
+      "answers": [
+        "*tail curls* ZaGrayWolf is his handle. A gray wolf, lone but still part of a pack. Between us, I keep a little wolf-ear tuft as a quiet joke about it.",
+        "*smug little blink* The handle's ZaGrayWolf. Gray wolf, runs alone but never forgets the pack. I wear a tiny wolf-ear tuft about it, my one running joke."
+      ],
       "action": null,
       "followups": ["who runs this?","what's he working on now?"]
     },
     {
       "id": "the-site",
+      "label": "how this site was made",
       "keywords": ["this site","the site","website","how was this made","how did you make","built this","this page","made this","tech behind","no framework","how is this built","who built this site"],
-      "answer": "*paws at the counter* This whole place is hand-written. Vanilla HTML, CSS, and JavaScript. No framework, no build step. The canvas critters and I run on plain code. He's stubborn like that.",
+      "answers": [
+        "*paws at the counter* This whole place is hand-written. Vanilla HTML, CSS, and JavaScript. No framework, no build step. The canvas critters and I run on plain code. He's stubborn like that.",
+        "*taps the wooden counter* All of this, hand-built. Plain HTML, CSS and JavaScript, no framework, no build step. Me, the alley, the cousin cat, all just honest code. He wouldn't have it any other way."
+      ],
       "action": null,
       "followups": ["what are his skills?","tell me about a project"]
     },
     {
       "id": "the-song",
+      "label": "the music",
       "keywords": ["song","music","audio","ambient","the sound","lofi","lo-fi","tune","whats playing","what's playing","the beat"],
-      "answer": "*sways a little* That lo-fi isn't a file, it's generated live in your browser with Web Audio. Am F C G, seventy beats a minute. Flip the little ♪ toggle back in the alley to hear it.",
+      "answers": [
+        "*sways a little* That lo-fi isn't a file, it's generated live in your browser with Web Audio. Am F C G, seventy beats a minute. Flip the little ♪ toggle back in the alley to hear it.",
+        "*nods to the beat* No mp3 here, that lo-fi is synthesized live in your browser, Web Audio. Am F C G, about 70 bpm. There's a ♪ toggle out in the alley if you want it playing."
+      ],
       "action": null,
       "followups": ["how was this made?","recommend something"]
     },
     {
       "id": "the-game",
+      "label": "the game",
       "keywords": ["game","neko","catcher","arcade","minigame","cat game","play a game","the game"],
-      "answer": "*perks up* NEKO CATCHER. Catch the good stuff, dodge the bug. It's back in the alley, or pet my cousin seven times and it pops up. Fair warning, it's a little addictive.",
+      "answers": [
+        "*perks up* NEKO CATCHER. Catch the good stuff, dodge the bug. It's back in the alley, or pet my cousin seven times and it pops up. Fair warning, it's a little addictive.",
+        "*eyes light up* There's a game, NEKO CATCHER. Grab the good things, dodge the bug. Find it in the alley, or pet the pixel cousin seven times till it appears. Don't blame me for your evening."
+      ],
       "action": null,
       "followups": ["who runs this?","recommend something"]
     },
     {
       "id": "availability",
+      "label": "his availability",
       "keywords": ["start","join","notice period","when available","when can he start","relocate","relocation","visa","sponsorship","full time","full-time","part time","freelance","remote"],
-      "answer": "*checks a tiny calendar* He's a CS undergrad, class of 2027, so internships and new-grad roles fit best. Happy to work remote, travels when it matters. For dates and specifics, just email him: abhuday2656@gmail.com.",
+      "answers": [
+        "*checks a tiny calendar* He's a CS undergrad, class of 2027, so internships and new-grad roles fit best. Happy to work remote, travels when it matters. For dates and specifics, just email him: abhuday2656@gmail.com.",
+        "*flips a small calendar* Class of 2027, so think internships and new-grad. Remote's fine, he'll travel when it counts. For exact dates, go straight to the source: abhuday2656@gmail.com."
+      ],
       "action": null,
       "followups": ["why hire him?","how do I reach him?"]
     },
     {
       "id": "favorites",
+      "label": "his favorites",
       "keywords": ["favorite","favourite","best anime","best movie","personal favorite","his favorite","top pick","favourite anime","favorite film"],
-      "answer": "*grins* He won't crown just one, that's the whole point of this stall. Light a lantern and I'll show you what he actually reaches for.",
+      "answers": [
+        "*grins* He won't crown just one, that's the whole point of this stall. Light a lantern and I'll show you what he actually reaches for.",
+        "*tilts head, amused* One favorite? Not his style, that's why there's a whole menu. Pick a lantern and I'll show you what he keeps coming back to."
+      ],
       "action": null,
       "followups": ["recommend an anime","recommend a movie","surprise me"]
     },
     {
       "id": "age",
+      "label": "his age",
       "keywords": ["age","how old","old is he","born","birthday","what year"],
-      "answer": "*squints* Old enough to ship production code, young enough to pull an all-nighter for a robot. Undergrad, class of 2027. Do the math.",
+      "answers": [
+        "*squints* Old enough to ship production code, young enough to pull an all-nighter for a robot. Undergrad, class of 2027. Do the math.",
+        "*flicks tail* Undergrad, class of 2027. Old enough for production deadlines, young enough to enjoy them. I'll let you carry the one."
+      ],
       "action": null,
       "followups": ["where did he study?","what's he working on now?"]
     },
     {
       "id": "thanks",
+      "label": "saying thanks",
       "keywords": ["thanks","thank you","thankyou","appreciate","cheers","thx","much obliged"],
-      "answer": "*dips his head* Anytime. Come back hungry, or curious.",
+      "answers": [
+        "*dips his head* Anytime. Come back hungry, or curious.",
+        "*slow, pleased blink* Anytime. The counter's always open, and so am I.",
+        "*tail curls contentedly* Don't mention it. Come back when you want another rec."
+      ],
       "action": null,
       "followups": ["recommend something","why hire him?"]
     },
     {
       "id": "bye",
+      "label": "heading out",
       "keywords": ["bye","goodbye","see ya","see you","later","cya","gotta go","farewell","good night","goodnight"],
-      "answer": "*yawns* Mind the lanterns on your way out. The night keeps the light on.",
+      "answers": [
+        "*yawns* Mind the lanterns on your way out. The night keeps the light on.",
+        "*lifts a paw* Off you go, then. Lanterns stay lit, I'll be here.",
+        "*settles onto the counter* Safe travels. The alley never really closes."
+      ],
       "action": null,
       "followups": ["one more rec","who runs this?"]
     },
     {
       "id": "rec-anime",
-      "keywords": [
-        "anime",
-        "watch",
-        "show",
-        "series",
-        "animation",
-        "recommend anime",
-        "an anime",
-        "anime rec"
+      "label": "anime recs",
+      "keywords": ["anime","watch","show","series","animation","recommend anime","an anime","anime rec"],
+      "answers": [
+        "*nudges the ANIME lantern* It's lit. Here's the shelf. Pick a title and I'll slide it over.",
+        "*bats the ANIME lantern awake* Lit. These are the ones he stands behind, take your pick."
       ],
-      "answer": "*nudges the ANIME lantern* It's lit. Here's the shelf. Pick a title and I'll slide it over.",
-      "action": {
-        "type": "rec",
-        "cat": "anime"
-      },
-      "followups": [
-        "what manga?",
-        "a film",
-        "surprise me"
-      ]
+      "action": {"type": "rec","cat": "anime"},
+      "followups": ["what manga?","a film","surprise me"]
     },
     {
       "id": "rec-manga",
-      "keywords": [
-        "manga",
-        "read",
-        "comic",
-        "comics",
-        "recommend manga",
-        "a manga",
-        "manga rec"
+      "label": "manga recs",
+      "keywords": ["manga","read","comic","comics","recommend manga","a manga","manga rec"],
+      "answers": [
+        "*nudges the MANGA lantern* Lit. Take your pick from the shelf.",
+        "*paws the MANGA lantern on* There. The good ones are all here, go ahead."
       ],
-      "answer": "*nudges the MANGA lantern* Lit. Take your pick from the shelf.",
-      "action": {
-        "type": "rec",
-        "cat": "manga"
-      },
-      "followups": [
-        "an anime",
-        "a book",
-        "surprise me"
-      ]
+      "action": {"type": "rec","cat": "manga"},
+      "followups": ["an anime","a book","surprise me"]
     },
     {
       "id": "rec-movies",
-      "keywords": [
-        "movie",
-        "movies",
-        "film",
-        "films",
-        "cinema",
-        "watch a film",
-        "recommend a movie",
-        "a movie"
+      "label": "movie recs",
+      "keywords": ["movie","movies","film","films","cinema","watch a film","recommend a movie","a movie"],
+      "answers": [
+        "*nudges the MOVIES lantern* Lit. Here's what's on the reel.",
+        "*flicks the MOVIES lantern alight* There we go. Pick one off the reel."
       ],
-      "answer": "*nudges the MOVIES lantern* Lit. Here's what's on the reel.",
-      "action": {
-        "type": "rec",
-        "cat": "movies"
-      },
-      "followups": [
-        "an anime",
-        "a book",
-        "surprise me"
-      ]
+      "action": {"type": "rec","cat": "movies"},
+      "followups": ["an anime","a book","surprise me"]
     },
     {
       "id": "rec-books",
-      "keywords": [
-        "book",
-        "books",
-        "read a book",
-        "novel",
-        "reading",
-        "recommend a book",
-        "a book"
+      "label": "book recs",
+      "keywords": ["book","books","read a book","novel","reading","recommend a book","a book"],
+      "answers": [
+        "*nudges the BOOKS lantern* Lit. The shelf's yours.",
+        "*noses the BOOKS lantern on* Lit up. Help yourself, these are keepers."
       ],
-      "answer": "*nudges the BOOKS lantern* Lit. The shelf's yours.",
-      "action": {
-        "type": "rec",
-        "cat": "books"
-      },
-      "followups": [
-        "a show",
-        "an anime",
-        "surprise me"
-      ]
+      "action": {"type": "rec","cat": "books"},
+      "followups": ["a show","an anime","surprise me"]
     },
     {
       "id": "rec-shows",
-      "keywords": [
-        "show",
-        "shows",
-        "series",
-        "tv",
-        "tv show",
-        "watch a show",
-        "recommend a show",
-        "a show",
-        "binge"
+      "label": "show recs",
+      "keywords": ["show","shows","series","tv","tv show","watch a show","recommend a show","a show","binge"],
+      "answers": [
+        "*nudges the SHOWS lantern* Lit. Pull up a stool, here's what to binge.",
+        "*taps the SHOWS lantern awake* Lit. Sit down, these'll eat your weekend nicely."
       ],
-      "answer": "*nudges the SHOWS lantern* Lit. Pull up a stool, here's what to binge.",
-      "action": {
-        "type": "rec",
-        "cat": "shows"
-      },
-      "followups": [
-        "a film",
-        "a book",
-        "surprise me"
-      ]
+      "action": {"type": "rec","cat": "shows"},
+      "followups": ["a film","a book","surprise me"]
     },
     {
       "id": "rec-surprise",
-      "keywords": [
-        "surprise",
-        "random",
-        "anything",
-        "chef",
-        "chef's choice",
-        "dealer's choice",
-        "you pick",
-        "you choose",
-        "whatever",
-        "recommend something",
-        "recommend",
-        "rec",
-        "suggestion",
-        "suggest"
+      "label": "a surprise pick",
+      "keywords": ["surprise","random","anything","chef","chef's choice","dealer's choice","you pick","you choose","whatever","recommend something","recommend","rec","suggestion","suggest"],
+      "answers": [
+        "*rings a little bell* Chef's choice. Coming across the counter now.",
+        "*taps the bell twice* Leaving it to me, brave. Chef's choice, incoming.",
+        "*grins, rings the bell* My pick, then. Don't second-guess the cat. Here it comes."
       ],
-      "answer": "*rings a little bell* Chef's choice. Coming across the counter now.",
-      "action": {
-        "type": "chef"
-      },
-      "followups": [
-        "an anime",
-        "a manga",
-        "a book"
-      ]
+      "action": {"type": "chef"},
+      "followups": ["an anime","a manga","a book"]
     }
   ]
 }

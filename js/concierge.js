@@ -60,6 +60,8 @@ const GREETINGS = new Set(['hi','hello','hey','yo','sup','hiya','greetings','oi'
 /* matchIntent(rawText, kb) → one of:
    { status:'greeting', intent }   greeting short-circuit
    { status:'match',    intent }   best intent cleared the threshold
+   { status:'near',     intent }   almost — below threshold but a real partial
+                                   signal; offer it as a "did you mean" guess
    { status:'fallback', config }   nothing confident — offer chips     */
 export function matchIntent(rawText, kb){
   const input = tokenize(normalize(rawText));
@@ -79,9 +81,14 @@ export function matchIntent(rawText, kb){
       b.specificity - a.specificity);
 
   const best = ranked[0];
-  const threshold = (kb.config && kb.config.threshold) || 1.0;
-  if (!best || best.score < threshold){
-    return { status: 'fallback', config: kb.config };
+  const cfg = kb.config || {};
+  const threshold = cfg.threshold || 1.0;
+  if (best && best.score >= threshold) return { status: 'match', intent: best.intent };
+  // near-miss: a partial hit (e.g. only a stemmed keyword landed) — guess rather
+  // than dead-end. Needs a `label` on the intent to phrase the "did you mean".
+  const nearFloor = cfg.nearThreshold || 0.6;
+  if (best && best.score >= nearFloor && best.intent.label){
+    return { status: 'near', intent: best.intent };
   }
-  return { status: 'match', intent: best.intent };
+  return { status: 'fallback', config: cfg };
 }

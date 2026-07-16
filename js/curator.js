@@ -6,7 +6,7 @@
      'wave'             contact strip ノシ-ish drift (slow horizontal undulation)
    Pure module, zero deps. createCurator(canvas, config) */
 
-import { subscribe, perf } from './ticker.js?v=4.54';
+import { subscribe, perf } from './ticker.js?v=4.55';
 
 const KATA = 'アカサタナハマヤラワヰンｱｲｳｴｵｶｷｸｹｺｼﾂﾈﾐ';
 const SOFT = '·.:¨ﾟ°+';
