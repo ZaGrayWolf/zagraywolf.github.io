@@ -3,7 +3,7 @@
    few churn through random glyphs. Accessible names are protected by
    aria-label on the element (set here if absent). Reduced-motion: instant. */
 
-import { subscribe } from './ticker.js?v=4.61';
+import { subscribe } from './ticker.js?v=4.62';
 
 const NOISE = 'アカサタナハマヤラ░▒▓┌┐└┘╱╲╳<>+*';
 const rand = () => NOISE[(Math.random() * NOISE.length) | 0];

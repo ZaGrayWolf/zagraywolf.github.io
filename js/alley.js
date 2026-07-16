@@ -3,9 +3,9 @@
    sign, curator escort on sign hover/focus, and the dawn contact strip
    (bg lerp + signs switching off one by one). */
 
-import { subscribe } from './ticker.js?v=4.61';
-import { scramble, scrambleOnApproach } from './scramble.js?v=4.61';
-import { holdNarration, forceNarrate } from './narrator.js?v=4.61';
+import { subscribe } from './ticker.js?v=4.62';
+import { scramble, scrambleOnApproach } from './scramble.js?v=4.62';
+import { holdNarration, forceNarrate } from './narrator.js?v=4.62';
 
 /* current parallax offset at factor 1 (px) — flows.js reads this so canvas-
    drawn streams can track the signs layer as it drifts under the pointer */

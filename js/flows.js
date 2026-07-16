@@ -7,9 +7,9 @@
    Budgets (C2): helix ≤160 cells, streams ≤240 glyphs. No shadowBlur.
    Hidden below 900px (A8). Zero deps. */
 
-import { subscribe } from './ticker.js?v=4.61';
-import { cssRGB } from './curator.js?v=4.61';
-import { parallax } from './alley.js?v=4.61';
+import { subscribe } from './ticker.js?v=4.62';
+import { cssRGB } from './curator.js?v=4.62';
+import { parallax } from './alley.js?v=4.62';
 
 const SIGNS_F = .75;                 // parallax factor of .layer-signs
 const CELL_H = 16;                   // helix row pitch (px) — bigger centerpiece
