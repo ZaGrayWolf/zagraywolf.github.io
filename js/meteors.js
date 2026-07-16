@@ -9,7 +9,7 @@
    Fragmentation: large comet splits at 25-40% of life; ~40% of small
    meteors split at 40-65% of life. */
 
-import { subscribe } from './ticker.js?v=4.58';
+import { subscribe } from './ticker.js?v=4.59';
 
 export function initMeteors() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;

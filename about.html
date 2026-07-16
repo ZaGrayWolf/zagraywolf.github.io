@@ -15,27 +15,27 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <!-- modulepreload: flatten the ES-module boot waterfall (all always-loaded; pure load speedup, no behaviour change). ?v= bumped by the site-wide sed. -->
-<link rel="modulepreload" href="/js/main.js?v=4.58">
-<link rel="modulepreload" href="/js/config.js?v=4.58">
-<link rel="modulepreload" href="/js/ticker.js?v=4.58">
-<link rel="modulepreload" href="/js/curator.js?v=4.58">
-<link rel="modulepreload" href="/js/cat.js?v=4.58">
-<link rel="modulepreload" href="/js/hud.js?v=4.58">
-<link rel="modulepreload" href="/js/transition.js?v=4.58">
-<link rel="modulepreload" href="/js/timeofday.js?v=4.58">
-<link rel="modulepreload" href="/js/narrator.js?v=4.58">
-<link rel="modulepreload" href="/js/analytics.js?v=4.58">
-<link rel="modulepreload" href="/js/palette.js?v=4.58">
-<link rel="modulepreload" href="/js/resume-preview.js?v=4.58">
-<link rel="modulepreload" href="/js/dynamic-menu.js?v=4.58">
+<link rel="modulepreload" href="/js/main.js?v=4.59">
+<link rel="modulepreload" href="/js/config.js?v=4.59">
+<link rel="modulepreload" href="/js/ticker.js?v=4.59">
+<link rel="modulepreload" href="/js/curator.js?v=4.59">
+<link rel="modulepreload" href="/js/cat.js?v=4.59">
+<link rel="modulepreload" href="/js/hud.js?v=4.59">
+<link rel="modulepreload" href="/js/transition.js?v=4.59">
+<link rel="modulepreload" href="/js/timeofday.js?v=4.59">
+<link rel="modulepreload" href="/js/narrator.js?v=4.59">
+<link rel="modulepreload" href="/js/analytics.js?v=4.59">
+<link rel="modulepreload" href="/js/palette.js?v=4.59">
+<link rel="modulepreload" href="/js/resume-preview.js?v=4.59">
+<link rel="modulepreload" href="/js/dynamic-menu.js?v=4.59">
 <meta property="og:image" content="https://zagraywolf.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://zagraywolf.github.io/assets/img/og.png">
-<link rel="stylesheet" href="css/tokens.css?v=4.58">
-<link rel="stylesheet" href="css/base.css?v=4.58">
-<link rel="stylesheet" href="css/alley.css?v=4.58">
-<link rel="stylesheet" href="css/about.css?v=4.58">
-<link rel="stylesheet" href="css/game.css?v=4.58">
+<link rel="stylesheet" href="css/tokens.css?v=4.59">
+<link rel="stylesheet" href="css/base.css?v=4.59">
+<link rel="stylesheet" href="css/alley.css?v=4.59">
+<link rel="stylesheet" href="css/about.css?v=4.59">
+<link rel="stylesheet" href="css/game.css?v=4.59">
 </head>
 <body data-page="about" class="preboot">
 <a class="skip-link" href="#main">skip to content</a>
@@ -212,6 +212,16 @@
       <p class="hero-sub">the human who runs this alley.</p>
     </header>
 
+    <!-- quick signs for the skimmer — reuses the alley's neon .dawn-sign motif -->
+    <nav class="about-quicknav" aria-label="Quick links">
+      <ul class="dawn-signs">
+        <li><a class="dawn-sign" href="resume.html">RESUME</a></li>
+        <li><a class="dawn-sign" href="projects.html">PROJECTS</a></li>
+        <li><a class="dawn-sign" href="papers.html">WINS</a></li>
+        <li><a class="dawn-sign" href="mailto:abhuday2656@gmail.com">MAIL</a></li>
+      </ul>
+    </nav>
+
     <div class="about-body">
       <p class="lede">Hey, I'm <b>Kunwar Abhuday Singh</b>. I'm happiest at the edge of something I don't understand yet, and most of what I know came from chasing that feeling.</p>
 
@@ -281,7 +291,7 @@
   <!-- the game, tucked into the bottom-left corner of the scene -->
   <button class="arcade arcade--about" type="button" aria-label="Play NEKO CATCHER — an arcade cabinet">
     <i aria-hidden="true">GAME</i>
-    <b aria-hidden="true">CAT</b>
+    <b aria-hidden="true">NEKO</b>
   </button>
 </main>
 
@@ -292,6 +302,6 @@
 <canvas id="curator-canvas" class="fx-canvas" aria-hidden="true"></canvas>
 <div class="scan" aria-hidden="true"></div>
 
-<script type="module" src="js/main.js?v=4.58"></script>
+<script type="module" src="js/main.js?v=4.59"></script>
 </body>
 </html>
