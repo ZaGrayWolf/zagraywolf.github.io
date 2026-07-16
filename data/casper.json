@@ -156,8 +156,8 @@
       "label": "where he studied",
       "keywords": ["education","study","studied","studies","college","university","degree","school","manipal","cgpa","gpa","graduate","graduation","btech","b.tech","cs"],
       "answers": [
-        "*tilts head* B.Tech in Computer Science at Manipal Institute of Technology (MIT MAHE), 2023 to 2027, CGPA 8.09 / 10.",
-        "*nods* Computer Science, B.Tech, Manipal Institute of Technology (MIT MAHE). Class of 2027, sitting at a 8.09 / 10. The rest of his education happens at this counter, mostly."
+        "*tilts head* B.Tech in Computer Science at Manipal Institute of Technology (MIT MAHE), 2023 to 2027.",
+        "*nods* Computer Science, B.Tech, Manipal Institute of Technology (MIT MAHE). Class of 2027. The rest of his education happens at this counter, mostly."
       ],
       "action": null,
       "followups": ["what are his skills?","what's he working on now?"]

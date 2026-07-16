@@ -5,7 +5,7 @@
    the button is never dead. Honeypot-only spam guard (ponytail: add a captcha
    only if real bots show up). */
 
-import { submitContact } from './analytics.js?v=4.55';
+import { submitContact } from './analytics.js?v=4.56';
 
 const MAILTO = 'abhuday2656@gmail.com';
 
