@@ -312,6 +312,39 @@ body[data-page="stall"] .manga-bg img:nth-child(6){ top:32%;   right:5%;  transf
 .stall-cat.is-speaking .cat-head{ transform-box:fill-box; transform-origin:50% 100%; animation:cat-speak .5s var(--ease-out) 2; }
 @keyframes cat-speak{ 0%,100%{ transform:translateY(0) rotate(0); } 50%{ transform:translateY(-2px) rotate(-1.5deg); } }
 
+/* ── moods (stall.js sets .mood-* per answer; medium intensity) ───────
+   The head keeps its speaking nod; moods play only on the eyes, ears and
+   tail so nothing fights over the same transform. One-shot reactions use
+   `both` to hold the end pose; state moods (sleepy/content) loop softly. */
+.stall-cat .cat-ear-in{ transform-box:fill-box; transform-origin:50% 100%; }
+
+.stall-cat.mood-happy    .cat-eye{ animation:cat-eye-squint .45s var(--ease-out) both; }
+.stall-cat.mood-happy    .cat-ear-in{ animation:cat-ear-perk .4s var(--ease-out) both; }
+.stall-cat.mood-happy    .cat-tail{ animation:cat-tail 1.1s var(--ease-in-out) 2; }
+
+.stall-cat.mood-proud    .cat-eye{ animation:cat-eye-wide .5s var(--ease-out) both; }
+.stall-cat.mood-proud    .cat-ear-in{ animation:cat-ear-perk .4s var(--ease-out) both; }
+.stall-cat.mood-proud    .cat-tail{ animation:cat-tail-up .6s var(--ease-out) both; }
+
+.stall-cat.mood-thinking .cat-eye{ animation:cat-eye-up 1s var(--ease-in-out) both; }
+
+.stall-cat.mood-shy      .cat-eye{ animation:cat-eye-shy .6s var(--ease-out) both; }
+.stall-cat.mood-shy      .cat-ear-in{ animation:cat-ear-droop .5s var(--ease-out) both; }
+
+.stall-cat.mood-sleepy   .cat-eye{ animation:cat-eye-sleepy 3s var(--ease-in-out) infinite; }
+.stall-cat.mood-sleepy   .cat-tail{ animation:cat-tail 7s var(--ease-in-out) infinite; }
+
+.stall-cat.mood-content  .cat-tail{ animation:cat-tail 5s var(--ease-in-out) infinite; }
+
+@keyframes cat-eye-squint{ to{ transform:scaleY(.28); } }
+@keyframes cat-eye-wide{ 0%{ transform:scaleY(1); } 60%{ transform:scaleY(1.28); } 100%{ transform:scaleY(1.12); } }
+@keyframes cat-eye-up{ to{ transform:translateY(-2.2px); } }
+@keyframes cat-eye-shy{ to{ transform:translate(2px,1.5px) scaleY(.6); } }
+@keyframes cat-eye-sleepy{ 0%,100%{ transform:scaleY(.5); } 50%{ transform:scaleY(.3); } }
+@keyframes cat-ear-perk{ 0%{ transform:scaleY(1); } 100%{ transform:scaleY(1.2) translateY(-1px); } }
+@keyframes cat-ear-droop{ to{ transform:scaleY(.7) translateY(1.5px); } }
+@keyframes cat-tail-up{ to{ transform:rotate(-16deg); } }
+
 /* ── concierge chat ──────────────────────────────────────────────── */
 .stall-concierge{ width:min(46rem, 100%); margin:var(--s-3) auto 0; }
 .casper-bubble{
@@ -391,6 +424,10 @@ body[data-page="stall"] .manga-bg img:nth-child(6){ top:32%;   right:5%;  transf
   .stall-sign text{ animation:none; }
   .stall-embers span{ animation:none; opacity:0; }
   .cat-body, .cat-eye, .cat-tail, .stall-cat.is-speaking .cat-head{ animation:none; }
+  /* moods: freeze all part animations (specificity beats the mood rules) */
+  .stall-cat[class*="mood-"] .cat-eye,
+  .stall-cat[class*="mood-"] .cat-ear-in,
+  .stall-cat[class*="mood-"] .cat-tail{ animation:none !important; }
   .casper-bubble{ transition:opacity .15s; transform:none; }
   .casper-bubble.is-in{ transform:none; }
   .stall-card, .stall-card.is-active, .stall-card.is-exiting{

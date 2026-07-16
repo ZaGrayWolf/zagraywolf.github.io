@@ -6,8 +6,8 @@
    Progressive enhancement: the static #stall-menu rec lists are the no-JS
    floor — this module takes that subtree over on boot. */
 
-import { loadCasper, matchIntent } from './concierge.js?v=4.56';
-import { narrate } from './narrator.js?v=4.56';
+import { loadCasper, matchIntent } from './concierge.js?v=4.57';
+import { narrate } from './narrator.js?v=4.57';
 
 const CATS   = ['anime', 'manga', 'movies', 'books', 'shows'];   // fixed — skips recs.json "_note"
 const LABELS = { anime: 'ANIME', manga: 'MANGA', movies: 'MOVIES', books: 'BOOKS', shows: 'SHOWS' };
@@ -83,6 +83,14 @@ async function initConcierge() {
   catch { return; }                     // no data → chat stays hidden, static recs remain
 
   let awaitingName = false;             // opt-in identity: set after the say-hi prompt
+  let lastIntent = null;                // last thing Casper answered — powers "tell me more"
+
+  // bare continuations that mean "keep going on the last thing" — no keywords of
+  // their own, so we intercept them before the matcher and re-run the last intent.
+  const CONTINUE = new Set([
+    'more','tell me more','more please','go on','continue','keep going','and',
+    'else','what else','anything else','again','another','one more','next','same again'
+  ]);
 
   // variety: intents/greeting/fallback may hold an array of phrasings. Pick one
   // per turn, never the same one twice in a row, so Casper doesn't sound taped.
@@ -107,14 +115,18 @@ async function initConcierge() {
     });
   }
 
-  function renderBubble(text, followups, asked) {
+  const MOODS = ['happy', 'proud', 'thinking', 'shy', 'sleepy', 'content'];
+
+  function renderBubble(text, followups, asked, mood) {
     bubble.innerHTML =
       (asked ? '<span class="you-asked">you: ' + escHtml(asked) + '</span>' : '') +
       escHtml(text);
     requestAnimationFrame(() => bubble.classList.add('is-in'));
     if (cat) {
+      MOODS.forEach(m => cat.classList.remove('mood-' + m));
       cat.classList.remove('is-speaking');
-      void cat.offsetWidth;             // restart the nod animation
+      void cat.offsetWidth;             // restart the nod + mood animations
+      if (mood && MOODS.includes(mood)) cat.classList.add('mood-' + mood);
       cat.classList.add('is-speaking');
     }
     renderChips(followups);
@@ -142,7 +154,8 @@ async function initConcierge() {
   // speak an intent's answer (one of its variants) + run any lantern/chef action.
   function answerIntent(it, asked) {
     if (it.id === 'say-hi') awaitingName = true;      // next message is their name
-    renderBubble(oneOf(it.answers ?? it.answer, it.id), it.followups, asked);
+    lastIntent = it;                                  // remember for "tell me more"
+    renderBubble(oneOf(it.answers ?? it.answer, it.id), it.followups, asked, it.mood);
     if (it.action?.type === 'rec')  selectCat(it.action.cat, listEl, hintEl);   // moves focus to titles
     else if (it.action?.type === 'chef') chefChoice(listEl, hintEl);            // moves focus to titles
     else input.focus();                  // about-Abhuday answer → stay in the input
@@ -157,8 +170,17 @@ async function initConcierge() {
     if (awaitingName) {
       awaitingName = false;
       try { dispatchEvent(new CustomEvent('zgw:track', { detail: { event: 'identify', props: { name: q.slice(0, 100) } } })); } catch {}
-      renderBubble("*dips his head* Noted. I'll let him know you stopped by. Anything else?", kb.config.fallbackChips, q);
+      renderBubble("*dips his head* Noted. I'll let him know you stopped by. Anything else?", kb.config.fallbackChips, q, 'content');
       input.focus();
+      return;
+    }
+
+    // "tell me more" / "again" / "another" → continue the last thread instead of
+    // dead-ending. Re-runs the last intent: a fresh answer variant, or (for recs)
+    // another pick off the same shelf.
+    const cont = q.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+    if (lastIntent && CONTINUE.has(cont)) {
+      answerIntent(lastIntent, q);
       return;
     }
 
@@ -167,7 +189,7 @@ async function initConcierge() {
     try { dispatchEvent(new CustomEvent('zgw:track', { detail: { event: 'ask', props: { q: q.slice(0, 120), intent: r.intent?.id || '', fallback: r.status === 'fallback', near: r.status === 'near' } } })); } catch {}
 
     if (r.status === 'fallback') {
-      renderBubble(oneOf(kb.config.fallback, '_fallback'), kb.config.fallbackChips, q);
+      renderBubble(oneOf(kb.config.fallback, '_fallback'), kb.config.fallbackChips, q, 'shy');
       input.focus();                     // bubble-only → stay in the input
       return;
     }
@@ -184,7 +206,7 @@ async function initConcierge() {
       renderBubble(oneOf(asks, '_near:' + it.id), [
         { label: 'yes, ' + it.label, run: () => answerIntent(it, 'yes, ' + it.label) },
         ...kb.config.fallbackChips.slice(0, 2)
-      ], q);
+      ], q, 'thinking');
       input.focus();
       return;
     }
@@ -200,7 +222,7 @@ async function initConcierge() {
   });
 
   // seed the greeting + starter chips
-  renderBubble(oneOf(kb.config.greeting, '_greeting'), kb.config.fallbackChips);
+  renderBubble(oneOf(kb.config.greeting, '_greeting'), kb.config.fallbackChips, undefined, 'happy');
 }
 
 // ── category selection ─────────────────────────────────────────────

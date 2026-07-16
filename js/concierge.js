@@ -28,6 +28,22 @@ function stem(w){
   return w.replace(/(ing|ed|es|s)$/,'');
 }
 
+// true iff a and b are exactly one edit apart (insert/delete/substitute).
+// Used for typo-tolerant keyword matching. Early-exits, no allocation.
+function editLE1(a, b){
+  const la = a.length, lb = b.length;
+  if (Math.abs(la - lb) > 1) return false;
+  let i = 0, j = 0, edits = 0;
+  while (i < la && j < lb){
+    if (a[i] === b[j]){ i++; j++; continue; }
+    if (++edits > 1) return false;
+    if (la > lb) i++;              // deletion from a
+    else if (lb > la) j++;         // insertion into a
+    else { i++; j++; }             // substitution
+  }
+  return edits + (la - i) + (lb - j) === 1;
+}
+
 function tokenize(norm){
   const raw = norm.split(' ').filter(Boolean);
   const set = new Set(raw);
@@ -48,6 +64,10 @@ function scoreIntent(input, intent){
       w = 1.0;
     } else if (input.set.has(stem(kw))){
       w = 0.6;
+    } else if (kw.length >= 6){
+      // typo tolerance: a one-edit-away token on a long keyword scores like a
+      // strong partial (0.9) — enough to trigger the "did you mean" near-miss.
+      for (const t of input.set){ if (t.length >= 5 && editLE1(t, kw)){ w = 0.9; break; } }
     }
     if (w > maxKw) maxKw = w;
     score += w;
