@@ -20,9 +20,9 @@
     "captionTail": "INCUBYTE · SOFTWARE ENGINEERING INTERN · JUN–JUL 2025",
     "title": "20+ enterprise AI agents. In production.",
     "crumb": { "title": "CODE GEASS", "cat": "anime", "note": "command from the shadows" },
-    "lead": "Enterprise AI agents on Google Cloud (Agno framework), wired into real corporate systems over RESTful microservices. Each agent handles a slice of the work that used to go to a human.",
+    "lead": "Enterprise AI agents on Azure (Agno framework), wired into real corporate systems over RESTful microservices. Each agent handles a slice of the work that used to go to a human.",
     "beats": [
-      { "caption": "THE STACK", "body": "Google Cloud · Agno framework · RESTful microservices · cloud-native from day one.", "metric": "20+ agents" },
+      { "caption": "THE STACK", "body": "Azure · Agno framework · RESTful microservices · cloud-native from day one.", "metric": "20+ agents" },
       { "caption": "THE CLIENTS", "body": "Real enterprise clients with live operational workflows — not prototypes. Every agent runs in a live corporate environment.", "metric": "in production" },
       { "caption": "THE NUMBERS", "body": "Manual workload down 60%. Throughput up 40%. The agents made the math better in both directions.", "metric": "−60% workload · +40% throughput" }
     ],

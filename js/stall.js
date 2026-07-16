@@ -6,8 +6,8 @@
    Progressive enhancement: the static #stall-menu rec lists are the no-JS
    floor — this module takes that subtree over on boot. */
 
-import { loadCasper, matchIntent } from './concierge.js?v=4.59';
-import { narrate } from './narrator.js?v=4.59';
+import { loadCasper, matchIntent } from './concierge.js?v=4.60';
+import { narrate } from './narrator.js?v=4.60';
 
 const CATS   = ['anime', 'manga', 'movies', 'books', 'shows'];   // fixed — skips recs.json "_note"
 const LABELS = { anime: 'ANIME', manga: 'MANGA', movies: 'MOVIES', books: 'BOOKS', shows: 'SHOWS' };

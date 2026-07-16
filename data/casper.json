@@ -239,8 +239,8 @@
         "automation"
       ],
       "answers": [
-        "*tail flicks* At Incubyte he shipped 20+ enterprise AI agents on Google Cloud with the Agno framework, wired into real corporate systems over RESTful microservices. Manual workload down 60%, throughput up 40%. In production, for real clients.",
-        "*counts it out* Incubyte: 20+ enterprise AI agents on Google Cloud, built with Agno, hooked into live corporate systems through RESTful microservices. Cut manual work by 60%, pushed throughput up 40%. Not a demo, actual clients."
+        "*tail flicks* At Incubyte he shipped 20+ enterprise AI agents on Azure with the Agno framework, wired into real corporate systems over RESTful microservices. Manual workload down 60%, throughput up 40%. In production, for real clients.",
+        "*counts it out* Incubyte: 20+ enterprise AI agents on Azure, built with Agno, hooked into live corporate systems through RESTful microservices. Cut manual work by 60%, pushed throughput up 40%. Not a demo, actual clients."
       ],
       "action": null,
       "followups": [
@@ -330,9 +330,9 @@
         "sql"
       ],
       "answers": [
-        "*counts on a paw* Languages: python, c++, javascript, sql. ML: pytorch, tensorflow, scikit-learn, numpy, pandas. Infra: docker, google-cloud, kubernetes, linux, git. Robotics: ros / ros2, opencv, aruco, jetson, coral. Plus quant (black-scholes, monte-carlo) and agent work with agno.",
-        "*ticks the paws* Code: python, c++, javascript, sql. ML stack: pytorch, tensorflow, scikit-learn, numpy, pandas. Ops: docker, google-cloud, kubernetes, linux, git. Robotics: ros/ros2, opencv, aruco, jetson, coral. And a quant streak, black-scholes, monte-carlo, plus agent work in agno.",
-        "*stretches, all business* Short version: python and c++ up front, pytorch and tensorflow for ML, docker/kubernetes/google-cloud for infra, ros/opencv for robots. Plus sql, git, linux, and some quant and agno on the side."
+        "*counts on a paw* Languages: python, c++, javascript, sql. ML: pytorch, tensorflow, scikit-learn, numpy, pandas. Infra: docker, azure, kubernetes, linux, git. Robotics: ros / ros2, opencv, aruco, jetson, coral. Plus quant (black-scholes, monte-carlo) and agent work with agno.",
+        "*ticks the paws* Code: python, c++, javascript, sql. ML stack: pytorch, tensorflow, scikit-learn, numpy, pandas. Ops: docker, azure, kubernetes, linux, git. Robotics: ros/ros2, opencv, aruco, jetson, coral. And a quant streak, black-scholes, monte-carlo, plus agent work in agno.",
+        "*stretches, all business* Short version: python and c++ up front, pytorch and tensorflow for ML, docker/kubernetes/azure for infra, ros/opencv for robots. Plus sql, git, linux, and some quant and agno on the side."
       ],
       "action": null,
       "followups": [
