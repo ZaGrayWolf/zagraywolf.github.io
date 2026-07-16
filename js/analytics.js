@@ -10,8 +10,8 @@
    so load order never matters and a missing analytics module is harmless. */
 
 // ── config ────────────────────────────────────────────────────────────────
-// Paste the Apps Script Web App /exec URL here after deploying (SETUP.md).
-// Until then everything below silently no-ops.
+// The deployed Apps Script Web App /exec URL. If this is ever cleared, every
+// call below silently no-ops (site stays fully functional).
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzge1rbf8cRerKuDCxLevIgEwydUuL89GFPDTwA1SIdAZjvHCX-f9Re8aK85JWuwBz3/exec';
 // Public bot-deterrent that the Apps Script checks — NOT a secret (it ships in
 // client source); it only filters drive-by POSTs, not a determined actor.

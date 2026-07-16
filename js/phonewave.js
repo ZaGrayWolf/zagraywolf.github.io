@@ -78,5 +78,14 @@ export function initPhoneWave(canvas){
   }
 
   if (reduced){ draw(0); return; }             // static frame, no animation loop
-  (function loop(t){ draw(t); requestAnimationFrame(loop); })(0);
+  // pause the loop when the tab is hidden so it doesn't burn battery in the
+  // background (mirrors ticker.js). Browsers throttle hidden rAF, but this stops
+  // it outright.
+  let raf;
+  const loop = t => { draw(t); raf = requestAnimationFrame(loop); };
+  raf = requestAnimationFrame(loop);
+  document.addEventListener('visibilitychange', () => {
+    cancelAnimationFrame(raf);
+    if (!document.hidden) raf = requestAnimationFrame(loop);
+  });
 }

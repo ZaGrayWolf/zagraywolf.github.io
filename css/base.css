@@ -87,7 +87,7 @@ body[data-page="alley"] .hud-resume{
 .world-paper .hud-resume:hover, .world-paper .hud-resume:focus-visible{ color:var(--ink); border-color:var(--ink); }
 
 /* dwell-to-peek thumbnail (js/resume-preview.js) — 2s hover on the hatch.
-   A pre-rendered PNG of page 1 (assets/img/resume-thumb.png), cropped to the
+   A pre-rendered JPEG of page 1 (assets/img/resume-thumb.jpg), cropped to the
    top ~55% by the card height. An image, not a PDF iframe: no viewer chrome
    can leak (Safari's PDF controls escape overflow clipping). Click = open full. */
 .resume-peek{

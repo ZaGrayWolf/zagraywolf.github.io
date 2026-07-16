@@ -541,7 +541,7 @@ body[data-page="alley"]{
   transition:border-color var(--dur-2) var(--ease-out);
 }
 .dawn-contact textarea{ resize:vertical; min-height:4.5rem; }
-.dawn-contact input::placeholder, .dawn-contact textarea::placeholder{ color:var(--dim); }
+.dawn-contact input::placeholder, .dawn-contact textarea::placeholder{ color:var(--label); }
 .dawn-contact input:focus-visible, .dawn-contact textarea:focus-visible{
   outline:none; border-color:var(--neon-cyan);
 }

@@ -18,3 +18,6 @@ MANIFESTO.md
 
 # the ID'd résumé copy at root (the site serves data/Resume.pdf, which IS tracked)
 /*.pdf
+
+# local screenshot harness — not for deploy
+_shot.html

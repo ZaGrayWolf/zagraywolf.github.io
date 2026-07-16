@@ -9,15 +9,15 @@
 
    To replace the résumé: drop the new file as data/Resume.pdf OR data/resume.pdf
    (resolveResumePdf() probes both), regenerate the thumbnail
-     sips -s format png --resampleWidth 480 data/Resume.pdf --out assets/img/resume-thumb.png
+     sips -s format jpeg -s formatOptions 70 --resampleWidth 480 data/Resume.pdf --out assets/img/resume-thumb.jpg
    and bump ?v= site-wide. */
 
 const DWELL = 2000;
-const THUMB = '/assets/img/resume-thumb.png';   // root-absolute: works from 404.html too
+const THUMB = '/assets/img/resume-thumb.jpg';   // root-absolute: works from 404.html too
 // Pages is case-sensitive, so try both casings and use whichever exists.
 // root-absolute so it resolves from 404.html too; ?v busts the cache on swap.
 const CANDIDATES = ['/data/Resume.pdf', '/data/resume.pdf'];
-const VER = '?v=4.57';
+const VER = '?v=4.58';
 
 // resolve the real PDF url once (memoized). Shared by the peek + the download CTA.
 let resolved;
