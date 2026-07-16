@@ -584,12 +584,12 @@
         "city",
         "country",
         "located",
-        "noida",
+        "delhi",
         "india"
       ],
       "answers": [
-        "*glances out* Noida and Manipal, India. Works remote for most of it; travels for the robotics.",
-        "*nods toward the horizon* India, between Noida and Manipal. Most of the work's remote; the robots are what get him on a plane."
+        "*glances out* New Delhi and Manipal, India. Works remote for most of it; travels for the robotics.",
+        "*nods toward the horizon* India, between New Delhi and Manipal. Most of the work's remote; the robots are what get him on a plane."
       ],
       "action": null,
       "followups": [
