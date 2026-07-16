@@ -15,8 +15,8 @@
    Scales for free: add a chapter to the static minimap HTML, give it a COORD,
    and the constellation, state-tracking, and transition all pick it up. */
 
-import { escortNarrate, endEscort } from './narrator.js?v=4.63';
-import { PAGES } from './config.js?v=4.63';
+import { escortNarrate, endEscort } from './narrator.js?v=4.64';
+import { PAGES } from './config.js?v=4.64';
 
 const LABELS = Object.fromEntries(PAGES.filter(p => p.nav).map(p => [p.slug, p.mapLabel]));
 // scattered star-chart coords (% of the map box), in chapter/DOM order —
