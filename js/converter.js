@@ -6,7 +6,7 @@
    The output font auto-fits: it's sized so `cols` characters exactly fill the
    output box, so the art is always legible regardless of the width setting. */
 
-import { imageToAscii, fileToImage } from './asciify.js?v=4.60';
+import { imageToAscii, fileToImage } from './asciify.js?v=4.61';
 
 const CHAR_W_RATIO = 0.6;   // monospace advance width ≈ 0.6em
 
