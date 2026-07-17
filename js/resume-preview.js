@@ -17,7 +17,7 @@ const THUMB = '/assets/img/resume-thumb.jpg';   // root-absolute: works from 404
 // Pages is case-sensitive, so try both casings and use whichever exists.
 // root-absolute so it resolves from 404.html too; ?v busts the cache on swap.
 const CANDIDATES = ['/data/Resume.pdf', '/data/resume.pdf'];
-const VER = '?v=4.65';
+const VER = '?v=4.66';
 
 // resolve the real PDF url once (memoized). Shared by the peek + the download CTA.
 let resolved;
@@ -51,7 +51,7 @@ export function initResumePreview(){
     card.rel = 'noopener';
     card.setAttribute('aria-label', 'Open the full résumé (PDF, new tab)');
     card.innerHTML =
-      '<img src="' + THUMB + VER + '" alt="" loading="lazy">' +
+      '<img src="' + THUMB + VER + '" alt="" loading="lazy" decoding="async">' +
       '<span class="resume-peek-hint">OPEN ↗</span>';
     // staying on the card keeps it alive; leaving it closes
     card.addEventListener('mouseenter', () => clearTimeout(hideTimer));

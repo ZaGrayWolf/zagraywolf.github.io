@@ -15,19 +15,19 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <!-- modulepreload: flatten the ES-module boot waterfall (all always-loaded; pure load speedup, no behaviour change). ?v= bumped by the site-wide sed. -->
-<link rel="modulepreload" href="/js/main.js?v=4.65">
-<link rel="modulepreload" href="/js/config.js?v=4.65">
-<link rel="modulepreload" href="/js/ticker.js?v=4.65">
-<link rel="modulepreload" href="/js/curator.js?v=4.65">
-<link rel="modulepreload" href="/js/cat.js?v=4.65">
-<link rel="modulepreload" href="/js/hud.js?v=4.65">
-<link rel="modulepreload" href="/js/transition.js?v=4.65">
-<link rel="modulepreload" href="/js/timeofday.js?v=4.65">
-<link rel="modulepreload" href="/js/narrator.js?v=4.65">
-<link rel="modulepreload" href="/js/analytics.js?v=4.65">
-<link rel="modulepreload" href="/js/palette.js?v=4.65">
-<link rel="modulepreload" href="/js/resume-preview.js?v=4.65">
-<link rel="modulepreload" href="/js/dynamic-menu.js?v=4.65">
+<link rel="modulepreload" href="/js/main.js?v=4.66">
+<link rel="modulepreload" href="/js/config.js?v=4.66">
+<link rel="modulepreload" href="/js/ticker.js?v=4.66">
+<link rel="modulepreload" href="/js/curator.js?v=4.66">
+<link rel="modulepreload" href="/js/cat.js?v=4.66">
+<link rel="modulepreload" href="/js/hud.js?v=4.66">
+<link rel="modulepreload" href="/js/transition.js?v=4.66">
+<link rel="modulepreload" href="/js/timeofday.js?v=4.66">
+<link rel="modulepreload" href="/js/narrator.js?v=4.66">
+<link rel="modulepreload" href="/js/analytics.js?v=4.66">
+<link rel="modulepreload" href="/js/palette.js?v=4.66">
+<link rel="modulepreload" href="/js/resume-preview.js?v=4.66">
+<link rel="modulepreload" href="/js/dynamic-menu.js?v=4.66">
 <meta property="og:image" content="https://zagraywolf.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://zagraywolf.github.io/assets/img/og.png">
@@ -36,11 +36,11 @@
 <meta property="og:image:alt" content="ZaGrayWolf: a night-alley portfolio by Kunwar Abhuday Singh">
 <meta name="twitter:title" content="About — ZaGrayWolf">
 <meta name="twitter:description" content="Who I am, what I build, and why this site is a Tokyo back-alley.">
-<link rel="stylesheet" href="css/tokens.css?v=4.65">
-<link rel="stylesheet" href="css/base.css?v=4.65">
-<link rel="stylesheet" href="css/alley.css?v=4.65">
-<link rel="stylesheet" href="css/about.css?v=4.65">
-<link rel="stylesheet" href="css/game.css?v=4.65">
+<link rel="stylesheet" href="css/tokens.css?v=4.66">
+<link rel="stylesheet" href="css/base.css?v=4.66">
+<link rel="stylesheet" href="css/alley.css?v=4.66">
+<link rel="stylesheet" href="css/about.css?v=4.66">
+<link rel="stylesheet" href="css/game.css?v=4.66">
 </head>
 <body data-page="about" class="preboot">
 <a class="skip-link" href="#main">skip to content</a>
@@ -49,12 +49,12 @@
 
 <!-- faint manga backdrop -->
 <div class="manga-bg" aria-hidden="true">
-  <img src="assets/img/panels/p-2024-09-20-01.jpg" alt="" loading="lazy">
-  <img src="assets/img/panels/p-2024-11-21-06.jpg" alt="" loading="lazy">
-  <img src="assets/img/panels/p-2025-03-17-14.jpg" alt="" loading="lazy">
-  <img src="assets/img/panels/p-2025-06-22-19.jpg" alt="" loading="lazy">
-  <img src="assets/img/panels/p-2025-12-19-26.jpg" alt="" loading="lazy">
-  <img src="assets/img/panels/p-2026-05-22-31.jpg" alt="" loading="lazy">
+  <img src="assets/img/panels/p-2024-09-20-01.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low">
+  <img src="assets/img/panels/p-2024-11-21-06.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low">
+  <img src="assets/img/panels/p-2025-03-17-14.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low">
+  <img src="assets/img/panels/p-2025-06-22-19.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low">
+  <img src="assets/img/panels/p-2025-12-19-26.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low">
+  <img src="assets/img/panels/p-2026-05-22-31.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low">
 </div>
 
 <!-- L0 · sky -->
@@ -277,7 +277,7 @@
     <p class="about-casper">That white blur following your cursor is <b>Casper</b>. Pet him enough and he gets ideas, or just hit the arcade cabinet in the corner and play.</p>
 
     <section class="about-socials" aria-label="Find me">
-      <img class="about-avatar" src="https://github.com/zagraywolf.png?size=160" alt="Abhuday Singh — GitHub profile photo" width="80" height="80">
+      <img class="about-avatar" src="https://github.com/zagraywolf.png?size=160" alt="Abhuday Singh — GitHub profile photo" width="80" height="80" decoding="async">
       <p class="dawn-sub">find me</p>
       <ul class="dawn-signs">
         <li><a class="dawn-sign" href="https://www.kaggle.com/abhuday7" rel="me">KAGGLE</a></li>
@@ -307,6 +307,6 @@
 <canvas id="curator-canvas" class="fx-canvas" aria-hidden="true"></canvas>
 <div class="scan" aria-hidden="true"></div>
 
-<script type="module" src="js/main.js?v=4.65"></script>
+<script type="module" src="js/main.js?v=4.66"></script>
 </body>
 </html>
