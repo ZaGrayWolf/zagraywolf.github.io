@@ -103,6 +103,7 @@
 }
 .tldr li:first-child{ border-top:0; }
 .tldr b{ font-weight:700; min-width:11rem; }
+.tldr-hit{ font-weight:700; }   /* makes the headline result pop for a skimmer */
 .tldr .mono{ font-family:var(--mono); font-size:var(--t-0); color:var(--ink-soft); margin-left:auto; }
 
 /* ---- pages & panels ------------------------------------------------------ */

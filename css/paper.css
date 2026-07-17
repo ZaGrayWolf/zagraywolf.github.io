@@ -164,7 +164,7 @@
 .world-paper .hud-state b{ color:var(--ink); }
 .world-paper .hud-map a[aria-current="page"]{ color:var(--ink); text-shadow:none; font-weight:600; }
 /* visited breadcrumb in warm amber-ink (not glaring neon — paper stays clean) */
-.world-paper .hud-map a.is-visited{ color:color-mix(in srgb, var(--amber) 60%, var(--ink)); }
+.world-paper .hud-map a.is-visited{ opacity:.4; }   /* dimmed: already explored */
 /* on paper the "considering" cue is the narrated line + escort, not a neon glow */
 .world-paper .hud-map a:hover, .world-paper .hud-map a:focus-visible{ color:var(--ink); text-shadow:none; }
 /* constellation trail in faint ink on paper (no neon dim) */

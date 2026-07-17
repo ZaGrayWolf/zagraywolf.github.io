@@ -200,7 +200,7 @@ body[data-page="alley"] .hud-resume{
   color:var(--label); text-decoration:none;
   padding:var(--s-1) 2px; /* generous tap/click target without changing the glyph look */
 }
-.hud-map a.is-visited{ color:var(--amber); }                       /* breadcrumb: been here */
+.hud-map a.is-visited{ opacity:.4; }                               /* dimmed: already explored */
 .hud-map a[aria-current="page"]{ color:var(--neon-cyan); text-shadow:0 0 8px var(--neon-cyan); }   /* active */
 /* hovering a node = the curator is considering that route — glows cyan (its
    colour), echoed by the swarm drifting toward it + the "escorting to…" line */
